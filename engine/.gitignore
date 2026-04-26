@@ -1,0 +1,15 @@
+
+# Python Cache
+__pycache__/
+*.py[cod]
+
+
+# Virtual Environments
+venv/
+env/
+
+# Environments & Secrets
+.env
+
+# Jupyter Notebook
+.ipynb_checkpoints/
