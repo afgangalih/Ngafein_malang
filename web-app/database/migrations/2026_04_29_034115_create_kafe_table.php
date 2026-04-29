@@ -20,7 +20,6 @@ return new class extends Migration
             $table->integer('harga_max')->default(0);
             $table->float('rating')->default(0);
             $table->float('jarak')->default(0);
-            $table->integer('variasi_menu_count')->default(0);
             $table->string('jam_buka')->nullable();
             $table->string('jam_tutup')->nullable();
             $table->text('deskripsi')->nullable();

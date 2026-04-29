@@ -289,7 +289,7 @@ with open(OUTPUT_FOLDER + "menu.sql", "w", encoding="utf-8") as f:
 
 with open(OUTPUT_FOLDER + "kafe.sql", "w", encoding="utf-8") as f:
     f.write("""INSERT INTO kafe 
-(id_kafe, nama_kafe, alamat, link_maps, harga_min, harga_max, rating, jarak, variasi_menu_count, jam_buka, jam_tutup, deskripsi) 
+(id_kafe, nama_kafe, alamat, link_maps, harga_min, harga_max, rating, jarak, jam_buka, jam_tutup, deskripsi) 
 VALUES\n""")
 
     values = []
@@ -313,17 +313,10 @@ VALUES\n""")
 
         jarak = parse_distance(row["Jarak"])
 
-        menu_items = set()
-        for item in split_menu(row["Variasi Menu"]):
-            norm = normalize_menu(item)
-            if norm:
-                menu_items.add(norm)
-        menu_count = len(menu_items)
-
         jam_buka, jam_tutup = parse_jam(row["Jam Operasional"])
 
         values.append(
-            f"({id_counter}, '{nama}', '{alamat}', '{link}', {harga_min}, {harga_max}, {rating}, {jarak}, {menu_count}, '{jam_buka}', '{jam_tutup}', '-')"
+            f"({id_counter}, '{nama}', '{alamat}', '{link}', {harga_min}, {harga_max}, {rating}, {jarak}, '{jam_buka}', '{jam_tutup}', '-')"
         )
 
         id_counter += 1
