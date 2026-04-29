@@ -24,11 +24,24 @@ def clean_sql_text(text):
 def clean_text(text):
     return str(text).strip().lower()
 
-def split_items(text):
+def split_fasilitas(text):
     if pd.isna(text):
         return []
     items = re.split(r'\n|-|,|;|\||/', str(text))
     return [i.strip() for i in items if i.strip()]
+
+def split_menu(text):
+    if pd.isna(text):
+        return []
+    items = re.split(r'\n|,|;|\||/', str(text))
+    cleaned = []
+    for i in items:
+        i = i.strip()
+        if i.startswith('-'):
+            i = i[1:].strip()
+        if i:
+            cleaned.append(i)
+    return cleaned
 
 # =========================
 # NORMALIZE FASILITAS (ASLI DIPERTAHANKAN)
@@ -187,25 +200,27 @@ def parse_distance(text):
 
 def normalize_menu(text):
     text = clean_text(text)
-    text = re.sub(r'[^a-z\s]', '', text)
-
-    if "non" in text and "coffee" in text:
+    
+    if any(x in text for x in ["non coffee", "non-coffee", "nonkopi", "non kopi"]):
         return "non_coffee"
 
-    if "coffee" in text or "kopi" in text:
+    if any(x in text for x in ["coffee", "kopi", "espresso", "latte", "cappuccino"]):
         return "coffee"
 
-    if "tea" in text:
+    if any(x in text for x in ["tea", "teh"]):
         return "tea"
 
-    if any(x in text for x in ["rice", "bowl", "mie", "ramen", "burger", "steak", "main"]):
+    if any(x in text for x in ["rice", "bowl", "mie", "ramen", "burger", "steak", "main", "food", "makanan", "dining", "nasi", "spaghetti", "pasta", "indonesia", "western", "bakso"]):
         return "food"
 
-    if any(x in text for x in ["dessert", "cake", "gelato", "ice cream"]):
+    if any(x in text for x in ["dessert", "cake", "gelato", "ice cream", "es krim", "manis", "waffle"]):
         return "dessert"
 
-    if any(x in text for x in ["snack", "pastry", "croissant", "roti"]):
+    if any(x in text for x in ["snack", "pastry", "croissant", "roti", "kentang", "french fries", "camilan", "gorengan", "platter"]):
         return "snack"
+
+    if any(x in text for x in ["juice", "jus", "minuman", "drink", "beverage", "squash", "smoothies"]):
+        return "non_coffee"
 
     return "other"
 
@@ -223,7 +238,7 @@ print("Total data:", len(df))
 all_fasilitas = set()
 
 for f in df["Fasilitas"]:
-    for item in split_items(f):
+    for item in split_fasilitas(f):
         norm = normalize_fasilitas(item)
         if norm:
             all_fasilitas.add(norm)
@@ -240,7 +255,7 @@ print("Total fasilitas:", len(fasilitas_list))
 all_menu = set()
 
 for m in df["Variasi Menu"]:
-    for item in split_items(m):
+    for item in split_menu(m):
         norm = normalize_menu(item)
         if norm:
             all_menu.add(norm)
@@ -299,11 +314,10 @@ VALUES\n""")
         jarak = parse_distance(row["Jarak"])
 
         menu_items = set()
-        for item in split_items(row["Variasi Menu"]):
+        for item in split_menu(row["Variasi Menu"]):
             norm = normalize_menu(item)
             if norm:
                 menu_items.add(norm)
-
         menu_count = len(menu_items)
 
         jam_buka, jam_tutup = parse_jam(row["Jam Operasional"])
@@ -341,7 +355,7 @@ with open(OUTPUT_FOLDER + "kafe_fasilitas.sql", "w", encoding="utf-8") as f:
 
         id_kafe = seen.get(key)
 
-        for item in split_items(row["Fasilitas"]):
+        for item in split_fasilitas(row["Fasilitas"]):
             norm = normalize_fasilitas(item)
 
             if norm and norm in fasilitas_map:
@@ -375,7 +389,7 @@ with open(OUTPUT_FOLDER + "kafe_menu.sql", "w", encoding="utf-8") as f:
 
         id_kafe = seen.get(key)
 
-        for item in split_items(row["Variasi Menu"]):
+        for item in split_menu(row["Variasi Menu"]):
             norm = normalize_menu(item)
             if norm in menu_map:
                 values.add((id_kafe, menu_map[norm]))
