@@ -94,9 +94,11 @@
             <i class="fa-solid fa-chevron-left text-3xl"></i>
         </button>
 
-        <div class="max-w-5xl w-full mx-4 flex flex-col items-center">
-            <img id="lightbox-img" src="" alt=""
-                 class="max-h-[75vh] w-auto max-w-full rounded-2xl shadow-2xl object-contain transition-opacity duration-300">
+        <div class="w-full h-full flex flex-col items-center justify-center p-4 md:p-12">
+            <div class="relative w-full max-w-5xl h-[80vh] flex items-center justify-center">
+                <img id="lightbox-img" src="" alt=""
+                     class="w-full h-full object-contain rounded-lg shadow-2xl transition-opacity duration-300">
+            </div>
             <div class="flex items-center gap-3 mt-6">
                 @foreach($allImages as $idx => $img)
                 <button onclick="goToImage({{ $idx }})"

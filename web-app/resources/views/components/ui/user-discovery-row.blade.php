@@ -15,7 +15,7 @@
             <p class="text-gray-400 text-sm font-medium">Belum ada kafe di kategori ini.</p>
         </div>
     @else
-        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             @foreach($cafes as $k)
                 @include('components.ui.user-cafe-card', ['k' => $k])
             @endforeach
