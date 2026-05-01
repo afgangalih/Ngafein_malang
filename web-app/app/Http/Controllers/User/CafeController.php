@@ -43,7 +43,7 @@ class CafeController extends Controller
                     $title = "Semua Kafe";
             }
 
-            $cafes = $query->paginate(12)->withQueryString();
+            $cafes = $query->paginate(12)->appends($request->query());
             $allFasilitas = \App\Models\FasilitasModel::all();
             $allMenus = \App\Models\MenuModel::all();
             return view('pages.user.list-cafe', compact('cafes', 'title', 'allFasilitas', 'allMenus'));
@@ -53,21 +53,21 @@ class CafeController extends Controller
         $terdekat = KafeModel::with(['menus', 'gambar', 'fasilitas'])
             ->where('jarak', '<=', 1.5)
             ->orderBy('jarak', 'asc')
-            ->take(3)->get();
+            ->take(4)->get();
         $sultan = KafeModel::with(['menus', 'gambar', 'fasilitas'])
             ->withCount('fasilitas')
             ->having('fasilitas_count', '>=', 9)
             ->orderBy('fasilitas_count', 'desc')
-            ->take(3)->get();
+            ->take(4)->get();
         $menuLengkap = KafeModel::with(['menus', 'gambar', 'fasilitas'])
             ->withCount('menus')
             ->having('menus_count', '>=', 6)
             ->orderBy('menus_count', 'desc')
-            ->take(3)->get();
+            ->take(4)->get();
         $buka24jam = KafeModel::with(['menus', 'gambar', 'fasilitas'])
             ->where('jam_buka', '00:00')
             ->where('jam_tutup', '23:59')
-            ->take(3)
+            ->take(4)
             ->get();
 
         return view('pages.user.index-cafe', compact('terdekat', 'sultan', 'menuLengkap', 'buka24jam'));
