@@ -10,3 +10,8 @@ Thumbs.db
 
 .agents/
 skills-lock.json
+
+# Ngafein Assets
+Foto Kafe/
+web-app/storage/app/public/cafes
+web-app/public/storage
