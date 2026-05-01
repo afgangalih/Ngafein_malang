@@ -3,14 +3,14 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\User\CafeController;
 use App\Http\Controllers\Admin\DashboardController;
-
+use App\Http\Controllers\User\WelcomeController;
 
 
 // USER ROUTES (Public)
 // =========================================================================
 Route::name('user.')->group(function () {
 
-    Route::get('/', function () { return view('welcome'); })->name('home');
+    Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
     Route::prefix('cafe')->name('cafe.')->group(function () {
         Route::get('/explore', [CafeController::class, 'index'])->name('index');
@@ -19,6 +19,7 @@ Route::name('user.')->group(function () {
     });
 
     // TODO: Tambah route rekomendasi, pencarian, preferensi di sini
+    Route::get('/kafe/rekomendasi', [WelcomeController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
 });
 
 
