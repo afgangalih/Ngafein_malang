@@ -8,14 +8,14 @@ Thumbs.db
 *.swp
 *.bak
 
-# Antigravity/Agent Files
+
 .agents/
 skills-lock.json
 
-# Ngafein Assets
+# ngafein asset
 Foto\ Kafe/
 
-# --- LARAVEL (web-app) ---
+# web-app
 web-app/.env
 web-app/vendor/
 web-app/node_modules/
