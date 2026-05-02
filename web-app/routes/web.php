@@ -12,10 +12,9 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-// USER ROUTES (Public)
-// =========================================================================
+
+
 Route::name('user.')->group(function () {
-    Route::get('/', fn() => view('welcome'))->name('home');
     Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
     Route::prefix('cafe')->name('cafe.')->controller(CafeController::class)->group(function () {
@@ -24,16 +23,20 @@ Route::name('user.')->group(function () {
         Route::get('/{id}', 'show')->name('detail');
     });
 
-    // TODO: Tambah route rekomendasi, pencarian, preferensi di sini
+   
     Route::get('/kafe/rekomendasi', [WelcomeController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
 });
 
 
-// ADMIN ROUTES
-// Middleware auth + role admin ditambahkan di sini nanti:
-// Route::middleware(['auth', 'role:admin'])->prefix('admin')-> ...
-// =========================================================================
+
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::resource('cafe', \App\Http\Controllers\Admin\CafeController::class);
+
+   
+    Route::view('/signin', 'admin.auth.signin')->name('signin');
+    Route::view('/signup', 'admin.auth.signup')->name('signup');
+
 });
+

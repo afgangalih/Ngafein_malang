@@ -10,26 +10,26 @@ class WelcomeController extends Controller
 {
     public function index(Request $request)
     {
-        // Total kafe & rating rata-rata
+       
         $totalKafe  = DB::table('kafe')->count();
         $avgRating  = DB::table('kafe')->avg('rating');
 
-        // 3 kafe unggulan (rating tertinggi)
+        
         $kafeUnggulan = DB::table('kafe')
             ->orderByDesc('rating')
             ->limit(3)
             ->get();
 
-        // Filter rekomendasi berdasarkan waktu saat ini
+       
         $hour = now()->hour;
         $rekomendasiWaktu = $this->getWaktuLabel($hour);
 
-        // Semua kafe (untuk halaman lihat semua)
+        
         $semuaKafe = DB::table('kafe')
             ->orderByDesc('rating')
             ->get();
 
-        return view('welcome', compact(
+        return view('user.welcome', compact(
             'totalKafe',
             'avgRating',
             'kafeUnggulan',
@@ -42,7 +42,7 @@ class WelcomeController extends Controller
     {
         $query = DB::table('kafe');
 
-        // Filter harga
+        
         if ($request->filled('harga_min')) {
             $query->where('harga_min', '>=', $request->harga_min);
         }
@@ -50,17 +50,17 @@ class WelcomeController extends Controller
             $query->where('harga_max', '<=', $request->harga_max);
         }
 
-        // Filter rating
+        
         if ($request->filled('rating')) {
             $query->where('rating', '>=', $request->rating);
         }
 
-        // Filter jarak
+       
         if ($request->filled('jarak')) {
             $query->where('jarak', '<=', $request->jarak);
         }
 
-        // Filter jam buka sekarang
+        
         if ($request->boolean('buka_sekarang')) {
             $jamSekarang = now()->format('H:i');
             $query->where('jam_buka', '<=', $jamSekarang)
@@ -72,9 +72,7 @@ class WelcomeController extends Controller
         return response()->json($kafeFilter);
     }
 
-    /**
-     * Tentukan label waktu berdasarkan jam
-     */
+   
     private function getWaktuLabel(int $hour): string
     {
         return match(true) {
