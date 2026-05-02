@@ -33,13 +33,13 @@
 </head>
 <body class="min-h-screen bg-[#fcfcfc] text-gray-800 font-sans">
 
-    @include('components.global.user.navbar')
+    @include('partials.user.navbar')
  
      <main class="pb-20">
          @yield('content')
      </main>
  
-     @include('components.global.user.footer')
+     @include('partials.user.footer')
 
     @stack('scripts')
 </body>

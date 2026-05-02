@@ -1,4 +1,3 @@
-
 # OS Generated Files
 .DS_Store
 Thumbs.db
@@ -6,12 +5,32 @@ Thumbs.db
 # IDE & Code Editors
 .vscode/
 .idea/
+*.swp
+*.bak
 
-
+# Antigravity/Agent Files
 .agents/
 skills-lock.json
 
 # Ngafein Assets
-Foto Kafe/
-web-app/storage/app/public/cafes
+Foto\ Kafe/
+
+# --- LARAVEL (web-app) ---
+web-app/.env
+web-app/vendor/
+web-app/node_modules/
+web-app/public/build/
+web-app/public/hot/
 web-app/public/storage
+web-app/storage/*.key
+web-app/storage/app/public/cafes
+web-app/storage/framework/cache/data/*
+web-app/storage/framework/views/*.php
+web-app/storage/framework/sessions/*
+web-app/storage/logs/*.log
+web-app/npm-debug.log*
+web-app/yarn-error.log*
+web-app/.phpunit.result.cache
+
+# User Uploaded Assets (Optional: Hapus jika ingin di-track)
+# web-app/public/assets/images/

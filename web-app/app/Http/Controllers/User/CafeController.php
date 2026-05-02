@@ -46,7 +46,7 @@ class CafeController extends Controller
             $cafes = $query->paginate(12)->appends($request->query());
             $allFasilitas = \App\Models\FasilitasModel::all();
             $allMenus = \App\Models\MenuModel::all();
-            return view('pages.user.list-cafe', compact('cafes', 'title', 'allFasilitas', 'allMenus'));
+            return view('user.list-cafe', compact('cafes', 'title', 'allFasilitas', 'allMenus'));
         }
 
         
@@ -70,7 +70,7 @@ class CafeController extends Controller
             ->take(4)
             ->get();
 
-        return view('pages.user.index-cafe', compact('terdekat', 'sultan', 'menuLengkap', 'buka24jam'));
+        return view('user.index-cafe', compact('terdekat', 'sultan', 'menuLengkap', 'buka24jam'));
     }
 
     public function show($id)
@@ -83,7 +83,7 @@ class CafeController extends Controller
             ->limit(4)
             ->get();
 
-        return view('pages.user.cafe-detail', compact('cafe', 'rekomendasi'));
+        return view('user.cafe-detail', compact('cafe', 'rekomendasi'));
     }
 
     public function searchApi(Request $request)
