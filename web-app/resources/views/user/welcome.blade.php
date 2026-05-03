@@ -7,6 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&family=Source+Sans+3:wght@300;400;600&display=swap" rel="stylesheet">
+    {{-- Alpine.js untuk live search --}}
+    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 
     <style>
         /* ─── RESET ─────────────────────────────────────────── */
@@ -15,16 +17,6 @@
         a { text-decoration: none; color: inherit; }
         button { font-family: inherit; cursor: pointer; }
 
-        /* ─── TOKENS ──────────────────────────────────────────
-           Referensi warna dari desain:
-           bg utama   : #1a1008  (coklat sangat gelap)
-           panel      : #2b1a09  (coklat gelap)
-           card       : #221306  (lebih gelap)
-           gold       : #c9891a  (oranye-emas tombol)
-           gold-text  : #e2a53a  (emas lebih terang untuk teks)
-           krem       : #f0e0c0  (teks utama)
-           muted      : #8c7459  (teks sekunder)
-        ─────────────────────────────────────────────────────── */
         :root {
             --page-bg   : #FFFFFF;
             --panel-bg  : #2b1a09;
@@ -40,7 +32,6 @@
             --r-xl      : 18px;
         }
 
-        /* ─── BASE ───────────────────────────────────────────── */
         html, body { min-height: 100vh; }
         body {
             font-family: 'Source Sans 3', sans-serif;
@@ -55,72 +46,367 @@
         ═══════════════════════════════════════════════════════ */
         .hero {
             position: relative;
-            height: 600px;
+            min-height: 620px;
             display: flex;
             align-items: center;
+            justify-content: center;
             overflow: hidden;
+            text-align: center;
         }
 
-        /* foto kafe sebagai background */
         .hero-bg {
             position: absolute;
             inset: 0;
             background:
-                url('https://images.unsplash.com/photo-1469631423273-6995642a6a40?q=80&w=1503&auto=format&fit=crop&ixlib=rb-4.1.0&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D')
+                url('https://images.unsplash.com/photo-1469631423273-6995642a6a40?q=80&w=1503&auto=format&fit=crop')
                 center 35% / cover no-repeat;
         }
 
-        /* gradien gelap dari bawah – persis seperti desain */
         .hero-bg::after {
             content: '';
             position: absolute;
             inset: 0;
             background:
-                linear-gradient(to right,  rgba(20,11,3,0.78) 40%, rgba(20,11,3,0.20) 100%),
-                linear-gradient(to bottom, rgba(20,11,3,0.05) 0%,  rgba(20,11,3,0.90) 100%);
+                radial-gradient(ellipse 70% 80% at 50% 55%, rgba(12,6,1,0.72) 0%, rgba(12,6,1,0.45) 100%),
+                linear-gradient(to bottom, rgba(10,5,1,0.30) 0%, rgba(10,5,1,0.88) 100%);
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            opacity: 0.18;
+            z-index: 1;
+            pointer-events: none;
         }
 
         .hero-body {
             position: relative;
             z-index: 2;
-            padding: 0 44px 80px;
+            padding: 0 24px 100px;
+            max-width: 760px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0;
         }
 
+        /* Eyebrow */
         .hero-eyebrow {
-            font-size: 16px;
-            letter-spacing: 2.5px;
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 500;
+            letter-spacing: 3.5px;
             text-transform: uppercase;
-            color: #fff;
-            font-weight: 400;
-            margin-bottom: 12px;
+            color: #f0b942;
+            margin-bottom: 20px;
+            opacity: 0;
+            animation: fadeUp 0.7s ease 0.1s forwards;
         }
 
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            content: '';
+            display: block;
+            width: 28px;
+            height: 1px;
+            background: #f0b942;
+            opacity: 0.60;
+        }
+
+        /* Judul */
         .hero-title {
             font-family: 'Playfair Display', serif;
-            font-size: 54px;
+            font-size: clamp(32px, 5vw, 54px);
             font-weight: 700;
-            line-height: 1.2;
+            line-height: 1.08;
             color: #fff;
-            margin-bottom: 12px;
+            letter-spacing: -0.5px;
+            margin-bottom: 18px;
+            opacity: 0;
+            animation: fadeUp 0.75s ease 0.22s forwards;
         }
 
+        .hero-title .line-italic {
+            font-style: italic;
+            font-weight: 300;
+            color: var(--cream);
+            display: block;
+        }
+
+        /* Subtitle */
         .hero-sub {
             font-family: 'Playfair Display', serif;
             font-style: italic;
-            font-size: 16px;
-            letter-spacing: 1.5px;
-            color: #fff;
+            font-size: 18px;
             font-weight: 300;
+            letter-spacing: 0.8px;
+            color: rgba(245,232,208,0.70);
+            margin-bottom: 36px;
+            opacity: 0;
+            animation: fadeUp 0.75s ease 0.36s forwards;
+        }
+
+        /* ── SEARCH BAR ── */
+        .hero-search {
+            width: 100%;
+            max-width: 560px;
+            position: relative;
+            opacity: 0;
+            animation: fadeUp 0.80s ease 0.50s forwards;
+        }
+
+        .search-wrap {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.07);
+            border: 1px solid rgba(200,155,60,0.35);
+            border-radius: 60px;
+            backdrop-filter: blur(14px);
+            -webkit-backdrop-filter: blur(14px);
+            padding: 6px 6px 6px 22px;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            box-shadow: 0 8px 32px rgba(0,0,0,0.45), inset 0 1px 0 rgba(255,255,255,0.06);
+        }
+
+        .search-wrap:focus-within {
+            border-color: rgba(200,155,60,0.70);
+            box-shadow: 0 8px 40px rgba(0,0,0,0.50), 0 0 0 3px rgba(201,137,26,0.15);
+        }
+
+        .search-icon {
+            flex-shrink: 0;
+            color: #f0b942;
+            opacity: 0.80;
+            margin-right: 10px;
+        }
+
+        .search-input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 14px;
+            font-weight: 300;
+            color: #fff;
+            letter-spacing: 0.2px;
+            min-width: 0;
+        }
+
+        .search-input::placeholder {
+            color: rgba(200,175,135,0.55);
+            font-style: italic;
+        }
+
+        /* Tombol X clear */
+        .search-clear {
+            flex-shrink: 0;
+            background: none;
+            border: none;
+            color: rgba(180,150,100,0.50);
+            padding: 0 10px;
+            font-size: 15px;
+            line-height: 1;
+            transition: color 0.15s;
+        }
+        .search-clear:hover { color: rgba(240,185,66,0.80); }
+
+        .search-btn {
+            flex-shrink: 0;
+            background: var(--gold);
+            color: #1a0e03;
+            border: none;
+            border-radius: 50px;
+            padding: 10px 22px;
+            font-family: 'Source Sans 3', sans-serif;
+            font-size: 13px;
+            font-weight: 600;
+            letter-spacing: 0.3px;
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            transition: background 0.18s, transform 0.12s;
+            white-space: nowrap;
+        }
+
+        .search-btn:hover {
+            background: var(--gold-hover);
+            transform: scale(1.03);
+        }
+
+        /* ── DROPDOWN ── */
+        .search-dropdown {
+            position: absolute;
+            top: calc(100% + 10px);
+            left: 0;
+            right: 0;
+            background: rgba(20,11,3,0.97);
+            border: 1px solid rgba(200,155,60,0.20);
+            border-radius: 18px;
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.72);
+            overflow: hidden;
+            z-index: 50;
+            text-align: left;
+        }
+
+        .dropdown-hdr {
+            padding: 10px 18px;
+            border-bottom: 1px solid rgba(200,155,60,0.10);
+            background: rgba(255,255,255,0.02);
+        }
+
+        .dropdown-hdr span {
+            font-size: 9.5px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: uppercase;
+            color: rgba(180,145,80,0.55);
+        }
+
+        .dropdown-loading {
+            padding: 28px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .spinner {
+            width: 22px;
+            height: 22px;
+            border: 2px solid rgba(200,155,60,0.18);
+            border-top-color: #f0b942;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+        }
+
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        .loading-text {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: rgba(180,145,80,0.50);
+        }
+
+        .dropdown-empty {
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+            text-align: center;
+        }
+
+        .empty-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.03);
+            border: 1px solid rgba(200,155,60,0.14);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: rgba(200,155,60,0.38);
+        }
+
+        .dropdown-empty p {
+            font-size: 11px;
+            color: rgba(180,150,100,0.50);
+            line-height: 1.6;
+        }
+        .dropdown-empty strong { color: rgba(245,232,208,0.70); }
+
+        .result-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 13px 18px;
+            border-bottom: 1px solid rgba(200,155,60,0.06);
+            transition: background 0.15s;
+            cursor: pointer;
+            text-decoration: none;
+        }
+
+        .result-item:last-child { border-bottom: none; }
+        .result-item:hover { background: rgba(200,155,60,0.06); }
+
+        .result-left { display: flex; align-items: center; gap: 13px; }
+
+        .result-icon {
+            width: 38px;
+            height: 38px;
+            border-radius: 10px;
+            background: rgba(200,137,26,0.10);
+            border: 1px solid rgba(200,137,26,0.18);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #f0b942;
+            flex-shrink: 0;
+            transition: background 0.15s, color 0.15s;
+        }
+
+        .result-item:hover .result-icon { background: var(--gold); color: #1a0e03; }
+
+        .result-name {
+            font-size: 13.5px;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 2px;
+        }
+
+        .result-meta {
+            font-size: 11px;
+            color: rgba(180,145,80,0.60);
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .result-rating { color: #f0b942; }
+
+        .result-arrow {
+            color: rgba(200,155,60,0.28);
+            transition: transform 0.15s, color 0.15s;
+            flex-shrink: 0;
+        }
+
+        .result-item:hover .result-arrow {
+            transform: translateX(3px);
+            color: rgba(200,155,60,0.60);
+        }
+
+        /* ── ANIMATIONS ── */
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(18px); }
+            to   { opacity: 1; transform: translateY(0); }
         }
 
         /* ═══════════════════════════════════════════════════════
-           2. PANEL "SIAP JELAJAHI"
+        
         ═══════════════════════════════════════════════════════ */
         .panel-wrap {
             padding: 0 28px;
             position: relative;
             z-index: 10;
-            margin-top: -52px;
+            margin-top: 0;
+        }
+
+        .panel-wrap {
+            padding: 0 28px;
+            padding-top: 32px; /* ← tambahkan ini */
+            position: relative;
+            z-index: 10;
+            margin-top: 0;
         }
 
         .panel {
@@ -143,10 +429,7 @@
             margin-bottom: 8px;
         }
 
-        .panel-text h2 em {
-            font-style: italic;
-            color: var(--gold-text);
-        }
+        .panel-text h2 em { font-style: italic; color: var(--gold-text); }
 
         .panel-text p {
             font-size: 12.5px;
@@ -155,12 +438,7 @@
             max-width: 320px;
         }
 
-        .panel-stats {
-            display: flex;
-            align-items: center;
-            gap: 24px;
-        }
-
+        .panel-stats { display: flex; align-items: center; gap: 24px; }
         .pstat { text-align: center; }
 
         .pstat-val {
@@ -181,13 +459,8 @@
             display: block;
         }
 
-        .pstat-div {
-            width: 1px;
-            height: 40px;
-            background: var(--border);
-        }
+        .pstat-div { width: 1px; height: 40px; background: var(--border); }
 
-        /* tombol "Cari Rekomendasimu" – kuning-emas persis di desain */
         .btn-cari {
             display: inline-flex;
             align-items: center;
@@ -204,17 +477,12 @@
             box-shadow: 0 4px 16px rgba(180,120,20,0.32);
         }
 
-        .btn-cari:hover {
-            background: var(--gold-hover);
-            transform: translateY(-2px);
-        }
+        .btn-cari:hover { background: var(--gold-hover); transform: translateY(-2px); }
 
         /* ═══════════════════════════════════════════════════════
            3. SECTION UTILITIES
         ═══════════════════════════════════════════════════════ */
-        .sec {
-            padding: 52px 44px;
-        }
+        .sec { padding: 52px 44px; }
 
         .sec-hdr {
             display: flex;
@@ -238,18 +506,9 @@
             color: var(--panel-bg);
         }
 
-        .sec-title em {
-            font-style: italic;
-            color: var(--gold-text);
-        }
+        .sec-title em { font-style: italic; color: var(--gold-text); }
+        .sec-sub { font-size: 12px; color: var(--muted); margin-top: 5px; }
 
-        .sec-sub {
-            font-size: 12px;
-            color: var(--muted);
-            margin-top: 5px;
-        }
-
-        /* tombol "Lihat Semua Kafe →" */
         .btn-ghost {
             display: inline-flex;
             align-items: center;
@@ -265,19 +524,12 @@
             transition: background .18s, border-color .18s;
         }
 
-        .btn-ghost:hover {
-            background: rgba(200,137,26,0.10);
-            border-color: var(--gold);
-        }
+        .btn-ghost:hover { background: rgba(200,137,26,0.10); border-color: var(--gold); }
 
         /* ═══════════════════════════════════════════════════════
-           4. KAFE CARDS  (grid 3 kolom persis desain)
+           4. KAFE CARDS
         ═══════════════════════════════════════════════════════ */
-        .kafe-grid {
-            display: grid;
-            grid-template-columns: repeat(3, 1fr);
-            gap: 18px;
-        }
+        .kafe-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
 
         .kafe-card {
             background: var(--page-bg);
@@ -287,42 +539,20 @@
             transition: transform .2s, box-shadow .2s;
         }
 
-        .kafe-card:hover {
-            transform: translateY(-4px);
-            box-shadow: 0 16px 42px rgba(0,0,0,0.48);
-        }
+        .kafe-card:hover { transform: translateY(-4px); box-shadow: 0 16px 42px rgba(0,0,0,0.48); }
 
-        /* area foto – pakai placeholder bernuansa coklat seperti desain */
-        .kafe-thumb {
-            height: 174px;
-            position: relative;
-            overflow: hidden;
-        }
+        .kafe-thumb { height: 174px; position: relative; overflow: hidden; }
+        .kafe-thumb-img { width: 100%; height: 100%; object-fit: cover; }
 
-        .kafe-thumb-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-
-        /* jika tidak ada foto, tampilkan gradient placeholder */
         .kafe-thumb-ph {
-            width: 100%;
-            height: 100%;
+            width: 100%; height: 100%;
             background: linear-gradient(135deg, #2c1a08 0%, #4a2e10 50%, #382010 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            display: flex; align-items: center; justify-content: center;
         }
-
-        /* icon kopi kecil di dalam placeholder */
         .kafe-thumb-ph svg { opacity: 0.22; }
 
-        /* chip lokasi pojok kiri atas kartu */
         .kafe-chip {
-            position: absolute;
-            top: 10px;
-            left: 10px;
+            position: absolute; top: 10px; left: 10px;
             background: rgba(15,8,2,0.76);
             backdrop-filter: blur(4px);
             border: 1px solid rgba(140,116,89,0.30);
@@ -333,9 +563,7 @@
             letter-spacing: .3px;
         }
 
-        .kafe-body {
-            padding: 16px 16px 18px;
-        }
+        .kafe-body { padding: 16px 16px 18px; }
 
         .kafe-name {
             font-family: 'Playfair Display', serif;
@@ -346,258 +574,128 @@
         }
 
         .kafe-alamat {
-            font-size: 11.5px;
-            color: var(--muted);
-            line-height: 1.45;
-            margin-bottom: 12px;
-            display: -webkit-box;
-            -webkit-line-clamp: 2;
-            -webkit-box-orient: vertical;
-            overflow: hidden;
+            font-size: 11.5px; color: var(--muted); line-height: 1.45; margin-bottom: 12px;
+            display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden;
         }
 
-        /* baris meta: rating + jam */
-        .kafe-meta {
-            display: flex;
-            gap: 14px;
-            font-size: 11.5px;
-            color: var(--panel-bg);
-            margin-bottom: 5px;
-            flex-wrap: wrap;
-        }
-
+        .kafe-meta { display: flex; gap: 14px; font-size: 11.5px; color: var(--panel-bg); margin-bottom: 5px; flex-wrap: wrap; }
         .kafe-meta-item { display: flex; align-items: center; gap: 4px; }
-
         .star { color: var(--gold); font-size: 12px; }
 
-        /* harga – teks lebih terang */
-        .kafe-price {
-            font-size: 12px;
-            color: var(--panel-bg);
-            margin-bottom: 14px;
-        }
+        .kafe-price { font-size: 12px; color: var(--panel-bg); margin-bottom: 14px; }
+        .kafe-price b { color: var(--panel-bg); font-weight: 600; }
 
-        .kafe-price b {
-            color: var(--panel-bg);
-            font-weight: 600;
-        }
-
-        /* tombol Lihat Detail – mirip desain: border tipis, teks emas */
         .btn-detail {
-            display: block;
-            width: 100%;
-            padding: 9px 0;
-            text-align: center;
-            border: 1px solid rgba(160,110,40,0.32);
-            border-radius: 8px;
-            background: transparent;
-            color: var(--gold-text);
-            font-size: 12.5px;
-            font-weight: 600;
-            letter-spacing: .3px;
+            display: block; width: 100%; padding: 9px 0; text-align: center;
+            border: 1px solid rgba(160,110,40,0.32); border-radius: 8px;
+            background: transparent; color: var(--gold-text);
+            font-size: 12.5px; font-weight: 600; letter-spacing: .3px;
             transition: background .18s, border-color .18s;
         }
-
-        .btn-detail:hover {
-            background: var(--gold);
-            border-color: var(--gold);
-            color: #fff;
-        }
+        .btn-detail:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
 
         /* ═══════════════════════════════════════════════════════
-           5. PANDUAN WAKTU (4 kartu berwarna)
+           5. PANDUAN WAKTU
         ═══════════════════════════════════════════════════════ */
-        .waktu-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 14px;
-        }
+        .waktu-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 14px; }
 
         .wk {
-            border-radius: var(--r-lg);
-            padding: 20px 18px 42px;
-            border: 1px solid var(--border);
-            position: relative;
-            overflow: hidden;
-            transition: transform .18s;
+            border-radius: var(--r-lg); padding: 20px 18px 42px;
+            border: 1px solid var(--border); position: relative; overflow: hidden; transition: transform .18s;
         }
-
         .wk:hover { transform: translateY(-3px); }
 
-        /* Warna masing-masing kartu – diambil dari referensi gambar */
-        .wk-pagi {background: linear-gradient(160deg, #1f1206 0%, #a06a28 100%);}
-        .wk-morning {background: linear-gradient(160deg, #c8891a 0%, #f4e2a1 100%);}
-        .wk-golden {background: linear-gradient(160deg, #5a341c 0%, #d6a84a 100%);}
-        .wk-night {background: linear-gradient(160deg, #0f0f0f 0%, #3b1f0f 100%);}
-        
-        /* kartu aktif (waktu sekarang): border emas */
+        .wk-pagi    { background: linear-gradient(160deg, #1f1206 0%, #a06a28 100%); }
+        .wk-morning { background: linear-gradient(160deg, #c8891a 0%, #f4e2a1 100%); }
+        .wk-golden  { background: linear-gradient(160deg, #5a341c 0%, #d6a84a 100%); }
+        .wk-night   { background: linear-gradient(160deg, #0f0f0f 0%, #3b1f0f 100%); }
+
         .wk-active { border-color: var(--gold); box-shadow: 0 0 0 1px rgba(200,137,26,0.20); }
-        .wk-active .wk-name { color: #fff }
+        .wk-active .wk-name { color: #fff; }
 
-        .wk-time {
-            font-size: 10px;
-            letter-spacing: 1.5px;
-            text-transform: uppercase;
-            color: #fff
-            margin-bottom: 9px;
-        }
-
-        .wk-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 17px;
-            font-weight: 700;
-            margin-bottom: 9px;
-            line-height: 1.2;
-        }
-
-        .wk-desc {
-            font-size: 11.5px;
-            color: #fff
-            line-height: 1.60;
-        }
-
-        /* emoji sudut kanan bawah */
-        .wk-emoji {
-            position: absolute;
-            bottom: 13px;
-            right: 14px;
-            font-size: 24px;
-            opacity: 0.50;
-            line-height: 1;
-        }
+        .wk-time { font-size: 10px; letter-spacing: 1.5px; text-transform: uppercase; color: #fff; margin-bottom: 9px; }
+        .wk-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 9px; line-height: 1.2; }
+        .wk-desc { font-size: 11.5px; color: #fff; line-height: 1.60; }
+        .wk-emoji { position: absolute; bottom: 13px; right: 14px; font-size: 24px; opacity: 0.50; line-height: 1; }
 
         /* ═══════════════════════════════════════════════════════
            6. FOOTER
         ═══════════════════════════════════════════════════════ */
         .site-footer {
-            text-align: center;
-            padding: 20px 24px;
+            text-align: center; padding: 20px 24px;
             border-top: 1px solid var(--border);
-            font-size: 11.5px;
-            color: #fff);
+            font-size: 11.5px; color: #fff;
             background: var(--panel-bg);
         }
 
         /* ═══════════════════════════════════════════════════════
-           7. MODAL – SEMUA KAFE
+           7. MODAL
         ═══════════════════════════════════════════════════════ */
         .modal-bg {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(6,3,1,0.90);
-            backdrop-filter: blur(6px);
-            z-index: 300;
-            align-items: center;
-            justify-content: center;
+            display: none; position: fixed; inset: 0;
+            background: rgba(6,3,1,0.90); backdrop-filter: blur(6px);
+            z-index: 300; align-items: center; justify-content: center;
         }
-
         .modal-bg.open { display: flex; }
 
         .modal {
-            background: var(--panel-bg);
-            border: 1px solid var(--border);
-            border-radius: var(--r-xl);
-            width: min(980px, 96vw);
-            max-height: 86vh;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
+            background: var(--panel-bg); border: 1px solid var(--border);
+            border-radius: var(--r-xl); width: min(980px, 96vw); max-height: 86vh;
+            display: flex; flex-direction: column; overflow: hidden;
             box-shadow: 0 24px 72px rgba(0,0,0,0.65);
         }
 
         .modal-hdr {
-            padding: 20px 26px;
-            border-bottom: 1px solid var(--border);
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
+            padding: 20px 26px; border-bottom: 1px solid var(--border);
+            display: flex; align-items: center; justify-content: space-between;
         }
+        .modal-hdr h3 { font-family: 'Playfair Display', serif; font-size: 19px; }
 
-        .modal-hdr h3 {
-            font-family: 'Playfair Display', serif;
-            font-size: 19px;
-        }
-
-        .modal-close {
-            background: none;
-            border: none;
-            color: var(--muted);
-            font-size: 20px;
-            line-height: 1;
-            transition: color .15s;
-        }
-
+        .modal-close { background: none; border: none; color: var(--muted); font-size: 20px; line-height: 1; transition: color .15s; }
         .modal-close:hover { color: var(--cream); }
 
-        .modal-body {
-            overflow-y: auto;
-            padding: 18px 26px 26px;
-        }
+        .modal-body { overflow-y: auto; padding: 18px 26px 26px; }
 
-        .tbl {
-            width: 100%;
-            border-collapse: collapse;
-            font-size: 12.5px;
-        }
-
+        .tbl { width: 100%; border-collapse: collapse; font-size: 12.5px; }
         .tbl th {
-            text-align: left;
-            padding: 8px 11px;
-            font-size: 10.5px;
-            letter-spacing: .8px;
-            text-transform: uppercase;
-            color: var(--muted);
-            font-weight: 600;
-            border-bottom: 1px solid var(--border);
-            white-space: nowrap;
+            text-align: left; padding: 8px 11px; font-size: 10.5px;
+            letter-spacing: .8px; text-transform: uppercase; color: var(--muted);
+            font-weight: 600; border-bottom: 1px solid var(--border); white-space: nowrap;
         }
-
-        .tbl td {
-            padding: 12px 11px;
-            border-bottom: 1px solid rgba(160,110,40,0.07);
-            vertical-align: middle;
-        }
-
+        .tbl td { padding: 12px 11px; border-bottom: 1px solid rgba(160,110,40,0.07); vertical-align: middle; }
         .tbl tr:last-child td { border-bottom: none; }
         .tbl tr:hover td { background: rgba(200,137,26,0.04); }
 
         .pill-rating {
-            display: inline-block;
-            background: rgba(200,137,26,0.16);
-            color: var(--gold-text);
-            border-radius: 20px;
-            padding: 2px 9px;
-            font-size: 11.5px;
-            font-weight: 600;
+            display: inline-block; background: rgba(200,137,26,0.16);
+            color: var(--gold-text); border-radius: 20px; padding: 2px 9px;
+            font-size: 11.5px; font-weight: 600;
         }
 
         .maps-a { color: var(--gold); font-size: 11.5px; }
         .maps-a:hover { text-decoration: underline; }
 
         .btn-sm {
-            display: inline-block;
-            border: 1px solid var(--border);
-            color: var(--gold-text);
-            background: transparent;
-            padding: 4px 13px;
-            border-radius: 50px;
-            font-size: 11px;
-            font-weight: 600;
-            transition: background .15s;
+            display: inline-block; border: 1px solid var(--border); color: var(--gold-text);
+            background: transparent; padding: 4px 13px; border-radius: 50px;
+            font-size: 11px; font-weight: 600; transition: background .15s;
         }
-
         .btn-sm:hover { background: rgba(200,137,26,0.10); }
 
         /* ─── RESPONSIVE ─────────────────────────────────────── */
         @media (max-width: 860px) {
-            .hero-title { font-size: 36px; }
-            .hero-body  { padding: 0 20px 44px; }
-            .panel-wrap { padding: 0 14px; }
             .panel { grid-template-columns: 1fr; gap: 20px; }
             .sec  { padding: 36px 20px; }
             .kafe-grid  { grid-template-columns: 1fr; }
             .waktu-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 600px) {
+            .hero { min-height: 560px; }
+            .hero-body { padding: 0 16px 80px; }
+            .hero-title { font-size: 32px; }
+            .panel-wrap { padding: 0 14px; }
+            .search-btn span { display: none; }
+            .search-btn { padding: 10px 14px; }
         }
     </style>
 </head>
@@ -608,10 +706,144 @@
 {{-- ══════════════════════════════════════════════════ --}}
 <section class="hero">
     <div class="hero-bg"></div>
+
     <div class="hero-body">
+
         <p class="hero-eyebrow">Temukan Tempat Ngopi Terbaik</p>
-        <h1 class="hero-title">Kopi dan Cerita<br>di Setiap Sudut Kota</h1>
+
+        <h1 class="hero-title">
+            Kopi dan Cerita
+            <span class="line-italic">di Setiap Sudut Kota</span>
+        </h1>
+
         <p class="hero-sub">Di mana moodmu hari ini membawamu?</p>
+
+        {{-- ══════════════════════════════════════════════
+             SEARCH BAR – Alpine.js live search
+             Route: GET /cafe/search-api?q=...
+             Route: GET /cafe/{id}  → user.cafe.detail
+        ══════════════════════════════════════════════ --}}
+        <div class="hero-search"
+             x-data="{
+                query: '',
+                results: [],
+                show: false,
+                loading: false,
+                timer: null,
+                init() {
+                    this.$watch('query', (val) => {
+                        clearTimeout(this.timer);
+                        if (val.trim().length < 2) {
+                            this.results = [];
+                            this.show = false;
+                            return;
+                        }
+                        this.loading = true;
+                        this.show = true;
+                        this.timer = setTimeout(() => this.fetch(val), 400);
+                    });
+                },
+                fetch(val) {
+                    fetch(`/cafe/search-api?q=${encodeURIComponent(val)}`)
+                        .then(r => r.json())
+                        .then(data => { this.results = data; this.loading = false; })
+                        .catch(() => { this.loading = false; });
+                },
+                clear() { this.query = ''; this.results = []; this.show = false; }
+             }"
+             @click.away="show = false"
+             @keydown.escape.window="show = false">
+
+            {{-- Input --}}
+            <div class="search-wrap">
+                <svg class="search-icon" width="16" height="16" viewBox="0 0 20 20" fill="none">
+                    <circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.8"/>
+                    <path d="M14 14l4 4" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>
+                </svg>
+
+                <input
+                    class="search-input"
+                    type="text"
+                    x-model="query"
+                    @focus="if(results.length > 0) show = true"
+                    placeholder="Mau ngopi dimana hari ini?"
+                    autocomplete="off"
+                    aria-label="Cari kafe"
+                >
+
+                <button class="search-clear" x-show="query.length > 0" @click="clear()" x-transition.opacity>✕</button>
+
+                <button class="search-btn" @click="if(query.length >= 2) show = true">
+                    <svg width="13" height="13" viewBox="0 0 20 20" fill="none">
+                        <circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="2"/>
+                        <path d="M14 14l4 4" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                    </svg>
+                    <span>Cari Kafe</span>
+                </button>
+            </div>
+
+            {{-- Dropdown --}}
+            <div class="search-dropdown"
+                 x-show="show && query.length >= 2"
+                 x-transition:enter="transition ease-out duration-180"
+                 x-transition:enter-start="opacity-0 -translate-y-1"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-120"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0">
+
+                {{-- Loading --}}
+                <div class="dropdown-loading" x-show="loading">
+                    <div class="spinner"></div>
+                    <p class="loading-text">Mencari kafe terbaik…</p>
+                </div>
+
+                {{-- Tidak ditemukan --}}
+                <div class="dropdown-empty" x-show="!loading && results.length === 0">
+                    <div class="empty-icon">
+                        <svg width="16" height="16" viewBox="0 0 20 20" fill="none">
+                            <circle cx="9" cy="9" r="6.5" stroke="currentColor" stroke-width="1.6"/>
+                            <path d="M14 14l4 4" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>
+                        </svg>
+                    </div>
+                    <p>Kafe <strong x-text="`&quot;${query}&quot;`"></strong> tidak ditemukan.<br>Coba kata kunci lain.</p>
+                </div>
+
+                {{-- Hasil – link ke route user.cafe.detail → /cafe/{id_kafe} --}}
+                <template x-if="!loading && results.length > 0">
+                    <div>
+                        <div class="dropdown-hdr">
+                            <span x-text="`${results.length} kafe ditemukan`"></span>
+                        </div>
+
+                        <template x-for="item in results" :key="item.id_kafe">
+                            <a :href="`/cafe/${item.id_kafe}`" class="result-item">
+                                <div class="result-left">
+                                    <div class="result-icon">
+                                        <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+                                            <path d="M18 8h1a4 4 0 010 8h-1M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8zM6 1v3M10 1v3M14 1v3"
+                                                  stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                        </svg>
+                                    </div>
+                                    <div>
+                                        <p class="result-name" x-text="item.nama_kafe"></p>
+                                        <div class="result-meta">
+                                            <span x-text="item.jarak ? item.jarak + ' km' : 'Malang'"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <svg class="result-arrow" width="14" height="14" viewBox="0 0 20 20" fill="none">
+                                    <path d="M7 5l5 5-5 5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                                </svg>
+                            </a>
+                        </template>
+                    </div>
+                </template>
+
+            </div>{{-- /dropdown --}}
+
+        </div>{{-- /hero-search --}}
+
     </div>
 </section>
 
@@ -621,14 +853,12 @@
 <div class="panel-wrap">
     <div class="panel">
 
-        {{-- teks kiri --}}
         <div class="panel-text">
             <h2>Siap Jelajahi <em>Kafe Terbaik</em> di Malang?</h2>
             <p>Temukan lebih dari satu kafe untuk dinikmati, dilengkapi foto terkini,
                ulasan terlengkap, filter spot hingga kamu guna kafe favorit kamu.</p>
         </div>
 
-        {{-- statistik tengah --}}
         <div class="panel-stats">
             <div class="pstat">
                 <span class="pstat-val">{{ $totalKafe }}+</span>
@@ -641,7 +871,6 @@
             </div>
         </div>
 
-        {{-- tombol → /cafe/explore --}}
         <a href="{{ route('user.cafe.index') }}" class="btn-cari">
             <svg width="14" height="14" viewBox="0 0 20 20" fill="none" aria-hidden="true">
                 <circle cx="9" cy="9" r="7" stroke="currentColor" stroke-width="2"/>
@@ -662,31 +891,22 @@
             <p class="sec-label">Rekomendasi tempat pilihan yang sudah dikurasi khusus untuk kamu</p>
             <h2 class="sec-title">Pilihan Kafe yang Bikin Betah</h2>
         </div>
-            <a href="{{ route('user.cafe.index') }}" class="btn-ghost">
-                Lihat Semua Kafe &rarr;
-            </a>
+        <a href="{{ route('user.cafe.index') }}" class="btn-ghost">
+            Lihat Semua Kafe &rarr;
+        </a>
     </div>
 
     <div class="kafe-grid">
         @foreach($kafeUnggulan as $kafe)
         <div class="kafe-card">
-
-            {{-- Thumbnail --}}
             <div class="kafe-thumb">
-                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80" 
-                    alt="Cafe"
-                    class="kafe-thumb-img">
-
-                <span class="kafe-chip">
-                    {{ $kafe->jarak ?? '–' }} km &middot; Malang
-                </span>
+                <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80"
+                    alt="Cafe" class="kafe-thumb-img">
+                <span class="kafe-chip">{{ $kafe->jarak ?? '–' }} km &middot; Malang</span>
             </div>
-
-            {{-- Body --}}
             <div class="kafe-body">
                 <h3 class="kafe-name">{{ $kafe->nama_kafe }}</h3>
                 <p class="kafe-alamat">{{ $kafe->alamat }}</p>
-
                 <div class="kafe-meta">
                     <span class="kafe-meta-item">
                         <span class="star">&#9733;</span>
@@ -699,17 +919,12 @@
                         {{ \Carbon\Carbon::parse($kafe->jam_tutup)->format('H:i') }}
                     </span>
                 </div>
-
                 <p class="kafe-price">
                     <b>Rp {{ number_format($kafe->harga_min / 1000, 0) }}k &ndash;
                        Rp {{ number_format($kafe->harga_max / 1000, 0) }}k</b>
                 </p>
-
-                {{-- → halaman detail kafe --}}
-                <a href="{{ route('user.cafe.detail', $kafe->id_kafe) }}"
-                   class="btn-detail">Lihat Detail</a>
+                <a href="{{ route('user.cafe.detail', $kafe->id_kafe) }}" class="btn-detail">Lihat Detail</a>
             </div>
-
         </div>
         @endforeach
     </div>
@@ -721,9 +936,7 @@
 <section class="sec" style="padding-top:0;">
     <div style="margin-bottom:28px;">
         <p class="sec-label">-- Panduan Waktu --</p>
-        <h2 class="sec-title">
-            Kapan Waktu <em>Terbaik</em> Ngopi?
-        </h2>
+        <h2 class="sec-title">Kapan Waktu <em>Terbaik</em> Ngopi?</h2>
         <p class="sec-sub">Setiap saat punya karakter yang berbeda. Pilih yang cocok dengan ritme harimu.</p>
     </div>
 
@@ -784,15 +997,8 @@
             <table class="tbl">
                 <thead>
                     <tr>
-                        <th>#</th>
-                        <th>Nama Kafe</th>
-                        <th>Alamat</th>
-                        <th>Rating</th>
-                        <th>Harga</th>
-                        <th>Jam</th>
-                        <th>Jarak</th>
-                        <th>Maps</th>
-                        <th>Detail</th>
+                        <th>#</th><th>Nama Kafe</th><th>Alamat</th><th>Rating</th>
+                        <th>Harga</th><th>Jam</th><th>Jarak</th><th>Maps</th><th>Detail</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -820,8 +1026,7 @@
                             @endif
                         </td>
                         <td>
-                            <a href="{{ route('user.cafe.detail', $k->id_kafe) }}"
-                               class="btn-sm">Detail &rarr;</a>
+                            <a href="{{ route('user.cafe.detail', $k->id_kafe) }}" class="btn-sm">Detail &rarr;</a>
                         </td>
                     </tr>
                     @endforeach
