@@ -12,8 +12,6 @@ Route::controller(LoginController::class)->group(function () {
     Route::post('/logout', 'logout')->name('logout');
 });
 
-
-
 Route::name('user.')->group(function () {
     Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
@@ -23,20 +21,19 @@ Route::name('user.')->group(function () {
         Route::get('/{id}', 'show')->name('detail');
     });
 
-   
     Route::get('/kafe/rekomendasi', [WelcomeController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
 });
-
-
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::resource('cafe', \App\Http\Controllers\Admin\CafeController::class);
 
-   
+    // Frontend only (dummy)
+    Route::get('/kriteria', function () {
+        return view('admin.kriteria.index');
+    })->name('kriteria.index');
+
     Route::view('/signin', 'admin.auth.signin')->name('signin');
     Route::view('/signup', 'admin.auth.signup')->name('signup');
-
 });
-
