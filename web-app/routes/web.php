@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\CafeController;
 use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\NormalisasiController;
 use App\Http\Controllers\User\WelcomeController;
 
 Route::controller(LoginController::class)->group(function () {
@@ -38,6 +39,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     return view('admin.matriks-keputusan.index');
 })->name('matriks-keputusan.index');
 
+    Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi.index');
+    
     Route::view('/signin', 'admin.auth.signin')->name('signin');
     Route::view('/signup', 'admin.auth.signup')->name('signup');
 });
