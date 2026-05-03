@@ -34,6 +34,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         return view('admin.kriteria.index');
     })->name('kriteria.index');
 
+    Route::get('/matriks-keputusan', function () {
+    return view('admin.matriks-keputusan.index');
+})->name('matriks-keputusan.index');
+
     Route::view('/signin', 'admin.auth.signin')->name('signin');
     Route::view('/signup', 'admin.auth.signup')->name('signup');
 });

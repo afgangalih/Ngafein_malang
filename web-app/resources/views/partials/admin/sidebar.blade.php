@@ -40,7 +40,7 @@
 
     <nav class="flex-1 overflow-y-auto py-8 px-4 space-y-2 no-scrollbar">
 
-
+        {{-- Dashboard --}}
         <a href="{{ route('admin.dashboard') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
                   {{ request()->routeIs('admin.dashboard') ? 'bg-white text-[#B87A3D] shadow-lg shadow-[#B87A3D]/20' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
@@ -56,6 +56,8 @@
             </span>
         </a>
 
+
+        {{-- Data Alternatif --}}
         <a href="{{ route('admin.cafe.index') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
                   {{ request()->routeIs('admin.cafe.*') ? 'bg-white text-[#B87A3D] shadow-lg shadow-[#B87A3D]/20' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
@@ -71,12 +73,16 @@
             </span>
         </a>
 
+           {{-- Data Kriteria --}}
         <a href="/admin/kriteria"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative"
            :class="isActive('/admin/kriteria')
                ? 'bg-white text-[#b87c39] shadow-lg shadow-black/10'
                : 'text-white/60 hover:bg-white/10 hover:text-white'">
-            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center">
+            <template x-if="isActive('/admin/kriteria')">
+                <div class="absolute left-1 top-1/3 bottom-1/3 w-1 bg-[#B87A3D] rounded-full"></div>
+            </template>
+            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/>
                     <polyline points="3.27 6.96 12 12.01 20.73 6.96"/>
@@ -84,17 +90,58 @@
                 </svg>
             </span>
             <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                  class="text-[14px] font-bold tracking-wide whitespace-nowrap">
+                  class="text-[13px] font-bold tracking-wide whitespace-nowrap">
                 Data Kriteria
             </span>
         </a>
+
+        {{-- Matriks Keputusan --}}
+        <a href="{{ route('admin.matriks-keputusan.index') }}"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
+                  {{ request()->routeIs('admin.matriks-keputusan.*') ? 'bg-white text-[#B87A3D] shadow-lg shadow-[#B87A3D]/20' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+            @if(request()->routeIs('admin.matriks-keputusan.*'))
+                <div class="absolute left-1 top-1/3 bottom-1/3 w-1 bg-[#B87A3D] rounded-full"></div>
+            @endif
+            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <i data-lucide="table" class="w-5 h-5 {{ request()->routeIs('admin.matriks-keputusan.*') ? 'stroke-[2.5px]' : '' }}"></i>
+            </span>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-[13px] font-bold tracking-wide whitespace-nowrap">
+                Matriks Keputusan
+            </span>
+        </a>
+
+        {{-- Normalisasi --}}
+        <a href="#"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
+            </span>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-[13px] font-bold tracking-wide">
+                Normalisasi
+            </span>
+        </a>
+
+        {{-- Perhitungan SAW --}}
+        <a href="#"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative text-white/70 hover:bg-white/10 hover:text-white">
+            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <i data-lucide="calculator" class="w-5 h-5"></i>
+            </span>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-[13px] font-bold tracking-wide">
+                Perhitungan SAW
+            </span>
+        </a>
+
     </nav>
 
     {{-- logout section --}}
     <div class="p-4 border-t border-white/10 mt-auto">
         <form action="{{ route('logout') }}" method="POST" class="w-full">
             @csrf
-            <button type="submit" 
+            <button type="submit"
                     class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200 group relative">
                 <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
                     <i data-lucide="log-out" class="w-5 h-5"></i>
@@ -106,7 +153,6 @@
             </button>
         </form>
     </div>
-
 
 </aside>
 
