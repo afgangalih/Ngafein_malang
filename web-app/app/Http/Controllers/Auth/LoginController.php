@@ -26,7 +26,12 @@ class LoginController extends Controller
     {
         $credentials = $request->validate([
             'email' => ['required', 'email'],
-            'password' => ['required', 'string'],
+            'password' => ['required', 'string', 'min:6'],
+        ], [
+            'email.required' => 'Waduh, emailnya jangan lupa diisi ya!',
+            'email.email' => 'Format email kamu sepertinya belum bener nih.',
+            'password.required' => 'Passwordnya wajib diisi, Bos!',
+            'password.min' => 'Password minimal harus 6 karakter ya.',
         ]);
 
         // Throttling: Limit login attempts to 5 per minute

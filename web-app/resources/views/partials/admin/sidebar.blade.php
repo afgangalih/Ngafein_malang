@@ -90,6 +90,23 @@
         </a>
     </nav>
 
+    {{-- logout section --}}
+    <div class="p-4 border-t border-white/10 mt-auto">
+        <form action="{{ route('logout') }}" method="POST" class="w-full">
+            @csrf
+            <button type="submit" 
+                    class="w-full flex items-center gap-4 px-4 py-3.5 rounded-2xl text-white/70 hover:bg-white/10 hover:text-white transition-all duration-200 group relative">
+                <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:translate-x-1">
+                    <i data-lucide="log-out" class="w-5 h-5"></i>
+                </span>
+                <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                      class="text-[13px] font-bold tracking-wide">
+                    Keluar Sistem
+                </span>
+            </button>
+        </form>
+    </div>
+
 
 </aside>
 
