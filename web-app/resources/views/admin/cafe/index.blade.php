@@ -4,109 +4,111 @@
 
 @section('content')
 <div class="flex flex-col h-full space-y-6 pb-12" x-data="cafeSearch()">
-    
-    {{-- page header --}}
+
+    {{-- HEADER --}}
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
-        <div class="flex flex-col">
-            <h1 class="text-[1.5rem] font-black text-gray-900 tracking-tight">Data Alternatif</h1>
-            <p class="text-gray-500 text-[13px] font-medium mt-1">Daftar cafe (alternatif) yang akan diproses dalam perhitungan SPK.</p>
+        <div>
+            <h1 class="text-[1.5rem] font-black text-gray-900">Data Alternatif</h1>
+            <p class="text-gray-500 text-[13px] mt-1">Daftar cafe untuk perhitungan SAW</p>
         </div>
-        
-        <div class="flex items-center gap-3">
-             <button class="flex items-center gap-2 px-5 py-2.5 bg-white border border-gray-200 text-gray-700 rounded-xl hover:bg-gray-50 hover:border-[#B87A3D]/30 transition-all font-bold text-[12px] shadow-sm group">
-               <i data-lucide="upload" class="w-4 h-4 text-gray-400 group-hover:text-[#B87A3D] transition-colors"></i> 
-               Import Dataset
-             </button>
-             <a href="#" class="flex items-center gap-2 px-5 py-2.5 bg-gradient-to-r from-[#B87A3D] to-[#A36A32] text-white rounded-xl hover:-translate-y-0.5 transition-all font-bold text-[12px] shadow-lg shadow-[#B87A3D]/20">
-               <i data-lucide="plus" class="w-4 h-4"></i> 
-               Tambah Cafe
-             </a>
+
+        <div class="flex gap-2">
+            <a href="#"
+               class="px-5 py-2.5 bg-[#F5ECD7] text-[#8B5E34] border border-[#E0C9A6] rounded-xl font-bold text-[12px] hover:bg-[#E8D5B5]">
+                ⬆ Import Dataset
+            </a>
+
+            <a href="#"
+               class="px-5 py-2.5 bg-[#B87A3D] text-white rounded-xl font-bold text-[12px] hover:bg-[#9c6531]">
+                + Tambah Cafe
+            </a>
         </div>
     </div>
 
-    {{-- main table card --}}
-    <div class="bg-white rounded-[2rem] shadow-[0_4px_24px_rgb(0,0,0,0.03)] border border-gray-100 flex flex-col relative overflow-hidden flex-1 min-h-[500px]">
-        
-        <div class="px-8 py-6 border-b border-gray-100 flex flex-col sm:flex-row justify-between items-center gap-4 bg-white/50 backdrop-blur-sm z-10 relative">
-           <div>
-              <h2 class="text-lg font-bold text-gray-900">Database Cafe</h2>
-              <p class="text-[12px] text-gray-500 mt-0.5" x-text="isLoading ? 'Mencari data...' : 'Daftar kafe yang tersedia untuk analisis.'"></p>
-           </div>
-           
-           <div class="relative w-full sm:w-80 group">
-                <div class="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-                    <i data-lucide="search" class="w-4 h-4 text-gray-400 group-focus-within:text-[#B87A3D] transition-colors"></i>
+    {{-- CARD --}}
+    <div class="bg-[#F5ECD7] rounded-[2rem] p-6 shadow-sm">
+
+        {{-- TOP --}}
+        <div class="flex flex-col gap-3 mb-6">
+            <h2 class="text-[1.2rem] font-black text-gray-800">
+                Tabel Alternatif
+            </h2>
+
+            <div class="flex justify-between items-center">
+
+                {{-- SHOW --}}
+                <div class="flex items-center gap-2 text-[13px] font-bold text-gray-700">
+                    <span>Tampilkan</span>
+
+                    <select x-model="perPage" @change="fetchData()"
+                        class="px-3 py-2 rounded-xl border bg-white text-[13px]">
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                    </select>
+
+                    <span>data</span>
                 </div>
-                <input 
-                    type="text" 
+
+                {{-- SEARCH --}}
+                <input type="text"
                     x-model="search"
-                    @input.debounce.400ms="fetchData()"
-                    class="w-full pl-11 pr-4 py-2.5 bg-[#F8F9FA] border border-transparent rounded-xl text-[13px] text-gray-900 placeholder-gray-400 focus:outline-none focus:bg-white focus:border-[#B87A3D]/40 focus:ring-4 focus:ring-[#B87A3D]/10 transition-all font-medium"
-                    placeholder="Cari cafe atau alamat..."
-                >
+                    @input.debounce.300ms="fetchData()"
+                    placeholder="Cari cafe..."
+                    class="px-4 py-2 rounded-xl border bg-white text-[13px]">
             </div>
         </div>
 
-        <div id="table-wrapper" :class="{ 'opacity-50 pointer-events-none': isLoading }" class="transition-opacity duration-200">
-           @include('admin.cafe._table')
+        {{-- TABLE --}}
+        <div id="table-wrapper">
+            @include('admin.cafe._table')
         </div>
 
     </div>
-
 </div>
 
 @push('scripts')
-<script>
-    function cafeSearch() {
-        return {
-            search: '',
-            isLoading: false,
-            fetchData() {
-                this.isLoading = true;
-                const url = new URL(window.location.href);
-                url.searchParams.set('search', this.search);
-                url.searchParams.delete('page');
+<script src="https://unpkg.com/lucide@latest"></script>
 
-                fetch(url, {
-                    headers: { 
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'text/html'
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('table-wrapper').innerHTML = html;
-                    if (typeof lucide !== 'undefined') lucide.createIcons();
-                    this.isLoading = false;
-                })
-                .catch(err => {
-                    console.error(err);
-                    this.isLoading = false;
-                });
-            },
-            fetchPage(url) {
-                this.isLoading = true;
-                fetch(url, {
-                    headers: { 
-                        'X-Requested-With': 'XMLHttpRequest',
-                        'Accept': 'text/html'
-                    }
-                })
-                .then(response => response.text())
-                .then(html => {
-                    document.getElementById('table-wrapper').innerHTML = html;
-                    if (typeof lucide !== 'undefined') lucide.createIcons();
-                    this.isLoading = false;
-                    window.history.pushState({}, '', url);
-                });
-            }
+<script>
+function cafeSearch() {
+    return {
+        search: '',
+        perPage: 10,
+
+        fetchData() {
+            const url = new URL(window.location.href);
+
+            url.searchParams.set('search', this.search);
+            url.searchParams.set('per_page', this.perPage);
+            url.searchParams.delete('page');
+
+            fetch(url, {
+                headers: { 'X-Requested-With': 'XMLHttpRequest' }
+            })
+            .then(res => res.text())
+            .then(html => {
+                document.getElementById('table-wrapper').innerHTML = html;
+
+                // 🔥 render ulang icon setelah AJAX
+                if (window.lucide) {
+                    lucide.createIcons();
+                }
+            });
         }
     }
+}
+
+// 🔥 render icon saat pertama load
+document.addEventListener("DOMContentLoaded", function () {
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+});
 </script>
-<script src="https://unpkg.com/lucide@latest"></script>
-<script>
-    lucide.createIcons();
-</script>
+
+<script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
 @endpush
 
 @endsection
