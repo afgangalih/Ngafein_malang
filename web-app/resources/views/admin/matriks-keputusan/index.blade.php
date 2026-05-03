@@ -38,12 +38,12 @@
                     @php
                         $dummyData = [
                             ['no' => 1, 'nama' => 'KAF Cafe',          'harga' => 37.5, 'rating' => 4.4, 'jarak' => 0.55, 'fasilitas' => 8,  'menu' => 5, 'durasi' => 19],
-                            ['no' => 2, 'nama' => 'Nakoa Cafe Su...',   'harga' => 37.5, 'rating' => 4.8, 'jarak' => 2.1,  'fasilitas' => 8,  'menu' => 4, 'durasi' => 15],
-                            ['no' => 3, 'nama' => 'Nakoa Cafe Pa...',   'harga' => 37.5, 'rating' => 4.9, 'jarak' => 1.4,  'fasilitas' => 9,  'menu' => 4, 'durasi' => 15],
+                            ['no' => 2, 'nama' => 'Nakoa Cafe Suhat',   'harga' => 37.5, 'rating' => 4.8, 'jarak' => 2.1,  'fasilitas' => 8,  'menu' => 4, 'durasi' => 15],
+                            ['no' => 3, 'nama' => 'Nakoa Cafe Panjaitan',   'harga' => 37.5, 'rating' => 4.9, 'jarak' => 1.4,  'fasilitas' => 9,  'menu' => 4, 'durasi' => 15],
                             ['no' => 4, 'nama' => 'Semusim Cafe',       'harga' => 13,   'rating' => 4.5, 'jarak' => 0.6,  'fasilitas' => 10, 'menu' => 5, 'durasi' => 19],
-                            ['no' => 5, 'nama' => 'Roketto Coff...',    'harga' => 37.5, 'rating' => 4.5, 'jarak' => 1.3,  'fasilitas' => 8,  'menu' => 4, 'durasi' => 24],
-                            ['no' => 6, 'nama' => 'Pesenkopi...',       'harga' => 37.5, 'rating' => 4.8, 'jarak' => 0.8,  'fasilitas' => 8,  'menu' => 5, 'durasi' => 12.8],
-                            ['no' => 7, 'nama' => 'Swara Bungu...',     'harga' => 13,   'rating' => 4.1, 'jarak' => 2.7,  'fasilitas' => 8,  'menu' => 5, 'durasi' => 24],
+                            ['no' => 5, 'nama' => 'Roketto Coffee & Co',    'harga' => 37.5, 'rating' => 4.5, 'jarak' => 1.3,  'fasilitas' => 8,  'menu' => 4, 'durasi' => 24],
+                            ['no' => 6, 'nama' => 'Pesenkopi Plus Betek',       'harga' => 37.5, 'rating' => 4.8, 'jarak' => 0.8,  'fasilitas' => 8,  'menu' => 5, 'durasi' => 12.8],
+                            ['no' => 7, 'nama' => 'Swara Bungur',     'harga' => 13,   'rating' => 4.1, 'jarak' => 2.7,  'fasilitas' => 8,  'menu' => 5, 'durasi' => 24],
                         ];
                     @endphp
 
