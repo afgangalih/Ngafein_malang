@@ -6,6 +6,7 @@ use App\Http\Controllers\User\CafeController;
 use App\Http\Controllers\Admin\DashboardController;
 use App\Http\Controllers\Admin\NormalisasiController;
 use App\Http\Controllers\User\WelcomeController;
+use App\Http\Controllers\Admin\PerhitunganSAWController;
 
 Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
@@ -40,6 +41,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 })->name('matriks-keputusan.index');
 
     Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi.index');
+    Route::get('/perhitungan-saw', [PerhitunganSAWController::class, 'index'])
+        ->name('saw.index');
     
     Route::view('/signin', 'admin.auth.signin')->name('signin');
     Route::view('/signup', 'admin.auth.signup')->name('signup');

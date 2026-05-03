@@ -85,13 +85,20 @@
         </a>
 
         {{-- Perhitungan SAW --}}
-        <a href="#"
-           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all text-white/70 hover:bg-white/10 hover:text-white">
-            
-            <i data-lucide="calculator" class="w-5 h-5"></i>
-            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Perhitungan SAW</span>
+        <a href="{{ route('admin.saw.index') }}"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
+                  {{ request()->routeIs('admin.saw.index') ? 'bg-white text-[#B87A3D] shadow-lg shadow-[#B87A3D]/20' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+            @if(request()->routeIs('admin.saw.index'))
+                <div class="absolute left-1 top-1/3 bottom-1/3 w-1 bg-[#B87A3D] rounded-full"></div>
+            @endif
+            <span class="flex-shrink-0 w-6 h-6 flex items-center justify-center transition-transform duration-300 group-hover:scale-110">
+                <i data-lucide="calculator" class="w-5 h-5 {{ request()->routeIs('admin.saw.index') ? 'stroke-[2.5px]' : '' }}"></i>
+            </span>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-[13px] font-bold tracking-wide">
+                Perhitungan SAW
+            </span>
         </a>
-
     </nav>
 
     {{-- LOGOUT --}}
@@ -114,3 +121,8 @@
      @click="$store.sidebar.setMobileOpen(false)"
      class="fixed inset-0 z-[99998] bg-black/60 backdrop-blur-md xl:hidden">
 </div>
+
+<script src="https://unpkg.com/lucide@latest"></script>
+<script>
+    lucide.createIcons();
+</script>
