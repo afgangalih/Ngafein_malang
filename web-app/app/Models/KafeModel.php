@@ -8,6 +8,7 @@ class KafeModel extends Model
 {
     protected $table = 'kafe';
     protected $primaryKey = 'id_kafe';
+    protected $guarded = [];
 
     public function fasilitas()
     {

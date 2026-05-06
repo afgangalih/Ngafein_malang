@@ -29,7 +29,10 @@ Route::name('user.')->group(function () {
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    
+    // cafe
     Route::resource('cafe', \App\Http\Controllers\Admin\CafeController::class);
+    Route::delete('cafe/image/{id}', [\App\Http\Controllers\Admin\CafeController::class, 'deleteImage'])->name('cafe.image.destroy');
 
     // Frontend only (dummy)
     Route::get('/kriteria', function () {
