@@ -3,15 +3,9 @@
 @section('title', 'Data Kriteria — Ngafein Admin')
 
 @section('content')
-<<<<<<< data-kriteria
-<div class="flex flex-col h-full space-y-6 pb-12" x-data="kriteriaPage()">
-=======
-@section('breadcrumb')
-    <x-admin.breadcrumb :links="[['label' => 'Data Kriteria']]" />
-@endsection
 
-<div class="flex flex-col h-full space-y-6 pb-12">
->>>>>>> main
+<div class="flex flex-col space-y-6 pb-12" x-data="kriteriaPage()">
+
 
     {{-- page header --}}
     <div class="flex flex-col">
