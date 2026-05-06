@@ -4,6 +4,7 @@
 
 @section('content')
 
+//container
 <div class="flex flex-col space-y-6 pb-12" x-data="kriteriaPage()">
 
 
