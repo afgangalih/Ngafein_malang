@@ -590,9 +590,9 @@
             border: 1px solid rgba(160,110,40,0.32); border-radius: 8px;
             background: transparent; color: var(--gold-text);
             font-size: 12.5px; font-weight: 600; letter-spacing: .3px;
-            transition: background .18s, border-color .18s;
+            transition: background .18s, border-color .18s, color .18s;
         }
-        .btn-detail:hover { background: var(--gold); border-color: var(--gold); color: #fff; }
+        .btn-detail:hover { background: var(--gold); border-color: var(--gold); color: #FFFFFF !important; }
 
         /* ═══════════════════════════════════════════════════════
            5. PANDUAN WAKTU
@@ -617,6 +617,217 @@
         .wk-name { font-family: 'Playfair Display', serif; font-size: 17px; font-weight: 700; margin-bottom: 9px; line-height: 1.2; }
         .wk-desc { font-size: 11.5px; color: #fff; line-height: 1.60; }
         .wk-emoji { position: absolute; bottom: 13px; right: 14px; font-size: 24px; opacity: 0.50; line-height: 1; }
+
+        /* ═══════════════════════════════════════════════════════
+           6. TIPS NGOPI — section baru
+        ═══════════════════════════════════════════════════════ */
+        .tips-grid {
+            display: grid;
+            grid-template-columns: repeat(5, 1fr);
+            gap: 12px;
+        }
+ 
+        .tip-card {
+            border-radius: var(--r-lg);
+            padding: 18px 15px 20px;
+            position: relative;
+            overflow: hidden;
+            min-height: 190px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform .18s, box-shadow .18s;
+            border: 1px solid var(--border); 
+        }
+ 
+        .tip-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+ 
+        .tip-card:nth-child(1) { background: linear-gradient(160deg, #1E0D02 0%, #3B1F04 50%, #6B3510 100%); }
+        .tip-card:nth-child(2) { background: linear-gradient(160deg, #6B3A02 0%, #C8920A 55%, #F5C842 100%); }
+        .tip-card:nth-child(3) { background: linear-gradient(160deg, #3E2205 0%, #7A4F0D 50%, #C27A20 100%); }
+        .tip-card:nth-child(4) { background: linear-gradient(160deg, #200F00 0%, #4A2800 50%, #9A5510 100%); }
+        .tip-card:nth-child(5) { background: linear-gradient(160deg, #0A0300 0%, #1A0900 50%, #4A2200 100%); }
+ 
+        .tip-cat {
+            font-size: 10px;
+            font-weight: 600;
+            letter-spacing: 1.5px;
+            text-transform: capitalize;
+            color: #fff;
+            margin-bottom: 9px;
+        }
+ 
+        .tip-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 14.5px;
+            font-weight: 700;
+            line-height: 1.25;
+            margin-bottom: 9px;
+            color: #f0e0c0;
+        }
+ 
+        .tip-body {
+            font-size: 11.5px;
+            line-height: 1.62;
+            font-weight: 300;
+            color: #fff;
+        }
+ 
+        .tip-icon {
+            font-size: 22px;
+            text-align: right;
+            margin-top: 12px;
+            opacity: 0.85;
+        }
+
+        /* ═══════════════════════════════════════════════════════
+           7. ANIMATIONS
+        ═══════════════════════════════════════════════════════ */
+ 
+        /* — Scroll Reveal base state — */
+        .reveal {
+            opacity: 0;
+            transform: translateY(28px);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .reveal.reveal-left {
+            transform: translateX(-28px);
+        }
+        .reveal.reveal-right {
+            transform: translateX(28px);
+        }
+        .reveal.reveal-scale {
+            transform: translateY(20px) scale(0.97);
+        }
+        .reveal.is-visible {
+            opacity: 1;
+            transform: translate(0) scale(1);
+        }
+ 
+        /* — Stagger delays for grid children — */
+        .stagger-children > *:nth-child(1) { transition-delay: 0.05s; }
+        .stagger-children > *:nth-child(2) { transition-delay: 0.13s; }
+        .stagger-children > *:nth-child(3) { transition-delay: 0.21s; }
+        .stagger-children > *:nth-child(4) { transition-delay: 0.29s; }
+        .stagger-children > *:nth-child(5) { transition-delay: 0.37s; }
+        .stagger-children > *:nth-child(6) { transition-delay: 0.45s; }
+ 
+        /* — Page load: panel animasi hanya via scroll reveal (class reveal di HTML) — */
+ 
+        /* — Hover: kafe cards shimmer border — */
+        .kafe-card {
+            transition: transform .25s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow .25s cubic-bezier(0.22,1,0.36,1),
+                        border-color .25s ease;
+        }
+        .kafe-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.44);
+            border-color: rgba(201,137,26,0.38);
+        }
+        .kafe-card:hover .btn-detail {
+            border-color: var(--gold);
+            color: var(--gold-text);
+        }
+ 
+        /* — Hover: waktu cards — */
+        .wk {
+            transition: transform .25s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow .25s cubic-bezier(0.22,1,0.36,1),
+                        border-color .25s ease;
+        }
+        .wk:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 14px 36px rgba(0,0,0,0.40);
+            border-color: rgba(201,137,26,0.35);
+        }
+ 
+        /* — Hover: tip cards — */
+        .tip-card {
+            transition: transform .25s cubic-bezier(0.22,1,0.36,1),
+                        box-shadow .25s cubic-bezier(0.22,1,0.36,1),
+                        border-color .25s ease;
+        }
+        .tip-card:hover {
+            transform: translateY(-6px);
+            box-shadow: 0 18px 44px rgba(0,0,0,0.50);
+            border-color: rgba(201,137,26,0.30);
+        }
+        .tip-card:hover .tip-icon {
+            transform: scale(1.15) rotate(-5deg);
+        }
+        .tip-icon {
+            display: inline-block;
+            transition: transform 0.30s cubic-bezier(0.22,1,0.36,1);
+        }
+ 
+        /* — Hover: btn-cari pulse ring — */
+        .btn-cari {
+            position: relative;
+            overflow: visible;
+        }
+        .btn-cari::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            border-radius: 50px;
+            border: 2px solid rgba(201,137,26,0.50);
+            opacity: 0;
+            transform: scale(1);
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .btn-cari:hover::after {
+            opacity: 1;
+            transform: scale(1.08);
+        }
+ 
+        /* — Hover: stat numbers count-up feel — */
+        .pstat-val {
+            transition: color 0.2s ease;
+        }
+        .pstat:hover .pstat-val {
+            color: #f0b942;
+        }
+ 
+        /* — Section header underline draw — */
+        .sec-title {
+            position: relative;
+            display: inline-block;
+        }
+        .sec-title::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: -4px;
+            width: 0;
+            height: 1.5px;
+            background: var(--gold);
+            opacity: 0.45;
+            transition: width 0.50s cubic-bezier(0.22,1,0.36,1);
+        }
+        .is-visible .sec-title::after,
+        .reveal.is-visible ~ * .sec-title::after {
+            width: 100%;
+        }
+        .sec-hdr-wrap.is-visible .sec-title::after,
+        .sec-title.line-drawn::after {
+            width: 100%;
+        }
+ 
+        /* — Gold shimmer on hero eyebrow lines — */
+        .hero-eyebrow::before,
+        .hero-eyebrow::after {
+            transition: width 0.6s cubic-bezier(0.22,1,0.36,1) 0.8s;
+        }
+ 
+        /* — Smooth gold border on search focus — */
+        .search-wrap {
+            transition: border-color 0.25s ease, box-shadow 0.25s ease;
+        }
 
         /* ═══════════════════════════════════════════════════════
            6. FOOTER
@@ -688,6 +899,8 @@
             .sec  { padding: 36px 20px; }
             .kafe-grid  { grid-template-columns: 1fr; }
             .waktu-grid { grid-template-columns: repeat(2, 1fr); }
+            .tips-grid  { grid-template-columns: repeat(2, 1fr); }
+            .tips-grid .tip-card:last-child { grid-column: span 2; }
         }
         @media (max-width: 600px) {
             .hero { min-height: 560px; }
@@ -696,6 +909,8 @@
             .panel-wrap { padding: 0 14px; }
             .search-btn span { display: none; }
             .search-btn { padding: 10px 14px; }
+            .tips-grid { grid-template-columns: 1fr; }
+            .tips-grid .tip-card:last-child { grid-column: span 1; }
         }
     </style>
 </head>
@@ -850,7 +1065,7 @@
 {{-- ══════════════════════════════════════════════════ --}}
 {{--  PANEL EKSPLORASI                                  --}}
 {{-- ══════════════════════════════════════════════════ --}}
-<div class="panel-wrap">
+<div class="panel-wrap reveal">
     <div class="panel">
 
         <div class="panel-text">
@@ -886,7 +1101,7 @@
 {{--  PILIHAN KAFE UNGGULAN                            --}}
 {{-- ══════════════════════════════════════════════════ --}}
 <section class="sec">
-    <div class="sec-hdr">
+    <div class="sec-hdr reveal">
         <div>
             <p class="sec-label">Rekomendasi tempat pilihan yang sudah dikurasi khusus untuk kamu</p>
             <h2 class="sec-title">Pilihan Kafe yang Bikin Betah</h2>
@@ -896,9 +1111,9 @@
         </a>
     </div>
 
-    <div class="kafe-grid">
+    <div class="kafe-grid stagger-children">
         @foreach($kafeUnggulan as $kafe)
-        <div class="kafe-card">
+        <div class="kafe-card reveal reveal-scale">
             <div class="kafe-thumb">
                 <img src="https://images.unsplash.com/photo-1495474472287-4d71bcdd2085?w=900&q=80"
                     alt="Cafe" class="kafe-thumb-img">
@@ -934,7 +1149,7 @@
 {{--  PANDUAN WAKTU NGOPI                              --}}
 {{-- ══════════════════════════════════════════════════ --}}
 <section class="sec" style="padding-top:0;">
-    <div style="margin-bottom:28px;">
+    <div style="margin-bottom:28px;" class="reveal">
         <p class="sec-label">-- Panduan Waktu --</p>
         <h2 class="sec-title">Kapan Waktu <em>Terbaik</em> Ngopi?</h2>
         <p class="sec-sub">Setiap saat punya karakter yang berbeda. Pilih yang cocok dengan ritme harimu.</p>
@@ -962,15 +1177,75 @@
         ];
     @endphp
 
-    <div class="waktu-grid">
+    <div class="waktu-grid stagger-children">
         @foreach($waktu as $w)
-        <div class="wk {{ $w['cls'] }} {{ $w['on'] ? 'wk-active' : '' }}">
+        <div class="wk {{ $w['cls'] }} {{ $w['on'] ? 'wk-active' : '' }} reveal reveal-scale">
             <p class="wk-time">{{ $w['range'] }}</p>
             <h4 class="wk-name">{{ $w['nama'] }}</h4>
             <p class="wk-desc">{{ $w['desc'] }}</p>
             <span class="wk-emoji">{{ $w['emoji'] }}</span>
         </div>
         @endforeach
+    </div>
+</section>
+
+{{-- ══════════════════════════════════════════════════ --}}
+{{--  5 TIPS NGOPI DI MALANG                           --}}
+{{-- ══════════════════════════════════════════════════ --}}
+<section class="sec" style="padding-top:0;">
+    <div style="margin-bottom:28px;" class="reveal">
+        <p class="sec-label">-- Panduan Ngopi --</p>
+        <h2 class="sec-title">5 Tips Ngopi di <em>Malang</em></h2>
+        <p class="sec-sub">Supaya sesi ngopi kamu makin nyaman, efisien, dan berkesan.</p>
+    </div>
+ 
+    <div class="tips-grid stagger-children">
+ 
+        <div class="tip-card reveal reveal-scale">
+            <div>
+                <p class="tip-cat">16:00 – 20:00</p>
+                <h4 class="tip-title">Hindari Jam Ramai</h4>
+                <p class="tip-body">Kafe mulai padat dari sore ke malam. Datang sebelum jam 16.00 atau agak malam biar dapat tempat duduk yang nyaman.</p>
+            </div>
+            <div class="tip-icon">🕐</div>
+        </div>
+ 
+        <div class="tip-card reveal reveal-scale">
+            <div>
+                <p class="tip-cat">WiFi &amp; Colokan</p>
+                <h4 class="tip-title">Pilih Kafe yang Mendukung Kerja</h4>
+                <p class="tip-body">Cari kafe dengan WiFi cepat dan banyak colokan agar lebih nyaman kerja atau nugas berlama-lama.</p>
+            </div>
+            <div class="tip-icon">☕</div>
+        </div>
+ 
+        <div class="tip-card reveal reveal-scale">
+            <div>
+                <p class="tip-cat">Cashless</p>
+                <h4 class="tip-title">Siapkan Pembayaran Non-Tunai</h4>
+                <p class="tip-body">Banyak kafe mengutamakan QRIS atau e-wallet. Siapkan dari awal biar transaksi lebih cepat dan praktis.</p>
+            </div>
+            <div class="tip-icon">💳</div>
+        </div>
+ 
+        <div class="tip-card reveal reveal-scale">
+            <div>
+                <p class="tip-cat">Sebelum 10:00</p>
+                <h4 class="tip-title">Outdoor Terbaik di Pagi Hari</h4>
+                <p class="tip-body">Kafe outdoor paling enak sebelum cuaca terik. Nikmati udara segar dan cahaya pagi sebelum pukul 10.00.</p>
+            </div>
+            <div class="tip-icon">🌄</div>
+        </div>
+ 
+        <div class="tip-card reveal reveal-scale">
+            <div>
+                <p class="tip-cat">Parkir</p>
+                <h4 class="tip-title">Pertimbangkan Akses Parkir</h4>
+                <p class="tip-body">Kafe hits sering kali punya parkir terbatas. Datang lebih awal atau pilih kafe dengan lahan parkir lebih lega.</p>
+            </div>
+            <div class="tip-icon">🏍️</div>
+        </div>
+ 
     </div>
 </section>
 
@@ -1040,7 +1315,71 @@
     document.getElementById('mdlSemua').addEventListener('click', function(e) {
         if (e.target === this) this.classList.remove('open');
     });
+
+/* ─── SCROLL REVEAL ───────────────────────────────────────
+       Hanya trigger saat user scroll — elemen yang sudah ada
+       di viewport saat halaman dibuka TIDAK langsung reveal.
+       Caranya: tunggu setelah halaman selesai load, lalu set
+       rootMargin negatif agar threshold tidak terpenuhi sampai
+       user benar-benar scroll ke elemen tersebut.
+    ──────────────────────────────────────────────────────────── */
+    window.addEventListener('load', function () {
+ 
+        /* Kumpulkan semua elemen reveal + anak stagger */
+        const revealEls = new Set();
+ 
+        document.querySelectorAll('.reveal').forEach(el => revealEls.add(el));
+ 
+        document.querySelectorAll('.stagger-children > *').forEach(child => {
+            if (!child.classList.contains('reveal')) {
+                child.classList.add('reveal');
+            }
+            revealEls.add(child);
+        });
+ 
+        /* Paksa semua tetap tersembunyi dulu (override jika ada yg
+           sudah terlanjur visible karena posisi di atas fold) */
+        revealEls.forEach(el => el.classList.remove('is-visible'));
+ 
+        /* Observer — rootMargin bawah negatif besar agar elemen
+           yang sudah di viewport awal belum terhitung masuk */
+        const io = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('is-visible');
+ 
+                    /* trigger underline draw untuk sec-title di dalam */
+                    const title = entry.target.querySelector('.sec-title');
+                    if (title) title.classList.add('line-drawn');
+ 
+                    io.unobserve(entry.target);
+                }
+            });
+        }, {
+            threshold: 0.10,
+            /* rootMargin negatif di bawah: elemen harus sudah
+               masuk minimal 80px ke dalam viewport baru trigger */
+            rootMargin: '0px 0px -80px 0px'
+        });
+ 
+        revealEls.forEach(el => io.observe(el));
+ 
+        /* sec-title underline observer terpisah */
+        document.querySelectorAll('.sec-title').forEach(title => {
+            const tIo = new IntersectionObserver((entries) => {
+                entries.forEach(e => {
+                    if (e.isIntersecting) {
+                        title.classList.add('line-drawn');
+                        tIo.unobserve(title);
+                    }
+                });
+            }, { threshold: 0.5, rootMargin: '0px 0px -60px 0px' });
+            tIo.observe(title);
+        });
+    });
 </script>
+
+
 
 </body>
 </html>
