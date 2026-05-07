@@ -4,9 +4,9 @@
             <h2 class="text-2xl font-black text-gray-900 tracking-tight mb-2">{{ $title }}</h2>
             <p class="text-sm text-gray-400 font-medium leading-relaxed">{{ $subtitle }}</p>
         </div>
-        <a href="{{ route('user.cafe.index', ['category' => $category]) }}" class="inline-flex items-center gap-2 text-xs font-bold text-[#b87c39] hover:text-[#9a662e] transition-all group shrink-0">
-            LIHAT SEMUA 
-            <i class="fa-solid fa-arrow-right-long group-hover:translate-x-1 transition-transform"></i>
+        <a href="{{ route('user.explore.index', ['category' => $category]) }}" class="inline-flex items-center gap-2 text-xs font-bold text-[#b87c39] hover:text-[#9a662e] transition-all group shrink-0 uppercase tracking-widest">
+            Lihat Semua 
+            <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
         </a>
     </div>
 

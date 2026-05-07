@@ -17,8 +17,8 @@ Route::controller(LoginController::class)->group(function () {
 Route::name('user.')->group(function () {
     Route::get('/', [WelcomeController::class, 'index'])->name('home');
 
-    Route::prefix('cafe')->name('cafe.')->controller(CafeController::class)->group(function () {
-        Route::get('/explore', 'index')->name('index');
+    Route::prefix('explore')->name('explore.')->controller(CafeController::class)->group(function () {
+        Route::get('/', 'index')->name('index');
         Route::get('/search-api', 'searchApi')->name('search.api');
         Route::get('/{id}', 'show')->name('detail');
     });

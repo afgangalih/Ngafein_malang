@@ -4,7 +4,7 @@
 
 @section('content')
 
-//container
+
 <div class="flex flex-col space-y-6 pb-12" x-data="kriteriaPage()">
 
 
@@ -332,26 +332,14 @@
 
                 this.closeModal();
 
-                // TODO: kirim ke backend
-                // fetch('/admin/kriteria/' + this.form.id, {
-                //     method: 'PUT',
-                //     headers: {
-                //         'Content-Type': 'application/json',
-                //         'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content
-                //     },
-                //     body: JSON.stringify({ nama, bobot, tipe: this.form.tipe })
-                // });
+               
             },
 
             hapus(id) {
                 if (!confirm('Yakin ingin menghapus kriteria ini?')) return;
                 this.kriteria = this.kriteria.filter(k => k.id !== id);
 
-                // TODO: kirim ke backend
-                // fetch('/admin/kriteria/' + id, {
-                //     method: 'DELETE',
-                //     headers: { 'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content }
-                // });
+               
             }
         }
     }

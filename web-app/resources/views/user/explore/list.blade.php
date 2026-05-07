@@ -1,15 +1,16 @@
 @extends('layouts.user')
 
 @section('title', $title . ' — Ngafein')
+@section('navbar-dark-text', 'true')
 
 @section('content')
 <div class="bg-[#FBFBFB] min-h-screen pb-20">
     
-    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-10 md:pt-16">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-32 md:pt-40">
         
         {{-- Header Section --}}
         <div class="mb-16">
-            <x-user.ui.user-back-button :href="route('user.cafe.index')" class="mb-6" />
+            <x-user.ui.user-back-button :href="route('user.explore.index')" class="mb-6" />
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-3">{{ $title }}</h1>
@@ -29,7 +30,7 @@
             @if($cafes->isEmpty())
                 <div class="bg-white border border-gray-100 rounded-[3rem] p-20 text-center shadow-sm">
                     <div class="w-20 h-20 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-8 text-gray-200">
-                        <i class="fa-solid fa-mug-hot text-3xl"></i>
+                        <i data-lucide="coffee" class="w-8 h-8 text-gray-300"></i>
                     </div>
                     <h3 class="text-2xl font-black text-gray-900 mb-3">Belum Ada Kafe</h3>
                     <p class="text-gray-400 max-w-sm mx-auto font-medium leading-relaxed">
