@@ -53,7 +53,11 @@
     @stack('styles')
 </head>
 <body class="min-h-screen bg-[#fcfcfc] text-[#2B1A09] font-sans selection:bg-[#B87C39]/20 selection:text-[#2B1A09]"
-      x-data="{ scrolled: false }"
+      x-data="{ 
+        scrolled: false, 
+        lightMode: @yield('navbar-light', 'false'),
+        forceDarkText: @yield('navbar-dark-text', 'false')
+      }"
       @scroll.window="scrolled = (window.pageYOffset > 50)">
 
     <!-- Navbar -->

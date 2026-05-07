@@ -1,10 +1,11 @@
 @extends('layouts.user')
 
 @section('title', $cafe->nama_kafe . ' — Ngafein')
+@section('navbar-dark-text', 'true')
 
 @section('content')
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-6">
+    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-32 md:pt-40">
         <x-user.ui.user-back-button class="mb-6" />
         @php
             $images = $cafe->gambar->pluck('link_gambar')->toArray();
@@ -20,8 +21,8 @@
                 <img src="{{ $allImages[0] }}" alt="Foto {{ $cafe->nama_kafe }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
                 <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all duration-300 flex items-center justify-center">
-                    <span class="bg-white/90 backdrop-blur-sm text-gray-900 font-bold px-6 py-2.5 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-xl">
-                        <i class="fa-solid fa-expand mr-2 text-[#b87c39]"></i> Perbesar Foto
+                    <span class="bg-white/90 backdrop-blur-sm text-gray-900 font-bold px-6 py-2.5 rounded-full opacity-0 group-hover:opacity-100 transition-all shadow-xl flex items-center">
+                        <i data-lucide="maximize-2" class="w-4 h-4 mr-2 text-[#b87c39]"></i> Perbesar Foto
                     </span>
                 </div>
             </div>
@@ -71,7 +72,7 @@
                     <img src="{{ $allImages[3] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90">
                     <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
                         <span class="bg-white/95 backdrop-blur-md text-gray-900 font-bold px-8 py-3 rounded-full shadow-xl flex items-center gap-2">
-                            <i class="fa-solid fa-images text-[#b87c39]"></i>
+                            <i data-lucide="images" class="w-5 h-5 text-[#b87c39]"></i>
                             @if($count > 4)
                                 +{{ $count - 3 }} Foto Lainnya
                             @else
@@ -87,11 +88,11 @@
     <div id="lightbox" class="fixed inset-0 z-50 hidden items-center justify-center"
          style="background: rgba(0,0,0,0.92); backdrop-filter: blur(8px);">
         <button onclick="closeLightbox()" class="absolute top-5 right-5 text-white/70 hover:text-white transition-colors z-10">
-            <i class="fa-solid fa-xmark text-3xl"></i>
+            <i data-lucide="x" class="w-8 h-8"></i>
         </button>
 
         <button onclick="prevImage()" class="absolute left-4 md:left-8 text-white/70 hover:text-white transition-colors z-10">
-            <i class="fa-solid fa-chevron-left text-3xl"></i>
+            <i data-lucide="chevron-left" class="w-10 h-10"></i>
         </button>
 
         <div class="w-full h-full flex flex-col items-center justify-center p-4 md:p-12">
@@ -110,7 +111,7 @@
         </div>
 
         <button onclick="nextImage()" class="absolute right-4 md:right-8 text-white/70 hover:text-white transition-colors z-10">
-            <i class="fa-solid fa-chevron-right text-3xl"></i>
+            <i data-lucide="chevron-right" class="w-10 h-10"></i>
         </button>
     </div>
 
@@ -126,7 +127,7 @@
                         {{ $cafe->menus->first()->nama_menu ?? 'Cafe' }}
                     </span>
                     <span class="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
-                        <i class="fa-solid fa-location-dot text-[#b87c39] text-xs"></i>
+                        <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#b87c39]"></i>
                         Berjarak <strong class="text-gray-900 ml-1">{{ $cafe->jarak }} km</strong>
                     </span>
                 </div>
@@ -189,25 +190,25 @@
                     <div class="flex flex-wrap gap-2.5">
                         @php
                         $fasilitasIcons = [
-                            'wifi'          => 'fa-wifi',
-                            'colokan'       => 'fa-plug',
-                            'parkir'        => 'fa-square-p',
-                            'toilet'        => 'fa-restroom',
-                            'mushola'       => 'fa-mosque',
-                            'indoor'        => 'fa-house-user',
-                            'outdoor'       => 'fa-sun',
-                            'semi_outdoor'  => 'fa-cloud-sun',
-                            'rooftop'       => 'fa-mountain-city',
-                            'smoking_area'  => 'fa-smoking',
-                            'smoking_indoor'=> 'fa-smoking',
-                            'workspace'     => 'fa-laptop-code',
-                            'live_music'    => 'fa-music',
-                            'meeting_room'  => 'fa-users-rectangle',
-                            'private_room'  => 'fa-key',
-                            'vip_room'      => 'fa-crown',
-                            'playground'    => 'fa-child-reaching',
-                            'shisha'        => 'fa-wind',
-                            'garden'        => 'fa-leaf',
+                            'wifi'          => 'wifi',
+                            'colokan'       => 'zap',
+                            'parkir'        => 'car',
+                            'toilet'        => 'bath',
+                            'mushola'       => 'moon',
+                            'indoor'        => 'home',
+                            'outdoor'       => 'sun',
+                            'semi_outdoor'  => 'cloud-sun',
+                            'rooftop'       => 'mountain',
+                            'smoking_area'  => 'cigarette',
+                            'smoking_indoor'=> 'cigarette',
+                            'workspace'     => 'laptop',
+                            'live_music'    => 'music',
+                            'meeting_room'  => 'users',
+                            'private_room'  => 'key',
+                            'vip_room'      => 'crown',
+                            'playground'    => 'smile',
+                            'shisha'        => 'wind',
+                            'garden'        => 'leaf',
                         ];
                         @endphp
                         @foreach($cafe->fasilitas as $fas)
@@ -216,7 +217,7 @@
                             $iconClass = $fasilitasIcons[$key] ?? 'fa-check'; 
                         @endphp
                         <span class="inline-flex items-center gap-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-default capitalize shadow-sm">
-                            <i class="fa-solid {{ $iconClass }} text-[#b87c39]"></i>
+                            <i data-lucide="{{ $iconClass }}" class="w-4 h-4 text-[#b87c39]"></i>
                             {{ str_replace('_', ' ', $fas->nama_fasilitas) }}
                         </span>
                         @endforeach
@@ -231,16 +232,16 @@
                     <div class="flex flex-wrap gap-2.5">
                         @php
                         $menuIcons = [
-                            'kopi'          => 'fa-mug-hot',
-                            'coffee'        => 'fa-mug-hot',
-                            'non-kopi'      => 'fa-glass-water',
-                            'makanan'       => 'fa-utensils',
-                            'food'          => 'fa-utensils',
-                            'snack'         => 'fa-cookie',
-                            'pastry'        => 'fa-croissant',
-                            'teh'           => 'fa-leaf',
-                            'tea'           => 'fa-leaf',
-                            'dessert'       => 'fa-ice-cream',
+                            'kopi'          => 'coffee',
+                            'coffee'        => 'coffee',
+                            'non-kopi'      => 'glass-water',
+                            'makanan'       => 'utensils',
+                            'food'          => 'utensils',
+                            'snack'         => 'cookie',
+                            'pastry'        => 'cake',
+                            'teh'           => 'leaf',
+                            'tea'           => 'leaf',
+                            'dessert'       => 'ice-cream',
                         ];
                         @endphp
                         @foreach($cafe->menus as $menu)
@@ -249,7 +250,7 @@
                             $mIcon = $menuIcons[$mKey] ?? 'fa-bowl-food';
                         @endphp
                         <span class="inline-flex items-center gap-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-pointer capitalize shadow-sm">
-                            <i class="fa-solid {{ $mIcon }} text-[#b87c39]"></i>
+                            <i data-lucide="{{ $mIcon }}" class="w-4 h-4 text-[#b87c39]"></i>
                             {{ str_replace('_', ' ', $menu->nama_menu) }}
                         </span>
                         @endforeach
@@ -287,7 +288,7 @@
                         <a href="{{ $cafe->link_maps }}" target="_blank" rel="noreferrer"
                            class="group w-full flex items-center justify-between bg-[#b87c39] hover:bg-[#9a662e] text-white text-sm font-semibold px-4 py-3 rounded-xl transition-all duration-200 shadow-sm">
                             <span class="flex items-center gap-2">
-                                <i class="fa-solid fa-diamond-turn-right"></i>
+                                <i data-lucide="navigation" class="w-4 h-4"></i>
                                 Buka Petunjuk Arah
                             </span>
                             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 group-hover:translate-x-0.5 transition-transform" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"/></svg>
@@ -333,15 +334,15 @@
                 <p class="text-xs font-bold text-[#b87c39] uppercase tracking-widest mb-1">Mungkin Kamu Suka</p>
                 <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Jelajahi Kafe Lainnya</h2>
             </div>
-            <a href="{{ route('user.home') }}" class="hidden md:flex items-center gap-2 text-sm font-semibold text-[#b87c39] hover:text-[#9a662e] transition-colors group">
+            <a href="{{ route('user.explore.index') }}" class="hidden md:flex items-center gap-2 text-sm font-semibold text-[#b87c39] hover:text-[#9a662e] transition-colors group">
                 Lihat Semua
-                <i class="fa-solid fa-arrow-right group-hover:translate-x-1 transition-transform"></i>
+                <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
             </a>
         </div>
 
         @if($rekomendasi->isEmpty())
             <div class="flex flex-col items-center justify-center py-16 text-gray-400">
-                <i class="fa-solid fa-mug-hot text-5xl mb-4 opacity-30"></i>
+                <i data-lucide="coffee" class="w-12 h-12 mb-4 opacity-30"></i>
                 <p class="font-medium">Belum ada kafe lain tersedia.</p>
             </div>
         @else
@@ -352,8 +353,8 @@
             </div>
 
             <div class="flex justify-center mt-12 md:hidden">
-                <a href="{{ route('user.home') }}" class="flex items-center gap-2 text-sm font-semibold text-[#b87c39] border border-[#b87c39] px-6 py-2.5 rounded-full hover:bg-[#b87c39] hover:text-white transition-all">
-                    Lihat Semua Kafe <i class="fa-solid fa-arrow-right"></i>
+                <a href="{{ route('user.explore.index') }}" class="flex items-center gap-2 text-sm font-semibold text-[#b87c39] border border-[#b87c39] px-6 py-2.5 rounded-full hover:bg-[#b87c39] hover:text-white transition-all">
+                    Lihat Semua Kafe <i data-lucide="arrow-right" class="w-4 h-4"></i>
                 </a>
             </div>
         @endif
