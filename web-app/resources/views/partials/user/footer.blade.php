@@ -1,33 +1,39 @@
-<footer class="bg-[#1e0f05] text-white mt-20">
-    <div class="container mx-auto px-4 md:px-8 pt-14 pb-10">
-        <div class="grid grid-cols-1 md:grid-cols-12 gap-10">
-            <div class="col-span-1 md:col-span-6">
-                <div class="mb-5">
-                    <a href="/" class="text-2xl font-extrabold tracking-tighter">
-                        Ngafein<span class="text-[#b87c39]">.</span>
-                    </a>
+<footer class="bg-[#2B1A09] pt-16 pb-8 mt-10 border-t border-[#B87C39]/20">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        
+        <div class="flex flex-col lg:flex-row justify-between items-center gap-10 border-b border-white/10 pb-10 mb-8">
+            <!-- Bagian Kiri: Brand -->
+            <div class="flex flex-col items-center lg:items-start text-center lg:text-left">
+                <div class="flex items-center gap-4 mb-6">
+                    <div class="bg-white p-3 rounded-2xl shadow-lg shadow-black/20">
+                        <img src="{{ asset('assets/images/logo-ngafein.png') }}" 
+                             alt="Ngafein Logo" 
+                             class="h-10 w-auto object-contain">
+                    </div>
+                    <span class="font-serif font-bold text-2xl text-white tracking-wide">
+                        Ngafe<span class="text-[#B87C39]">in</span>.
+                    </span>
                 </div>
-                <p class="text-[#c8a87a] text-sm leading-relaxed max-w-xs">
-                    Direktori kafe cerdas untuk mahasiswa dan profesional di Malang — temukan tempat terbaik untuk ngopi, nugas, dan kolaborasi.
+                <p class="text-sm text-white/60 max-w-sm leading-relaxed">
+                    Platform kurasi kafe dan tempat nongkrong terbaik di Malang. Temukan sudut paling pas untuk ceritamu hari ini.
                 </p>
             </div>
-            <div class="col-span-1 md:col-span-3">
-                <p class="text-white text-xs font-semibold uppercase tracking-[0.15em] mb-5">Eksplor</p>
-                <ul class="space-y-3 text-sm text-[#c8a87a]">
-                    <li><a href="#" class="hover:text-white transition-colors">Semua Kafe</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Peta Interaktif</a></li>
-                </ul>
-            </div>
-            <div class="col-span-1 md:col-span-3">
-                <p class="text-white text-xs font-semibold uppercase tracking-[0.15em] mb-5">Bantuan</p>
-                <ul class="space-y-3 text-sm text-[#c8a87a]">
-                    <li><a href="#" class="hover:text-white transition-colors">FAQ</a></li>
-                    <li><a href="#" class="hover:text-white transition-colors">Hubungi Kami</a></li>
-                </ul>
+
+            <!-- Bagian Kanan: Link Navigasi -->
+            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-white/80">
+                <a href="#" class="hover:text-[#B87C39] transition-colors">Beranda</a>
+                <a href="{{ route('user.explore.index') }}" class="hover:text-[#B87C39] transition-colors">Eksplorasi</a>
+                <a href="#" class="hover:text-[#B87C39] transition-colors">Rekomendasi</a>
+                <a href="#" class="hover:text-[#B87C39] transition-colors">Tentang Kami</a>
             </div>
         </div>
-        <div class="mt-14 pt-8 border-t border-white/[0.08] text-center text-[#c8a87a] text-xs">
-            <p>© {{ date('Y') }} Ngafein. Hak Cipta Dilindungi.</p>
+
+        <!-- Bottom Bar -->
+        <div class="flex flex-col items-center justify-center text-center">
+            <p class="text-[11px] font-bold text-white/40 tracking-[0.1em] uppercase">
+                © {{ date('Y') }} Sistem Rekomendasi Cafe Kota Malang
+            </p>
         </div>
+        
     </div>
 </footer>
