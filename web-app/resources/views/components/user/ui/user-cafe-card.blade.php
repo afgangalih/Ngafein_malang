@@ -22,7 +22,7 @@
     {{-- Top Badge --}}
     <div class="absolute top-5 left-5">
         <div class="bg-black/40 backdrop-blur-md border border-white/20 text-white px-3 py-1.5 rounded-xl flex items-center gap-2">
-            <i class="fa-solid fa-mug-hot text-[9px]"></i>
+            <i data-lucide="coffee" class="w-3 h-3 text-[#B87C39]"></i>
             <span class="text-[9px] font-bold uppercase tracking-widest">Cafe</span>
         </div>
     </div>
@@ -34,7 +34,7 @@
                 {{ $k->nama_kafe }}
             </h3>
             <div class="flex items-center gap-2 text-white/70 text-[10px] font-medium">
-                <i class="fa-solid fa-location-dot text-[#b87c39]"></i>
+                <i data-lucide="map-pin" class="w-3 h-3 text-[#b87c39]"></i>
                 <span>Malang, Indonesia</span>
             </div>
         </div>
@@ -43,9 +43,9 @@
             <div class="flex flex-col">
                 <div class="flex items-center gap-1 mb-0.5">
                     <span class="text-base font-black text-white">{{ number_format($k->rating, 1) }}</span>
-                    <div class="flex text-[8px] text-amber-400">
+                    <div class="flex gap-0.5">
                         @for($i = 0; $i < 5; $i++)
-                            <i class="fa-solid fa-star {{ $i < round($k->rating) ? '' : 'text-gray-600' }}"></i>
+                            <i data-lucide="star" class="w-2.5 h-2.5 {{ $i < round($k->rating) ? 'fill-amber-400 text-amber-400' : 'text-gray-600' }}"></i>
                         @endfor
                     </div>
                 </div>
@@ -64,7 +64,7 @@
             <div class="flex items-center justify-between group/item">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white border border-white/10">
-                        <i class="fa-solid fa-wifi text-xs"></i>
+                        <i data-lucide="wifi" class="w-4 h-4"></i>
                     </div>
                     <span class="text-xs font-bold text-white tracking-wide">Internet</span>
                 </div>
@@ -76,7 +76,7 @@
             <div class="flex items-center justify-between group/item">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white border border-white/10">
-                        <i class="fa-solid fa-plug text-xs"></i>
+                        <i data-lucide="zap" class="w-4 h-4"></i>
                     </div>
                     <span class="text-xs font-bold text-white tracking-wide">Outlets</span>
                 </div>
@@ -88,7 +88,7 @@
             <div class="flex items-center justify-between group/item">
                 <div class="flex items-center gap-3">
                     <div class="w-8 h-8 rounded-lg bg-white/10 flex items-center justify-center text-white border border-white/10">
-                        <i class="fa-solid fa-couch text-xs"></i>
+                        <i data-lucide="armchair" class="w-4 h-4"></i>
                     </div>
                     <span class="text-xs font-bold text-white tracking-wide">Comfort</span>
                 </div>
