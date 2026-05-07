@@ -6,16 +6,18 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
+use App\Models\KafeModel;
+
 class WelcomeController extends Controller
 {
     public function index(Request $request)
     {
        
-        $totalKafe  = DB::table('kafe')->count();
-        $avgRating  = DB::table('kafe')->avg('rating');
+        $totalKafe  = KafeModel::count();
+        $avgRating  = KafeModel::avg('rating');
 
         
-        $kafeUnggulan = DB::table('kafe')
+        $kafeUnggulan = KafeModel::with('gambar')
             ->orderByDesc('rating')
             ->limit(3)
             ->get();
@@ -25,7 +27,7 @@ class WelcomeController extends Controller
         $rekomendasiWaktu = $this->getWaktuLabel($hour);
 
         
-        $semuaKafe = DB::table('kafe')
+        $semuaKafe = KafeModel::with('gambar')
             ->orderByDesc('rating')
             ->get();
 

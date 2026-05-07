@@ -9,7 +9,7 @@
     $hasAC = $k->fasilitas->contains(fn($f) => str_contains(strtolower($f->nama_fasilitas), 'ac'));
 @endphp
 
-<a href="{{ route('user.cafe.detail', $k->id_kafe) }}"
+<a href="{{ route('user.explore.detail', $k->id_kafe) }}"
    class="group relative block aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl hover:shadow-[#b87c39]/20 transition-all duration-500 bg-gray-900">
     
     {{-- Background Image --}}

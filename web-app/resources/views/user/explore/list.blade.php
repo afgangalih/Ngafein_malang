@@ -9,7 +9,7 @@
         
         {{-- Header Section --}}
         <div class="mb-16">
-            <x-user.ui.user-back-button :href="route('user.cafe.index')" class="mb-6" />
+            <x-user.ui.user-back-button :href="route('user.explore.index')" class="mb-6" />
             <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
                 <div>
                     <h1 class="text-4xl md:text-5xl font-black text-gray-900 tracking-tight mb-3">{{ $title }}</h1>
