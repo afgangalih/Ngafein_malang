@@ -48,7 +48,7 @@
             <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Dashboard</span>
         </a>
 
-        {{-- 🔥 Data Kriteria (DIPINDAH KE ATAS) --}}
+        {{-- Data Kriteria (DIPINDAH KE ATAS) --}}
         <a href="{{ route('admin.kriteria.index') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
            {{ request()->routeIs('admin.kriteria.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
@@ -57,7 +57,7 @@
             <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Data Kriteria</span>
         </a>
 
-        {{-- 🔥 Data Alternatif --}}
+        {{-- Data Alternatif --}}
         <a href="{{ route('admin.cafe.index') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
            {{ request()->routeIs('admin.cafe.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
@@ -66,39 +66,13 @@
             <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Data Alternatif</span>
         </a>
 
-        {{-- Matriks Keputusan --}}
-        <a href="{{ route('admin.matriks-keputusan.index') }}"
-           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
-           {{ request()->routeIs('admin.matriks-keputusan.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-            
-            <i data-lucide="table" class="w-5 h-5"></i>
-            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Matriks Keputusan</span>
-        </a>
-
-        {{-- Normalisasi --}}
-        <a href="{{ route('admin.normalisasi.index') }}"
-           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
-           {{ request()->routeIs('admin.normalisasi.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-            
-            <i data-lucide="bar-chart-2" class="w-5 h-5"></i>
-            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Normalisasi</span>
-        </a>
-
-        {{-- Perhitungan SAW --}}
+        {{-- Proses SAW --}}
         <a href="{{ route('admin.saw.index') }}"
-           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all duration-200 group relative
-                  {{ request()->routeIs('admin.saw.index') ? 'bg-white text-[#B87A3D] shadow-lg shadow-[#B87A3D]/20' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+        class="flex items-center gap-4 px-4 py-3.5 rounded-2xl
+        {{ request()->routeIs('admin.saw.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
             
-            @if(request()->routeIs('admin.saw.index'))
-                <div class="absolute left-1 top-1/3 bottom-1/3 w-1 bg-[#B87A3D] rounded-full"></div>
-            @endif
-
             <i data-lucide="calculator" class="w-5 h-5"></i>
-
-            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                  class="text-[13px] font-bold tracking-wide">
-                Perhitungan SAW
-            </span>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered">Proses SAW</span>
         </a>
 
     </nav>

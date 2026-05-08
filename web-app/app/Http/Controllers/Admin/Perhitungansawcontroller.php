@@ -10,26 +10,30 @@ class PerhitunganSAWController extends Controller
 {
     public function index()
     {
-        // Ambil bobot kriteria dari database
+        // ========================
+        // AMBIL BOBOT
+        // ========================
         $bobotRows = DB::table('bobot_kriteria')->get()->keyBy('nama_kriteria');
 
-        // Bobot masing-masing kriteria (fallback ke nilai default jika belum ada di DB)
         $bobot = [
-            'harga'           => $bobotRows->get('harga')?->bobot           ?? 0.25,
-            'rating'          => $bobotRows->get('rating')?->bobot          ?? 0.10,
-            'jarak'           => $bobotRows->get('jarak')?->bobot           ?? 0.20,
-            'fasilitas'       => $bobotRows->get('fasilitas')?->bobot       ?? 0.20,
-            'menu'            => $bobotRows->get('menu')?->bobot            ?? 0.15,
+            'harga'           => $bobotRows->get('harga')?->bobot ?? 0.25,
+            'rating'          => $bobotRows->get('rating')?->bobot ?? 0.10,
+            'jarak'           => $bobotRows->get('jarak')?->bobot ?? 0.20,
+            'fasilitas'       => $bobotRows->get('fasilitas')?->bobot ?? 0.20,
+            'menu'            => $bobotRows->get('menu')?->bobot ?? 0.15,
             'jam_operasional' => $bobotRows->get('jam_operasional')?->bobot ?? 0.10,
         ];
 
-        // Ambil semua kafe beserta relasi
+        // ========================
+        // AMBIL DATA KAFE
+        // ========================
         $kafes = KafeModel::with(['fasilitas', 'menus'])->get();
 
-        // Bangun nilai mentah tiap kafe
-        $nilaiMentah = $kafes->map(function ($kafe) {
+        // ========================
+        // MATRKS (DATA MENTAH)
+        // ========================
+        $matriks = $kafes->map(function ($kafe) {
             return [
-                'id_kafe'   => $kafe->id_kafe,
                 'nama_kafe' => $kafe->nama_kafe,
                 'harga'     => $kafe->harga_min,
                 'rating'    => (float) $kafe->rating,
@@ -40,83 +44,94 @@ class PerhitunganSAWController extends Controller
             ];
         });
 
-        // Hitung nilai max/min untuk normalisasi
+        // ========================
+        // MAX MIN
+        // ========================
         $maxMin = [
-            'harga'     => ['min' => $nilaiMentah->min('harga'),     'max' => $nilaiMentah->max('harga')],
-            'rating'    => ['min' => $nilaiMentah->min('rating'),    'max' => $nilaiMentah->max('rating')],
-            'jarak'     => ['min' => $nilaiMentah->min('jarak'),     'max' => $nilaiMentah->max('jarak')],
-            'fasilitas' => ['min' => $nilaiMentah->min('fasilitas'), 'max' => $nilaiMentah->max('fasilitas')],
-            'menu'      => ['min' => $nilaiMentah->min('menu'),      'max' => $nilaiMentah->max('menu')],
-            'durasi'    => ['min' => $nilaiMentah->min('durasi'),    'max' => $nilaiMentah->max('durasi')],
+            'harga'     => ['min' => $matriks->min('harga'),     'max' => $matriks->max('harga')],
+            'rating'    => ['max' => $matriks->max('rating')],
+            'jarak'     => ['min' => $matriks->min('jarak')],
+            'fasilitas' => ['max' => $matriks->max('fasilitas')],
+            'menu'      => ['max' => $matriks->max('menu')],
+            'durasi'    => ['max' => $matriks->max('durasi')],
         ];
 
-        // Normalisasi tiap nilai
-        $hasil = $nilaiMentah->map(function ($item) use ($maxMin, $bobot) {
+        // ========================
+        // NORMALISASI
+        // ========================
+        $normalisasi = $matriks->map(function ($item) use ($maxMin) {
 
-            // Normalisasi: Cost = min/xi, Benefit = xi/max
-            $r = [
-                'harga'     => $this->normCost($item['harga'],     $maxMin['harga']['min']),
-                'rating'    => $this->normBenefit($item['rating'],  $maxMin['rating']['max']),
-                'jarak'     => $this->normCost($item['jarak'],     $maxMin['jarak']['min']),
+            return [
+                'nama'      => $item['nama_kafe'],
+                'harga'     => $this->normCost($item['harga'], $maxMin['harga']['min']),
+                'rating'    => $this->normBenefit($item['rating'], $maxMin['rating']['max']),
+                'jarak'     => $this->normCost($item['jarak'], $maxMin['jarak']['min']),
                 'fasilitas' => $this->normBenefit($item['fasilitas'], $maxMin['fasilitas']['max']),
-                'menu'      => $this->normBenefit($item['menu'],   $maxMin['menu']['max']),
+                'menu'      => $this->normBenefit($item['menu'], $maxMin['menu']['max']),
                 'durasi'    => $this->normBenefit($item['durasi'], $maxMin['durasi']['max']),
             ];
+        });
 
-            // Skor SAW = Σ (bobot × nilai_normalisasi)
+        // ========================
+        // HASIL SAW
+        // ========================
+        $hasil = $normalisasi->map(function ($item) use ($bobot) {
+
             $skor =
-                ($bobot['harga']           * $r['harga'])     +
-                ($bobot['rating']          * $r['rating'])    +
-                ($bobot['jarak']           * $r['jarak'])     +
-                ($bobot['fasilitas']       * $r['fasilitas']) +
-                ($bobot['menu']            * $r['menu'])      +
-                ($bobot['jam_operasional'] * $r['durasi']);
+                ($bobot['harga']           * $item['harga']) +
+                ($bobot['rating']          * $item['rating']) +
+                ($bobot['jarak']           * $item['jarak']) +
+                ($bobot['fasilitas']       * $item['fasilitas']) +
+                ($bobot['menu']            * $item['menu']) +
+                ($bobot['jam_operasional'] * $item['durasi']);
 
-            // Bangun string perhitungan untuk ditampilkan di tabel
             $perhitungan = sprintf(
-                '(%.2f×%.2f) + (%.2f×%.2f) + (%.2f×%.2f) + (%.2f×%.2f) + (%.2f×%.2f) + (%.2f×%.2f)',
-                $bobot['harga'],           $r['harga'],
-                $bobot['rating'],          $r['rating'],
-                $bobot['jarak'],           $r['jarak'],
-                $bobot['fasilitas'],       $r['fasilitas'],
-                $bobot['menu'],            $r['menu'],
-                $bobot['jam_operasional'], $r['durasi']
+                '(%.2f×%.2f)+(%.2f×%.2f)+(%.2f×%.2f)+(%.2f×%.2f)+(%.2f×%.2f)+(%.2f×%.2f)',
+                $bobot['harga'], $item['harga'],
+                $bobot['rating'], $item['rating'],
+                $bobot['jarak'], $item['jarak'],
+                $bobot['fasilitas'], $item['fasilitas'],
+                $bobot['menu'], $item['menu'],
+                $bobot['jam_operasional'], $item['durasi']
             );
 
             return [
-                'id_kafe'      => $item['id_kafe'],
-                'nama_kafe'    => $item['nama_kafe'],
-                'normalisasi'  => $r,
-                'perhitungan'  => $perhitungan,
-                'skor'         => round($skor, 2),
+                'nama_kafe'   => $item['nama'],
+                'perhitungan' => $perhitungan,
+                'skor'        => round($skor, 2),
             ];
         })->sortByDesc('skor')->values();
 
-        return view('admin.saw.index', compact('hasil', 'bobot'));
+        // ========================
+        // RETURN VIEW
+        // ========================
+        return view('admin.saw.index', compact(
+            'matriks',
+            'normalisasi',
+            'hasil'
+        ));
     }
 
-    // Normalisasi Benefit: xi / max
-    private function normBenefit(float $nilai, float $max): float
+    private function normBenefit($nilai, $max)
     {
-        if ($max == 0) return 0;
-        return round($nilai / $max, 2);
+        return $max == 0 ? 0 : round($nilai / $max, 2);
     }
 
-    // Normalisasi Cost: min / xi
-    private function normCost(float $nilai, float $min): float
+    private function normCost($nilai, $min)
     {
-        if ($nilai == 0) return 0;
-        return round($min / $nilai, 2);
+        return $nilai == 0 ? 0 : round($min / $nilai, 2);
     }
 
-    // Hitung durasi operasional dalam jam
-    private function hitungDurasi(?string $jamBuka, ?string $jamTutup): float
+    private function hitungDurasi($buka, $tutup)
     {
-        if (!$jamBuka || !$jamTutup) return 0;
+        if (!$buka || !$tutup) return 0;
+
         try {
-            $buka  = \Carbon\Carbon::createFromFormat('H:i', $jamBuka);
-            $tutup = \Carbon\Carbon::createFromFormat('H:i', $jamTutup);
-            if ($tutup->lte($buka)) $tutup->addDay();
+            $buka  = \Carbon\Carbon::createFromFormat('H:i', $buka);
+            $tutup = \Carbon\Carbon::createFromFormat('H:i', $tutup);
+
+            if ($tutup <= $buka) $tutup->addDay();
+
             return round($buka->diffInMinutes($tutup) / 60, 1);
         } catch (\Exception $e) {
             return 0;
