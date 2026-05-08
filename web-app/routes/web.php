@@ -4,7 +4,6 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\CafeController;
 use App\Http\Controllers\Admin\DashboardController;
-use App\Http\Controllers\Admin\NormalisasiController;
 use App\Http\Controllers\User\WelcomeController;
 use App\Http\Controllers\Admin\PerhitunganSAWController;
 
@@ -39,11 +38,6 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
         return view('admin.kriteria.index');
     })->name('kriteria.index');
 
-    Route::get('/matriks-keputusan', function () {
-    return view('admin.matriks-keputusan.index');
-})->name('matriks-keputusan.index');
-
-    Route::get('/normalisasi', [NormalisasiController::class, 'index'])->name('normalisasi.index');
     Route::get('/perhitungan-saw', [PerhitunganSAWController::class, 'index'])
         ->name('saw.index');
     
