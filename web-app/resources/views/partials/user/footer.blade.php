@@ -14,24 +14,27 @@
                         Ngafe<span class="text-[#B87C39]">in</span>.
                     </span>
                 </div>
-                <p class="text-sm text-white/60 max-w-sm leading-relaxed">
-                    Platform kurasi kafe dan tempat nongkrong terbaik di Malang. Temukan sudut paling pas untuk ceritamu hari ini.
+                <p class="text-sm text-white/60 max-w-md leading-relaxed">
+                    Ngafein adalah platform kurasi kafe dan tempat nongkrong di Kota Malang. Kami mengumpulkan, menilai, dan merekomendasikan kafe terbaik agar kamu tidak perlu bingung lagi mencari tempat yang pas. Tinggal datang, pesan, dan nikmati.
                 </p>
             </div>
 
             <!-- Bagian Kanan: Link Navigasi -->
-            <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-white/80">
-                <a href="#" class="hover:text-[#B87C39] transition-colors">Beranda</a>
-                <a href="{{ route('user.explore.index') }}" class="hover:text-[#B87C39] transition-colors">Eksplorasi</a>
-                <a href="#" class="hover:text-[#B87C39] transition-colors">Rekomendasi</a>
-                <a href="#" class="hover:text-[#B87C39] transition-colors">Tentang Kami</a>
+            <div class="flex flex-col items-start gap-4">
+                <p class="text-left text-[12px] font-medium text-[#B87C39] tracking-[0.12em] uppercase">Halaman</p>
+                <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-white/80">
+                    <a href="{{ route('user.home') }}"  class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Beranda</a>
+                    <a href="{{ route('user.explore.index') }}"class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Eksplorasi</a>
+                    <a href="{{ route('user.kafe.rekomendasi') }}"  class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Rekomendasi</a>
+                    <a href="{{ route('user.about') }}"class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Tentang Kami</a>
+                </div>
             </div>
         </div>
 
         <!-- Bottom Bar -->
         <div class="flex flex-col items-center justify-center text-center">
             <p class="text-[11px] font-bold text-white/40 tracking-[0.1em] uppercase">
-                © {{ date('Y') }} Sistem Rekomendasi Cafe Kota Malang
+                © {{ date('Y') }} Sistem Rekomendasi Kafe Kota Malang
             </p>
         </div>
         
