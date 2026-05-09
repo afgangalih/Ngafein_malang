@@ -23,6 +23,7 @@ Route::name('user.')->group(function () {
     });
 
     Route::get('/kafe/rekomendasi', [WelcomeController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
+    Route::view('/about', 'user.about_us.about') ->name('about');
 });
 
 Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {

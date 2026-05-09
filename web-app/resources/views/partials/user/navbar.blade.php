@@ -31,7 +31,10 @@
                 Rekomendasi
             </a>
             
-            <a href="#" class="transition-colors hover:text-[#B87C39]">Tentang</a>
+            <a href="{{ route('user.about') }}" 
+            class="transition-colors hover:text-[#B87C39] {{ request()->routeIs('user.about') ? 'text-[#B87C39]' : '' }}">
+                Tentang
+            </a>
         </div>
     </div>
 </nav>
