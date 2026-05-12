@@ -3,10 +3,7 @@
 @section('title', 'Data Kriteria — Ngafein Admin')
 
 @section('content')
-
-
 <div class="flex flex-col space-y-6 pb-12" x-data="kriteriaPage()">
-
 
     {{-- page header --}}
     <div class="flex flex-col">
@@ -34,7 +31,7 @@
                         <th class="py-5 px-8 text-[14px] font-bold text-white text-center">Aksi</th>
                     </tr>
                 </thead>
-                <tbody>
+                <tbody x-init="$nextTick(() => lucide.createIcons())">
                     <template x-for="(item, index) in kriteria" :key="item.id">
                         <tr class="border-b border-[#D4B896] hover:bg-[#DFC9A0] transition-colors"
                             :class="index % 2 === 0 ? 'bg-[#EFE0C2]' : 'bg-[#E8D5B5]'">
@@ -60,18 +57,24 @@
 
                             <td class="py-5 px-8 text-center">
                                 <div class="flex justify-center items-center gap-3">
-                                    {{-- tombol edit --}}
                                     <button
                                         @click="openEdit(item.id, item.nama, item.bobot, item.tipe)"
                                         class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white rounded-lg text-[13px] font-bold transition-all border border-blue-200">
-                                        <i data-lucide="pencil" class="w-4 h-4"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                                        </svg>
                                         Edit
                                     </button>
-                                    {{-- tombol hapus --}}
                                     <button
                                         @click="hapus(item.id)"
                                         class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg text-[13px] font-bold transition-all border border-red-200">
-                                        <i data-lucide="trash-2" class="w-4 h-4"></i>
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                            <polyline points="3 6 5 6 21 6"/>
+                                            <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
+                                            <path d="M10 11v6M14 11v6"/>
+                                            <path d="M9 6V4a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2"/>
+                                        </svg>
                                         Hapus
                                     </button>
                                 </div>
@@ -101,12 +104,8 @@
             <p class="text-[16px] text-gray-600">
                 <span class="font-bold">Total Bobot</span>
                 &nbsp;&nbsp;: <span class="font-bold" x-text="totalBobot().toFixed(2)"></span>
-                <span x-show="totalBobot() < 1" class="text-orange-500 text-[14px] font-semibold ml-2">
-                    (kurang dari 1.00)
-                </span>
-                <span x-show="totalBobot() == 1" class="text-green-600 text-[14px] font-semibold ml-2">
-                    ✓ (sudah pas)
-                </span>
+                <span x-show="totalBobot() < 1" class="text-orange-500 text-[14px] font-semibold ml-2">(kurang dari 1.00)</span>
+                <span x-show="totalBobot() == 1" class="text-green-600 text-[14px] font-semibold ml-2">✓ (sudah pas)</span>
             </p>
         </div>
 
@@ -142,7 +141,10 @@
             <div class="flex items-center justify-between mb-6">
                 <div class="flex items-center gap-3">
                     <div class="w-10 h-10 flex items-center justify-center bg-[#C9A876] rounded-xl">
-                        <i data-lucide="pencil" class="w-5 h-5 text-white"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                            <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                        </svg>
                     </div>
                     <div>
                         <h3 class="text-[18px] font-black text-gray-800">Edit Kriteria</h3>
@@ -151,7 +153,10 @@
                 </div>
                 <button @click="closeModal()"
                         class="w-9 h-9 flex items-center justify-center rounded-xl bg-gray-100 hover:bg-gray-200 transition-all">
-                    <i data-lucide="x" class="w-4 h-4 text-gray-500"></i>
+                    <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 text-gray-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <line x1="18" y1="6" x2="6" y2="18"/>
+                        <line x1="6" y1="6" x2="18" y2="18"/>
+                    </svg>
                 </button>
             </div>
 
@@ -180,8 +185,7 @@
                     <p x-show="errorBobot" x-text="errorBobot"
                        class="text-[12px] text-red-600 bg-red-50 border border-red-200 rounded-lg px-3 py-2 font-semibold"></p>
                     <p class="text-[12px] text-gray-400">
-                        Nilai antara 0 dan 1.
-                        Sisa bobot tersedia:
+                        Nilai antara 0 dan 1. Sisa bobot tersedia:
                         <span class="font-bold text-gray-600" x-text="sisaBobot().toFixed(2)"></span>
                     </p>
                 </div>
@@ -215,7 +219,11 @@
                         type="button"
                         @click="saveEdit()"
                         class="flex-1 flex items-center justify-center gap-2 py-3 bg-gradient-to-r from-[#B87A3D] to-[#A36A32] text-white rounded-xl font-bold text-[14px] hover:-translate-y-0.5 transition-all shadow-lg shadow-[#B87A3D]/20">
-                        <i data-lucide="save" class="w-4 h-4"></i>
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <path d="M19 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11l5 5v11a2 2 0 0 1-2 2z"/>
+                            <polyline points="17 21 17 13 7 13 7 21"/>
+                            <polyline points="7 3 7 8 15 8"/>
+                        </svg>
                         Simpan Perubahan
                     </button>
                     <button
@@ -250,22 +258,19 @@
                 tipe: ''
             },
 
-            
             kriteria: [
                 { id: 1, nama: 'Jarak',     bobot: 0.20, tipe: 'Cost' },
-                { id: 2, nama: 'Harga',     bobot: 0.25, tipe: 'Cost' },
-                { id: 3, nama: 'Fasilitas', bobot: 0.15, tipe: 'Benefit' },
-                { id: 4, nama: 'Rating',    bobot: 0.20, tipe: 'Benefit' },
-                { id: 5, nama: 'Menu',      bobot: 0.10, tipe: 'Benefit' },
-                { id: 6, nama: 'Jam',       bobot: 0.10, tipe: 'Benefit' },
+                { id: 2, nama: 'Harga',     bobot: 0.20, tipe: 'Cost' },
+                { id: 3, nama: 'Fasilitas', bobot: 0.20, tipe: 'Benefit' },
+                { id: 4, nama: 'Rating',    bobot: 0.10, tipe: 'Benefit' },
+                { id: 5, nama: 'Menu',      bobot: 0.15, tipe: 'Benefit' },
+                { id: 6, nama: 'Jam',       bobot: 0.15, tipe: 'Benefit' },
             ],
 
-            // Hitung total bobot semua kriteria
             totalBobot() {
                 return this.kriteria.reduce((sum, k) => sum + parseFloat(k.bobot), 0);
             },
 
-            // Hitung sisa bobot yang tersedia (dikurangi item yang sedang diedit)
             sisaBobot() {
                 const totalTanpaIni = this.kriteria
                     .filter(k => k.id !== this.form.id)
@@ -281,7 +286,6 @@
                 this.errorNama  = '';
                 this.errorBobot = '';
                 this.showModal  = true;
-                this.$nextTick(() => lucide.createIcons());
             },
 
             closeModal() {
@@ -294,23 +298,19 @@
                 const nama  = this.form.nama.trim();
                 const bobot = parseFloat(this.form.bobot);
 
-                // Reset error
                 this.errorNama  = '';
                 this.errorBobot = '';
 
-                // Validasi nama
                 if (!nama) {
                     this.errorNama = 'Nama kriteria tidak boleh kosong.';
                     return;
                 }
 
-                // Validasi bobot range
                 if (isNaN(bobot) || bobot < 0 || bobot > 1) {
                     this.errorBobot = 'Bobot harus berupa angka antara 0 dan 1.';
                     return;
                 }
 
-                // Validasi total bobot tidak melebihi 1
                 const totalTanpaIni = this.kriteria
                     .filter(k => k.id !== this.form.id)
                     .reduce((sum, k) => sum + parseFloat(k.bobot), 0);
@@ -319,11 +319,10 @@
 
                 if (totalBaru > 1.0001) {
                     const sisa = (1 - totalTanpaIni).toFixed(2);
-                    this.errorBobot = `Total bobot akan menjadi ${totalBaru.toFixed(2)}, melebihi 1.00. Bobot maksimal yang bisa diisi: ${sisa}.`;
+                    this.errorBobot = `Total bobot akan menjadi ${totalBaru.toFixed(2)}, melebihi 1.00. Maksimal: ${sisa}.`;
                     return;
                 }
 
-                // Update data di array (reaktif)
                 this.kriteria = this.kriteria.map(k =>
                     k.id === this.form.id
                         ? { ...k, nama: nama, bobot: bobot, tipe: this.form.tipe }
@@ -331,15 +330,11 @@
                 );
 
                 this.closeModal();
-
-               
             },
 
             hapus(id) {
                 if (!confirm('Yakin ingin menghapus kriteria ini?')) return;
                 this.kriteria = this.kriteria.filter(k => k.id !== id);
-
-               
             }
         }
     }
