@@ -36,7 +36,7 @@ class WelcomeController extends Controller
             ->orderByDesc('rating')
             ->get();
 
-        return view('user.welcome', compact(
+        return view('user.landing.index', compact(
             'totalKafe',
             'avgRating',
             'kafeUnggulan',
