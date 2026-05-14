@@ -258,14 +258,7 @@
                 tipe: ''
             },
 
-            kriteria: [
-                { id: 1, nama: 'Jarak',     bobot: 0.20, tipe: 'Cost' },
-                { id: 2, nama: 'Harga',     bobot: 0.20, tipe: 'Cost' },
-                { id: 3, nama: 'Fasilitas', bobot: 0.20, tipe: 'Benefit' },
-                { id: 4, nama: 'Rating',    bobot: 0.10, tipe: 'Benefit' },
-                { id: 5, nama: 'Menu',      bobot: 0.15, tipe: 'Benefit' },
-                { id: 6, nama: 'Jam',       bobot: 0.15, tipe: 'Benefit' },
-            ],
+            kriteria: @json($kriterias),
 
             totalBobot() {
                 return this.kriteria.reduce((sum, k) => sum + parseFloat(k.bobot), 0);
@@ -323,18 +316,59 @@
                     return;
                 }
 
-                this.kriteria = this.kriteria.map(k =>
-                    k.id === this.form.id
-                        ? { ...k, nama: nama, bobot: bobot, tipe: this.form.tipe }
-                        : k
-                );
-
-                this.closeModal();
+                // Simpan ke database via AJAX
+                fetch(`/admin/kriteria/${this.form.id}`, {
+                    method: 'PATCH',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: JSON.stringify({
+                        nama_kriteria: nama,
+                        bobot: bobot,
+                        tipe: this.form.tipe.toLowerCase()
+                    })
+                })
+                .then(res => res.json())
+                .then(data => {
+                    this.kriteria = this.kriteria.map(k =>
+                        k.id === this.form.id
+                            ? { ...k, nama: nama, bobot: bobot, tipe: this.form.tipe }
+                            : k
+                    );
+                    this.closeModal();
+                    // Optional: Tampilkan toast sukses jika ada store toast
+                    if (window.Alpine && Alpine.store('toast')) {
+                        Alpine.store('toast').show('Kriteria berhasil diperbarui', 'success');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Gagal menyimpan perubahan. Silakan coba lagi.');
+                });
             },
 
             hapus(id) {
                 if (!confirm('Yakin ingin menghapus kriteria ini?')) return;
-                this.kriteria = this.kriteria.filter(k => k.id !== id);
+                
+                fetch(`/admin/kriteria/${id}`, {
+                    method: 'DELETE',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    }
+                })
+                .then(() => {
+                    this.kriteria = this.kriteria.filter(k => k.id !== id);
+                    if (window.Alpine && Alpine.store('toast')) {
+                        Alpine.store('toast').show('Kriteria berhasil dihapus', 'success');
+                    }
+                })
+                .catch(err => {
+                    console.error(err);
+                    alert('Gagal menghapus kriteria.');
+                });
             }
         }
     }

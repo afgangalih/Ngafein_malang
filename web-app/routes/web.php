@@ -34,10 +34,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('cafe', \App\Http\Controllers\Admin\CafeController::class);
     Route::delete('cafe/image/{id}', [\App\Http\Controllers\Admin\CafeController::class, 'deleteImage'])->name('cafe.image.destroy');
 
-    // Frontend only (dummy)
-    Route::get('/kriteria', function () {
-        return view('admin.kriteria.index');
-    })->name('kriteria.index');
+    // kriteria
+    Route::resource('kriteria', \App\Http\Controllers\Admin\KriteriaController::class);
 
     Route::get('/perhitungan-saw', [PerhitunganSAWController::class, 'index'])
         ->name('saw.index');
