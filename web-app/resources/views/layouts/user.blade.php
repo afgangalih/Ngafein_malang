@@ -13,46 +13,12 @@
     <!-- Lucide Icons -->
     <script src="https://unpkg.com/lucide@latest"></script>
     
-    <!-- Tailwind CSS -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    fontFamily: {
-                        sans: ['Plus Jakarta Sans', 'sans-serif'],
-                        serif: ['Playfair Display', 'serif'],
-                    },
-                    colors: {
-                        brand: {
-                            DEFAULT: '#b87c39',
-                            dark: '#9a662e',
-                            light: '#c8a87a',
-                            subtle: '#fdf8f3',
-                        }
-                    }
-                }
-            }
-        }
-    </script>
-    
-    <!-- Alpine.js -->
-    <script defer src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-
-    <style>
-        [x-cloak] { display: none !important; }
-        .font-serif { font-family: 'Playfair Display', serif; }
-        .font-sans { font-family: 'Plus Jakarta Sans', sans-serif; }
-        .scrollbar-hide::-webkit-scrollbar { display: none; }
-        .scrollbar-hide { -ms-overflow-style: none; scrollbar-width: none; }
-        
-        /* Smooth Scrolling */
-        html { scroll-behavior: smooth; }
-    </style>
+    <!-- Vite: CSS & JS (Tailwind 4 & Alpine.js) -->
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
     
     @stack('styles')
 </head>
-<body class="min-h-screen bg-[#fcfcfc] text-[#2B1A09] font-sans selection:bg-[#B87C39]/20 selection:text-[#2B1A09]"
+<body class="selection:bg-brand/20 selection:text-[#2B1A09]"
       x-data="{ 
         scrolled: false, 
         lightMode: @yield('navbar-light', 'false'),
@@ -60,18 +26,15 @@
       }"
       @scroll.window="scrolled = (window.pageYOffset > 50)">
 
-    <!-- Navbar -->
     @include('partials.user.navbar')
 
     <main class="min-h-screen">
         @yield('content')
     </main>
 
-    <!-- Footer -->
     @include('partials.user.footer')
 
     <script>
-        // Initialize Lucide Icons
         lucide.createIcons();
     </script>
     @stack('scripts')
