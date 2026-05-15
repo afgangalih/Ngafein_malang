@@ -107,7 +107,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" class="w-3 h-3"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
                         </div>
                         <p class="text-[11px] text-[#5C4D3C] leading-relaxed">
-                            <strong>Dikeluarkan</strong> dari perhitungan algoritma rekomendasi <strong>SAW berikutnya</strong>.
+                            <strong>Dikeluarkan sepenuhnya</strong> dari perhitungan algoritma rekomendasi <strong>SAW</strong>.
                         </p>
                     </div>
                     
@@ -131,7 +131,7 @@
                     <button type="button" 
                             @click="showConfirm = false; toggleBlacklist()" 
                             class="flex-1 py-2.5 px-4 bg-[#B87C39] hover:bg-[#9a662e] text-white font-bold text-xs rounded-xl shadow-md shadow-[#B87C39]/10 transition-all cursor-pointer text-center">
-                        Ya, Kecualikan
+                        Kecualikan Kafe
                     </button>
                 </div>
             </div>
