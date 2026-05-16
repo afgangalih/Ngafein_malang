@@ -31,6 +31,8 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
     // cafe
+    Route::get('cafe/template', [\App\Http\Controllers\Admin\CafeController::class, 'downloadTemplate'])->name('cafe.template');
+    Route::post('cafe/import', [\App\Http\Controllers\Admin\CafeController::class, 'import'])->name('cafe.import');
     Route::resource('cafe', \App\Http\Controllers\Admin\CafeController::class);
     Route::delete('cafe/image/{id}', [\App\Http\Controllers\Admin\CafeController::class, 'deleteImage'])->name('cafe.image.destroy');
 
