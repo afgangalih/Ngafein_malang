@@ -8,4 +8,6 @@ class FasilitasModel extends Model
 {
     protected $table = 'fasilitas';
     protected $primaryKey = 'id_fasilitas';
+    public $incrementing = false;
+    protected $guarded = [];
 }

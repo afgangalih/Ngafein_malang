@@ -8,4 +8,6 @@ class MenuModel extends Model
 {
     protected $table = 'menu';
     protected $primaryKey = 'id_menu';
+    public $incrementing = false;
+    protected $guarded = [];
 }
