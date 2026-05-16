@@ -20,56 +20,55 @@
         </div>
 
         {{-- table --}}
-        <div class="bg-[#EFE0C2] rounded-2xl overflow-hidden border border-[#D4B896]">
-            <table class="w-full text-left border-collapse">
+        <div class="rounded-2xl overflow-hidden border border-[#D4B896]">
+            <table class="w-full text-left" style="border-collapse:collapse;table-layout:fixed">
                 <thead>
-                    <tr class="bg-[#C9A876]">
-                        <th class="py-5 px-8 text-[14px] font-bold text-white border-r border-[#B89060] text-center w-20">No</th>
-                        <th class="py-5 px-8 text-[14px] font-bold text-white border-r border-[#B89060]">Nama Kriteria</th>
-                        <th class="py-5 px-8 text-[14px] font-bold text-white border-r border-[#B89060] text-center">Bobot</th>
-                        <th class="py-5 px-8 text-[14px] font-bold text-white border-r border-[#B89060] text-center">Tipe</th>
-                        <th class="py-5 px-8 text-[14px] font-bold text-white text-center">Aksi</th>
+                    <tr>
+                        <th class="text-center" style="width:56px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">No</th>
+                        <th style="width:220px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">Nama Kriteria</th>
+                        <th class="text-center" style="width:100px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">Bobot</th>
+                        <th class="text-center" style="width:110px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">Tipe</th>
+                        <th class="text-center" style="width:180px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">Aksi</th>
                     </tr>
                 </thead>
                 <tbody x-init="$nextTick(() => lucide.createIcons())">
                     <template x-for="(item, index) in kriteria" :key="item.id">
-                        <tr class="border-b border-[#D4B896] hover:bg-[#DFC9A0] transition-colors"
-                            :class="index % 2 === 0 ? 'bg-[#EFE0C2]' : 'bg-[#E8D5B5]'">
+                        <tr :style="index % 2 === 0 ? 'background:#F5ECD7' : 'background:#EFE0C2'"
+                            style="border-bottom:1px solid #D4B896;transition:background .15s"
+                            @mouseenter="$el.style.background='#DFC9A0'"
+                            @mouseleave="$el.style.background = index % 2 === 0 ? '#F5ECD7' : '#EFE0C2'">
 
-                            <td class="py-5 px-8 text-[15px] font-bold text-gray-500 border-r border-[#D4B896] text-center"
-                                x-text="index + 1">
-                            </td>
+                            <td class="text-center"
+                                style="padding:10px 16px;font-size:13px;font-weight:700;color:#7a6248;border-bottom:1px solid #D4B896"
+                                x-text="index + 1"></td>
 
-                            <td class="py-5 px-8 text-[15px] font-bold text-gray-800 border-r border-[#D4B896]"
-                                x-text="item.nama">
-                            </td>
+                            <td style="padding:10px 16px;font-size:13px;font-weight:700;color:#3d2f1f;border-bottom:1px solid #D4B896"
+                                x-text="item.nama"></td>
 
-                            <td class="py-5 px-8 text-[15px] text-gray-700 border-r border-[#D4B896] text-center font-semibold"
-                                x-text="parseFloat(item.bobot).toFixed(2)">
-                            </td>
+                            <td class="text-center"
+                                style="padding:10px 16px;font-size:13px;font-weight:700;color:#3d2f1f;border-bottom:1px solid #D4B896"
+                                x-text="parseFloat(item.bobot).toFixed(2)"></td>
 
-                            <td class="py-5 px-8 border-r border-[#D4B896] text-center">
-                                <span class="px-4 py-1.5 rounded-lg text-[13px] font-bold"
+                            <td class="text-center" style="padding:10px 16px;border-bottom:1px solid #D4B896">
+                                <span class="px-3 py-1 rounded-lg text-[12px] font-bold"
                                     :class="item.tipe === 'Benefit' ? 'bg-green-100 text-green-700' : 'bg-red-100 text-red-600'"
                                     x-text="item.tipe">
                                 </span>
                             </td>
 
-                            <td class="py-5 px-8 text-center">
-                                <div class="flex justify-center items-center gap-3">
-                                    <button
-                                        @click="openEdit(item.id, item.nama, item.bobot, item.tipe)"
-                                        class="flex items-center gap-2 px-4 py-2 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white rounded-lg text-[13px] font-bold transition-all border border-blue-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <td class="text-center" style="padding:10px 16px;border-bottom:1px solid #D4B896">
+                                <div class="flex justify-center items-center gap-2">
+                                    <button @click="openEdit(item.id, item.nama, item.bobot, item.tipe)"
+                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white rounded-lg text-[12px] font-bold transition-all border border-blue-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                         </svg>
                                         Edit
                                     </button>
-                                    <button
-                                        @click="hapus(item.id)"
-                                        class="flex items-center gap-2 px-4 py-2 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg text-[13px] font-bold transition-all border border-red-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <button @click="hapus(item.id)"
+                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg text-[12px] font-bold transition-all border border-red-200">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <polyline points="3 6 5 6 21 6"/>
                                             <path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/>
                                             <path d="M10 11v6M14 11v6"/>
