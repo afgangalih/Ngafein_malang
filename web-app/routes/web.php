@@ -44,6 +44,11 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
 
     Route::get('/perhitungan-saw/export-pdf', [PerhitunganSAWController::class, 'exportPdf'])
         ->name('saw.export');
+
+    // laporan
+    Route::get('/laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
+    Route::get('/laporan/print', [\App\Http\Controllers\Admin\LaporanController::class, 'printPdf'])->name('laporan.print');
+    Route::get('/laporan/excel', [\App\Http\Controllers\Admin\LaporanController::class, 'exportExcel'])->name('laporan.excel');
     
     Route::view('/signin', 'admin.auth.signin')->name('signin');
     Route::view('/signup', 'admin.auth.signup')->name('signup');

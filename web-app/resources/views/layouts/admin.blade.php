@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+    @stack('styles')
     <style>
         body { opacity: 0; }
         body.ready { opacity: 1; }
