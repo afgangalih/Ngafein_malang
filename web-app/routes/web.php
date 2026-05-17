@@ -42,6 +42,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::get('/perhitungan-saw', [PerhitunganSAWController::class, 'index'])
         ->name('saw.index');
 
+    Route::get('/perhitungan-saw/export-pdf', [PerhitunganSAWController::class, 'exportPdf'])
+        ->name('saw.export');
+
     // laporan
     Route::get('/laporan', [\App\Http\Controllers\Admin\LaporanController::class, 'index'])->name('laporan.index');
     Route::get('/laporan/print', [\App\Http\Controllers\Admin\LaporanController::class, 'printPdf'])->name('laporan.print');
