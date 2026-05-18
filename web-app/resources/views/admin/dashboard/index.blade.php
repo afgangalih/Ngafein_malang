@@ -5,18 +5,15 @@
 @section('content')
 <div class="space-y-6 pb-12">
 
-    {{-- stats cards --}}
     <div class="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-4 gap-6">
-        <x-admin.dashboard.stat-card icon="coffee"     title="Total Alternatif Kafe" :value="$stats['total_kafe']" />
-        <x-admin.dashboard.stat-card icon="layers"     title="Total Kriteria"        :value="$stats['total_kriteria']" />
-        <x-admin.dashboard.stat-card icon="calculator" title="Jumlah Perhitungan"    :value="$stats['total_perhitungan']" />
-        <x-admin.dashboard.stat-card icon="award"      title="Rekomendasi"           :value="$stats['total_rekomendasi']" highlight />
+        @include('admin.dashboard.components.stat-card', ['icon' => 'coffee', 'title' => 'Total Alternatif Kafe', 'value' => $stats['total_kafe']])
+        @include('admin.dashboard.components.stat-card', ['icon' => 'layers', 'title' => 'Total Kriteria', 'value' => $stats['total_kriteria']])
+        @include('admin.dashboard.components.stat-card', ['icon' => 'calculator', 'title' => 'Jumlah Perhitungan', 'value' => $stats['total_perhitungan']])
+        @include('admin.dashboard.components.stat-card', ['icon' => 'award', 'title' => 'Rekomendasi', 'value' => $stats['total_rekomendasi'], 'highlight' => true])
     </div>
 
-    {{-- recommendation and ranking --}}
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-        {{-- banner SAW --}}
         <div class="xl:col-span-2 bg-gradient-to-br from-[#FEF6E7] to-[#FFFBF5] rounded-[2rem] p-8 md:p-10 shadow-sm flex flex-col md:flex-row items-center justify-between relative overflow-hidden border border-[#F3E8D5]/60 group">
             <div class="absolute right-[-5%] top-[-10%] w-64 h-64 bg-[#B87A3D]/5 rounded-full blur-3xl pointer-events-none group-hover:scale-110 transition-transform duration-700"></div>
             <div class="w-full md:w-2/3 pr-0 md:pr-6 z-10 relative">
@@ -41,7 +38,6 @@
             </div>
         </div>
 
-        {{-- top 4 ranking --}}
         <div class="bg-[#FEF6E7] rounded-[2rem] p-8 shadow-sm border border-[#F3E8D5] flex flex-col relative overflow-hidden">
             <div class="absolute top-0 right-0 w-32 h-32 bg-[#B87A3D]/5 rounded-bl-full pointer-events-none"></div>
             <div class="flex items-center justify-between mb-6 relative z-10">
@@ -53,11 +49,11 @@
             </div>
             <div class="space-y-3 flex-1 relative z-10">
                 @forelse($topCafes as $index => $cafe)
-                    <x-admin.dashboard.ranking-item
-                        :rank="$index + 1"
-                        :name="$cafe->nama_kafe"
-                        :score="$cafe->skor"
-                    />
+                    @include('admin.dashboard.components.ranking-item', [
+                        'rank' => $index + 1,
+                        'name' => $cafe->nama_kafe,
+                        'score' => $cafe->skor
+                    ])
                 @empty
                     <div class="flex flex-col items-center justify-center py-10 text-center opacity-50">
                         <div class="w-12 h-12 rounded-full bg-white flex items-center justify-center mb-3">
@@ -70,10 +66,8 @@
         </div>
     </div>
 
-    {{-- comparison chart and quick actions --}}
     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
 
-        {{-- bar chart nilai preferensi --}}
         <div class="xl:col-span-2 bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col relative">
             <div class="flex items-center justify-between mb-8">
                 <div>
@@ -111,12 +105,12 @@
                     @endphp
                     <div class="{{ $index >= 4 ? 'chart-extra hidden' : '' }}"
                          @if($index >= 4) style="opacity:0; transform: translateY(8px);" @endif>
-                        <x-admin.dashboard.score-bar
-                            :name="$label"
-                            :score="$item->skor"
-                            :color="$color"
-                            :highlight="$index === 0"
-                        />
+                        @include('admin.dashboard.components.score-bar', [
+                            'name' => $label,
+                            'score' => $item->skor,
+                            'color' => $color,
+                            'highlight' => $index === 0
+                        ])
                     </div>
                 @empty
                     <div class="flex flex-col items-center justify-center py-10 text-center opacity-50">
@@ -129,7 +123,6 @@
             </div>
         </div>
 
-        {{-- aksi cepat --}}
         <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col">
             <h3 class="text-lg font-bold text-gray-900 mb-6 flex items-center gap-2">
                 <i data-lucide="zap" class="text-[#B87A3D] w-5 h-5"></i>
@@ -137,7 +130,6 @@
             </h3>
             <div class="flex flex-col gap-3">
 
-                {{-- Hitung SAW --}}
                 <a href="{{ route('admin.saw.index') }}"
                    class="flex items-center gap-4 p-4 rounded-2xl bg-[#FEF6E7] border border-[#F3E8D5] hover:bg-[#B87A3D] group transition-all duration-300">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#B87A3D] group-hover:bg-white/20 group-hover:text-white transition-colors">
@@ -149,7 +141,6 @@
                     </div>
                 </a>
 
-                {{-- Tambah Kafe --}}
                 <a href="{{ route('admin.cafe.index') }}?action=create"
                    class="flex items-center gap-4 p-4 rounded-2xl bg-[#FEF6E7] border border-[#F3E8D5] hover:bg-[#B87A3D] group transition-all duration-300">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#B87A3D] group-hover:bg-white/20 group-hover:text-white transition-colors">
@@ -161,8 +152,7 @@
                     </div>
                 </a>
 
-                {{-- Ekspor Laporan --}}
-                <a href="{{ route('admin.saw.export') }}"
+                <a href="{{ route('admin.laporan.print') }}" target="_blank"
                    class="flex items-center gap-4 p-4 rounded-2xl bg-[#FEF6E7] border border-[#F3E8D5] hover:bg-[#B87A3D] group transition-all duration-300">
                     <div class="w-10 h-10 rounded-xl bg-white flex items-center justify-center text-[#B87A3D] group-hover:bg-white/20 group-hover:text-white transition-colors">
                         <i data-lucide="printer" class="w-5 h-5"></i>
@@ -177,9 +167,6 @@
         </div>
     </div>
 
-    {{-- ============================================================
-         DISTRIBUSI BOBOT KRITERIA
-    ============================================================ --}}
     <div class="bg-white rounded-[2rem] p-8 shadow-sm border border-gray-100 flex flex-col relative overflow-hidden">
         <div class="flex items-center justify-between mb-8">
             <div>
@@ -197,7 +184,6 @@
         </div>
 
         @if($kriterias->isEmpty() || $totalBobot == 0)
-            {{-- empty state --}}
             <div class="flex flex-col items-center justify-center py-12 text-center bg-gray-50/50 rounded-[1.5rem] border border-dashed border-gray-200">
                 <div class="w-14 h-14 bg-white rounded-full shadow-sm flex items-center justify-center mb-4">
                     <i data-lucide="settings-2" class="text-gray-300 w-7 h-7"></i>
@@ -234,11 +220,9 @@
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-10 items-center">
 
-                {{-- Donut Chart --}}
                 <div class="flex flex-col items-center justify-center">
                     <div class="relative" style="width:224px; height:224px;">
                         <canvas id="donutKriteria" width="224" height="224"></canvas>
-                        {{-- label tengah --}}
                         <div class="absolute inset-0 flex flex-col items-center justify-center pointer-events-none">
                             <span id="donut-center-value"
                                   class="font-black text-gray-900 transition-all duration-200"
@@ -252,7 +236,6 @@
                         </div>
                     </div>
 
-                    {{-- badge total bobot --}}
                     <div class="mt-5 flex items-center gap-2 rounded-2xl px-5 py-2.5 border
                         {{ $isBobotValid ? 'bg-green-50 border-green-200' : 'bg-red-50 border-red-200' }}">
                         <span class="text-[11px] font-semibold {{ $isBobotValid ? 'text-green-600' : 'text-red-500' }}">
@@ -275,7 +258,6 @@
                     @endif
                 </div>
 
-                {{-- Legend + Progress Bars --}}
                 <div class="flex flex-col gap-3">
                     @foreach($kriterias as $i => $kriteria)
                         @php
@@ -311,7 +293,6 @@
                                     </span>
                                 </div>
                             </div>
-                            {{-- progress bar --}}
                             <div class="h-2 bg-gray-100 rounded-full overflow-hidden">
                                 <div class="h-full rounded-full transition-all duration-700"
                                      id="lbar-{{ $i }}"
@@ -323,14 +304,12 @@
                 </div>
             </div>
 
-            {{-- pass data ke JS --}}
             <script>
                 window._kriteriaData = @json($kriteriaJs);
             </script>
         @endif
     </div>
 
-    {{-- informasi sistem --}}
     <div class="bg-[#FEF6E7] rounded-[2rem] p-8 shadow-sm border border-[#F3E8D5] relative overflow-hidden group">
         <div class="absolute top-0 right-0 w-32 h-32 bg-white/40 rounded-bl-full pointer-events-none"></div>
         <div class="relative z-10 flex flex-col md:flex-row items-center gap-6">

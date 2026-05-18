@@ -1,6 +1,7 @@
-@props(['name', 'score', 'maxScore' => 1, 'color' => 'bg-[#B87A3D]', 'highlight' => false])
-
 @php
+    $maxScore = $maxScore ?? 1;
+    $color = $color ?? 'bg-[#B87A3D]';
+    $highlight = $highlight ?? false;
     $percentage = ($score / $maxScore) * 100;
 @endphp
 

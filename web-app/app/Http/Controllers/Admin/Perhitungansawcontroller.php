@@ -259,27 +259,8 @@ class PerhitunganSAWController extends Controller
     
     public function exportPdf()
     {
-        $hasilRanked = $this->hitungSAW();
-
-        $pdf = Pdf::loadView('admin.saw.export-pdf', [
-            'hasilRanked' => $hasilRanked,
-
-            'tanggal' => \Carbon\Carbon::now()
-                ->locale('id')
-                ->translatedFormat('d F Y'),
-
-            'waktu' => now()->format('H:i'),
-        ])
-        ->setPaper('a4', 'portrait')
-        ->setOptions([
-            'defaultFont' => 'sans-serif',
-            'isHtml5ParserEnabled' => true,
-            'isRemoteEnabled' => false,
-        ]);
-
-        $filename = 'ranking-kafe-saw.pdf';
-
-        return $pdf->download($filename);
+        // Alihkan (redirect) rute cetak lama ke rute cetak laporan PDF native yang lebih ringan dan elegan.
+        return redirect()->route('admin.laporan.print');
     }
 
     /*
