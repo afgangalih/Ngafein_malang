@@ -21,18 +21,13 @@
     }">
 
     {{-- HEADER --}}
-    <div class="flex items-center justify-between px-6 h-20 flex-shrink-0">
+    <div class="flex items-center justify-between px-4 h-20 flex-shrink-0">
         <div class="flex items-center gap-3 overflow-hidden">
-            <div class="flex-shrink-0 w-10 h-10 rounded-2xl flex items-center justify-center bg-white/20 shadow-inner backdrop-blur-md">
-                <svg width="22" height="22" viewBox="0 0 24 24" fill="none">
-                    <path d="M18 8h1a4 4 0 0 1 0 8h-1M2 8h16v9a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V8zM6 1v3M10 1v3M14 1v3"
-                          stroke="white" stroke-width="2"/>
-                </svg>
-            </div>
+            <img src="{{ asset('assets/images/logo-ngafein.png') }}" alt="Ngafein" class="flex-shrink-0 h-14 w-auto object-contain drop-shadow-md" />
 
-            <div x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen">
-                <p class="text-white font-extrabold text-lg uppercase">Ngafein</p>
-                <p class="text-white/40 text-[9px] font-bold uppercase mt-1">Management</p>
+            <div class="flex flex-col justify-center leading-none" x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen">
+                <p class="text-white font-extrabold text-base uppercase tracking-wide leading-none">Ngafein</p>
+                <p class="text-white/50 text-[9px] font-semibold uppercase tracking-[0.2em] mt-1 leading-none">Management</p>
             </div>
         </div>
     </div>
