@@ -1,4 +1,6 @@
-@props(['label', 'percentage', 'color' => 'bg-[#B87A3D]'])
+@php
+    $color = $color ?? 'bg-[#B87A3D]';
+@endphp
 
 <div class="flex flex-col gap-2">
     <div class="flex justify-between items-center text-[13px] font-bold">

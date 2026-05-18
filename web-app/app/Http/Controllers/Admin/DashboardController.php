@@ -146,7 +146,7 @@ class DashboardController extends Controller
             'total_rekomendasi' => $topCafes->count(),
         ];
 
-        return view('admin.dashboard', compact(
+        return view('admin.dashboard.index', compact(
             'stats',
             'topCafes',
             'chartData',
