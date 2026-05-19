@@ -15,6 +15,7 @@
     @mouseleave="$store.sidebar.setHovered(false)"
     x-data="{
         sawOpen: {{ request()->routeIs('admin.saw.*') ? 'true' : 'false' }},
+        alternatifOpen: {{ (request()->routeIs('admin.cafe.*') || request()->routeIs('admin.fasilitas.*') || request()->routeIs('admin.menu.*')) ? 'true' : 'false' }},
         isActive(path) {
             return window.location.pathname === path;
         }
@@ -53,14 +54,67 @@
                   class="text-sm font-semibold whitespace-nowrap">Data Kriteria</span>
         </a>
 
-        {{-- Data Alternatif --}}
-        <a href="{{ route('admin.cafe.index') }}"
-           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
-           {{ request()->routeIs('admin.cafe.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
-            <i data-lucide="coffee" class="w-5 h-5 flex-shrink-0"></i>
-            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                  class="text-sm font-semibold whitespace-nowrap">Data Alternatif</span>
-        </a>
+        {{-- Data Alternatif (accordion) --}}
+        <div>
+            {{-- Toggle label (expanded) --}}
+            <button
+                @click="alternatifOpen = !alternatifOpen"
+                x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                class="w-full flex items-center justify-between gap-4 px-4 py-3.5 rounded-2xl transition-all
+                {{ (request()->routeIs('admin.cafe.*') || request()->routeIs('admin.fasilitas.*') || request()->routeIs('admin.menu.*')) ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <div class="flex items-center gap-4">
+                    <i data-lucide="coffee" class="w-5 h-5 flex-shrink-0"></i>
+                    <span class="text-sm font-semibold whitespace-nowrap">Data Alternatif</span>
+                </div>
+                <div class="transition-transform duration-300 flex-shrink-0 flex items-center justify-center"
+                     :class="alternatifOpen ? 'rotate-180' : ''">
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
+            </button>
+
+            {{-- Icon only (collapsed) --}}
+            <button
+                @click="alternatifOpen = !alternatifOpen"
+                x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
+                class="w-full flex items-center justify-center px-4 py-3.5 rounded-2xl transition-all
+                {{ (request()->routeIs('admin.cafe.*') || request()->routeIs('admin.fasilitas.*') || request()->routeIs('admin.menu.*')) ? 'bg-white/20 text-white' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+                <i data-lucide="coffee" class="w-5 h-5"></i>
+            </button>
+
+            {{-- Sub-menu Data Alternatif --}}
+            <div x-show="alternatifOpen && ($store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen)"
+                 x-transition:enter="transition ease-out duration-200"
+                 x-transition:enter-start="opacity-0 -translate-y-2"
+                 x-transition:enter-end="opacity-100 translate-y-0"
+                 x-transition:leave="transition ease-in duration-150"
+                 x-transition:leave-start="opacity-100 translate-y-0"
+                 x-transition:leave-end="opacity-0 -translate-y-2"
+                 class="mt-1 ml-4 pl-4 border-l-2 border-white/20 space-y-1">
+
+                <p class="text-[9px] font-black text-white/30 uppercase tracking-[0.15em] px-2 pt-2 pb-1">Alternatif</p>
+
+                <a href="{{ route('admin.cafe.index') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm
+                   {{ request()->routeIs('admin.cafe.*') ? 'bg-white text-[#B87A3D] shadow font-bold' : 'text-white/60 hover:bg-white/10 hover:text-white font-medium' }}">
+                    <i data-lucide="store" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap">Daftar Kafe</span>
+                </a>
+
+                <a href="{{ route('admin.fasilitas.index') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm
+                   {{ request()->routeIs('admin.fasilitas.*') ? 'bg-white text-[#B87A3D] shadow font-bold' : 'text-white/60 hover:bg-white/10 hover:text-white font-medium' }}">
+                    <i data-lucide="check-square" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap">Fasilitas Kafe</span>
+                </a>
+
+                <a href="{{ route('admin.menu.index') }}"
+                   class="flex items-center gap-3 px-3 py-2.5 rounded-xl transition-all text-sm
+                   {{ request()->routeIs('admin.menu.*') ? 'bg-white text-[#B87A3D] shadow font-bold' : 'text-white/60 hover:bg-white/10 hover:text-white font-medium' }}">
+                    <i data-lucide="clipboard-list" class="w-4 h-4 flex-shrink-0"></i>
+                    <span class="whitespace-nowrap">Kategori Menu</span>
+                </a>
+            </div>
+        </div>
 
         {{-- Manajemen (accordion) --}}
         <div>
@@ -74,8 +128,10 @@
                     <i data-lucide="settings-2" class="w-5 h-5 flex-shrink-0"></i>
                     <span class="text-sm font-semibold whitespace-nowrap">Proses saw</span>
                 </div>
-                <i data-lucide="chevron-down" class="w-4 h-4 transition-transform duration-200 flex-shrink-0"
-                   :class="sawOpen ? 'rotate-180' : ''"></i>
+                <div class="transition-transform duration-300 flex-shrink-0 flex items-center justify-center"
+                     :class="sawOpen ? 'rotate-180' : ''">
+                    <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                </div>
             </button>
 
             {{-- Icon only (collapsed) --}}
