@@ -7,48 +7,40 @@
 <div class="flex flex-col h-full space-y-6 pb-12" x-data="cafeManager()">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <h1 class="text-[1.5rem] font-black text-gray-900">Data Alternatif</h1>
-            <p class="text-gray-500 text-[13px] mt-1">Daftar cafe untuk perhitungan SAW</p>
+            <h1 class="text-2xl font-black tracking-tight text-gray-900">Data Alternatif</h1>
+            <p class="mt-1 text-sm font-medium text-gray-500">Daftar cafe untuk perhitungan SAW</p>
         </div>
         <div class="flex gap-2">
             <button @click="openImportModal()"
-                class="px-4 py-2.5 text-[#2B1A09] bg-white border border-[#D4B896] rounded-xl font-bold text-sm hover:bg-[#F5ECD7] flex items-center gap-2 shadow-sm transition-all active:scale-95">
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 shadow-sm transition hover:bg-gray-50">
                 <i data-lucide="upload" class="w-4 h-4 text-[#B87C39]"></i>
                 Import Excel
             </button>
             <button @click="openPanel('{{ route('admin.cafe.create') }}', 'add')"
-                style="background-color: #b87c39;"
-                class="px-4 py-2.5 text-white rounded-xl font-bold text-sm hover:brightness-90 flex items-center gap-2 shadow-sm transition-all active:scale-95">
+                class="inline-flex items-center justify-center gap-2 rounded-lg bg-[#B87C39] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#6E4A22]">
                 <i data-lucide="plus" class="w-4 h-4"></i>
                 Tambah Cafe
             </button>
         </div>
     </div>
-    <div class="bg-[#F5ECD7] rounded-[2rem] p-6 shadow-sm">
-        <div class="flex flex-col gap-3 mb-6">
-            <h2 class="text-[1.2rem] font-black text-gray-800">
-                Tabel Alternatif
-            </h2>
-            <div class="flex justify-between items-center">
-                <div class="flex items-center gap-2 text-[13px] font-bold text-gray-700">
-                    <span>Tampilkan</span>
-                    <select x-model="perPage" @change="fetchData()"
-                        class="px-3 py-2 rounded-xl border bg-white text-[13px]">
-                        <option value="10">10</option>
-                        <option value="25">25</option>
-                        <option value="50">50</option>
-                        <option value="100">100</option>
-                    </select>
-                    <span>data</span>
-                </div>
-                <div class="relative">
-                    <i data-lucide="search" class="w-4 h-4 absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-                    <input type="text"
-                        x-model="search"
-                        @input.debounce.300ms="fetchData()"
-                        placeholder="Cari cafe..."
-                        class="pl-9 pr-4 py-2 rounded-xl border bg-white text-[13px] w-64 focus:ring-2 focus:ring-amber-500 outline-none">
-                </div>
+    <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+        <div class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
+            <div class="relative w-full md:max-w-sm">
+                <i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"></i>
+                <input type="text"
+                    x-model="search"
+                    @input.debounce.300ms="fetchData()"
+                    placeholder="Cari cafe..."
+                    class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-gray-800 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
+            </div>
+            <div class="flex items-center gap-2">
+                <select x-model="perPage" @change="fetchData()"
+                    class="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
+                    <option value="10">10 data</option>
+                    <option value="25">25 data</option>
+                    <option value="50">50 data</option>
+                    <option value="100">100 data</option>
+                </select>
             </div>
         </div>
         <div id="table-wrapper">
