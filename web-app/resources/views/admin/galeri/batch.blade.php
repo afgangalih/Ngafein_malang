@@ -10,12 +10,7 @@
     {{-- Header --}}
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
-            <div class="flex items-center gap-2">
-                <a href="{{ route('admin.cafe.index') }}" class="inline-flex items-center justify-center h-8 w-8 rounded-lg border border-gray-200 bg-white text-gray-500 hover:bg-gray-50 transition shadow-sm">
-                    <i data-lucide="chevron-left" class="w-4 h-4"></i>
-                </a>
-                <h1 class="text-2xl font-black tracking-tight text-gray-900">Batch Upload Foto</h1>
-            </div>
+            <h1 class="text-2xl font-black tracking-tight text-gray-900">Batch Upload Foto</h1>
             <p class="mt-1 text-sm font-medium text-gray-500">Unggah beberapa foto untuk beberapa kafe sekaligus dalam antrean asinkron.</p>
         </div>
         <div class="flex items-center gap-3">

@@ -185,6 +185,14 @@
             </div>
         </div>
 
+        <a href="{{ route('admin.user.index') }}"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
+           {{ request()->routeIs('admin.user.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+            <i data-lucide="users" class="w-5 h-5 flex-shrink-0"></i>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-sm font-semibold whitespace-nowrap">User Admin</span>
+        </a>
+
         <a href="{{ route('admin.laporan.index') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
            {{ request()->routeIs('admin.laporan.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
