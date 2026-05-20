@@ -26,14 +26,11 @@
                 <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama atau email" class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-gray-800 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
             </div>
             <div class="flex items-center gap-2">
-                <select name="per_page" class="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
+                <select name="per_page" onchange="this.form.submit()" class="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
                     @foreach ([10, 25, 50] as $size)
                         <option value="{{ $size }}" @selected((int) request('per_page', 10) === $size)>{{ $size }} data</option>
                     @endforeach
                 </select>
-                <button type="submit" class="inline-flex items-center justify-center rounded-lg border border-[#B87C39] px-4 py-2.5 text-sm font-bold text-[#6E4A22] transition hover:bg-[#B87C39] hover:text-white">
-                    Terapkan
-                </button>
             </div>
         </form>
 

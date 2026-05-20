@@ -7,6 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-ngafein.png') }}">
 
     <!-- Scripts -->
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])

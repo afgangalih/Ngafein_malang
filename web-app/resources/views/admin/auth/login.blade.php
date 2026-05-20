@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login — Ngafein Admin</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-ngafein.png') }}">
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
 </head>
 <body class="flex flex-col h-screen bg-[#FEF6E7] font-sans selection:bg-[#B87A3D] selection:text-white overflow-hidden">
