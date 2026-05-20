@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>@yield('title', 'Ngafein') — Kopi dan Cerita di Setiap Sudut Kota</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-ngafein.png') }}">
     
     <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
