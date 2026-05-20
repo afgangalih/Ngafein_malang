@@ -14,6 +14,7 @@ use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PerhitunganSAWController;
 use App\Http\Controllers\Admin\LaporanController;
 use App\Http\Controllers\Admin\KafeGambarBatchController;
+use App\Http\Controllers\Admin\UserController;
 
 // auth
 Route::controller(LoginController::class)->group(function () {
@@ -42,6 +43,9 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     // dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     
+    // user admin
+    Route::resource('user', UserController::class)->except(['create', 'show', 'edit']);
+
     // cafe
     Route::get('cafe/template', [AdminCafeController::class, 'downloadTemplate'])->name('cafe.template');
     Route::post('cafe/import', [AdminCafeController::class, 'import'])->name('cafe.import');
