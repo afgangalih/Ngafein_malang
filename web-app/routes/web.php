@@ -13,6 +13,7 @@ use App\Http\Controllers\Admin\FasilitasController;
 use App\Http\Controllers\Admin\MenuController;
 use App\Http\Controllers\Admin\PerhitunganSAWController;
 use App\Http\Controllers\Admin\LaporanController;
+use App\Http\Controllers\Admin\KafeGambarBatchController;
 
 // auth
 Route::controller(LoginController::class)->group(function () {
@@ -49,6 +50,10 @@ Route::middleware('auth')->prefix('admin')->name('admin.')->group(function () {
     Route::resource('kriteria', KriteriaController::class);
     Route::resource('fasilitas', FasilitasController::class);
     Route::resource('menu', MenuController::class);
+    
+    // batch upload gambar kafe
+    Route::get('/galeri/batch', [KafeGambarBatchController::class, 'index'])->name('galeri.batch');
+    Route::post('/galeri/batch', [KafeGambarBatchController::class, 'upload'])->name('galeri.batch.store');
 
     // saw
     Route::get('/perhitungan-saw', [PerhitunganSAWController::class, 'index'])->name('saw.index');
