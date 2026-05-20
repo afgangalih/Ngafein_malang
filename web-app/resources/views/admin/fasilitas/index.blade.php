@@ -3,7 +3,7 @@
 @section('title', 'Data Fasilitas - Ngafein Admin')
 
 @section('breadcrumb')
-    <x-admin.breadcrumb :links="[['label' => 'Fasilitas Kafe']]" />
+    <x-admin.breadcrumb :links="[['label' => 'Data Alternatif', 'url' => route('admin.cafe.index')], ['label' => 'Fasilitas Kafe']]" />
 @endsection
 
 @section('content')

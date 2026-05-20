@@ -2,7 +2,7 @@
 @section('title', 'Data Alternatif — Ngafein Admin')
 @section('content')
 @section('breadcrumb')
-    <x-admin.breadcrumb :links="[['label' => 'Data Alternatif']]" />
+    <x-admin.breadcrumb :links="[['label' => 'Data Alternatif', 'url' => route('admin.cafe.index')], ['label' => 'Daftar Kafe']]" />
 @endsection
 <div class="flex flex-col h-full space-y-6 pb-12" x-data="cafeManager()">
     <div class="flex flex-col md:flex-row md:items-center justify-between gap-4">
@@ -11,6 +11,11 @@
             <p class="mt-1 text-sm font-medium text-gray-500">Daftar cafe untuk perhitungan SAW</p>
         </div>
         <div class="flex gap-2">
+            <a href="{{ route('admin.galeri.batch') }}"
+                class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 shadow-sm transition hover:bg-gray-50">
+                <i data-lucide="image-plus" class="w-4 h-4 text-[#B87C39]"></i>
+                Batch Upload Foto
+            </a>
             <button @click="openImportModal()"
                 class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 bg-white px-4 py-2.5 text-sm font-bold text-gray-700 shadow-sm transition hover:bg-gray-50">
                 <i data-lucide="upload" class="w-4 h-4 text-[#B87C39]"></i>
