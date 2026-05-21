@@ -17,6 +17,4 @@
 
 ## Deskripsi Proyek
 
-Ngafein adalah platform monorepo yang dirancang untuk memberikan rekomendasi kafe kepada pengguna. Proyek ini memadukan aplikasi web interaktif dengan mesin rekomendasi berbasis analisis data dan machine learning.
-
-Arsitektur monorepo memisahkan antara aplikasi web (Laravel) dan mesin rekomendasi (Python) untuk menjaga skalabilitas dan efisiensi integrasi data.
+Ngafein adalah 
