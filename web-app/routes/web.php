@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\User\WelcomeController;
+use App\Http\Controllers\User\RekomendasiController;
 use App\Http\Controllers\User\CafeController as UserCafeController;
 
 use App\Http\Controllers\Admin\DashboardController;
@@ -33,7 +34,7 @@ Route::name('user.')->group(function () {
         Route::get('/{id}', 'show')->name('detail');
     });
 
-    Route::get('/kafe/rekomendasi', [WelcomeController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
+    Route::get('/kafe/rekomendasi', [RekomendasiController::class, 'cariRekomendasi'])->name('kafe.rekomendasi');
     Route::view('/about', 'user.about_us.index')->name('about');
 });
 

@@ -34,3 +34,15 @@ web-app/.phpunit.result.cache
 
 # User Uploaded Assets (Optional: Hapus jika ingin di-track)
 # web-app/public/assets/images/
+
+# python engine
+__pycache__/
+*.pyc
+*.pyo
+engine/.venv/
+engine/venv/
+engine/env/
+.pytest_cache/
+
+# int
+docs/
