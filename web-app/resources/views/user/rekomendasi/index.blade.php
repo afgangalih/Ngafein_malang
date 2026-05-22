@@ -392,10 +392,32 @@
         </div>
     </div>
 
-    {{-- ── Grid Kartu ──
-         PHP render semua, card index >= 6 diberi class card-hidden.
-         JS akan reveal per-6 saat tombol diklik.
-    ── --}}
+    @if(!isset($engineError))
+    <div class="mb-8 fu d1 rounded-2xl p-4 flex items-start gap-3.5" style="background: rgba(184, 124, 57, 0.05); border: 1px solid rgba(184, 124, 57, 0.15);">
+        <div class="w-8 h-8 rounded-lg flex items-center justify-center flex-shrink-0 text-[#b87c39]" style="background: rgba(184, 124, 57, 0.1);">
+            <i data-lucide="cpu" class="w-4 h-4"></i>
+        </div>
+        <div>
+            <h4 class="text-[11px] font-bold uppercase tracking-wider mb-0.5 text-[#b87c39]">Engine Rekomendasi Online</h4>
+            <p class="text-xs text-gray-500 leading-relaxed font-light">
+                Perangkingan kafe dihitung dan diurutkan secara dinamis menggunakan metode **Simple Additive Weighting (SAW)** melalui server API Python.
+            </p>
+        </div>
+    </div>
+    @else
+    <div class="mb-8 fu d1 bg-red-50 border border-red-100 rounded-2xl p-4 flex items-start gap-3.5">
+        <div class="w-8 h-8 rounded-lg bg-red-100 flex items-center justify-center flex-shrink-0 text-red-600">
+            <i data-lucide="wifi-off" class="w-4 h-4"></i>
+        </div>
+        <div>
+            <h4 class="text-[11px] font-bold text-red-800 uppercase tracking-wider mb-0.5">Engine Rekomendasi Offline</h4>
+            <p class="text-xs text-red-600/85 leading-relaxed font-light">
+                Gagal terhubung ke server API Python. Sistem mendegradasi fungsionalitas secara aman: menampilkan daftar kafe sesuai filter Anda tanpa urutan rekomendasi SAW.
+            </p>
+        </div>
+    </div>
+    @endif
+
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-7" id="kafe-grid">
         @foreach($hasil as $kafe)
         @php
@@ -404,8 +426,6 @@
             $pct      = round($kafe['skor'] * 100);
             $medalCls = match($rank){1=>'medal-1',2=>'medal-2',3=>'medal-3',default=>'medal-n'};
 
-            // Card pertama 6: langsung visible dengan animasi stagger
-            // Card sisanya: disembunyikan, JS yang reveal
             $visibleCls = $idx < 6
                 ? 'fu d' . min($idx + 1, 6)
                 : 'card-hidden';
@@ -415,7 +435,6 @@
            class="kafe-card group relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm flex flex-col {{ $visibleCls }}"
            data-card-index="{{ $idx }}">
 
-            {{-- Foto --}}
             <div class="relative h-52 overflow-hidden bg-gray-50 flex-shrink-0">
                 @if($kafe['gambar'])
                     <img src="{{ $kafe['gambar'] }}" alt="{{ $kafe['nama_kafe'] }}"
@@ -426,14 +445,13 @@
                     </div>
                 @endif
 
-                {{-- Rank badge --}}
+                @if(!isset($engineError))
                 <div class="absolute top-3.5 left-3.5 z-10">
                     <span class="inline-flex items-center justify-center w-9 h-9 rounded-full text-white text-xs font-extrabold shadow-lg ring-[3px] ring-white/50 {{ $medalCls }}">
                         #{{ $rank }}
                     </span>
                 </div>
 
-                {{-- Skor pill --}}
                 <div class="absolute top-3.5 right-3.5 z-10">
                     <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-white/60"
                           style="color:#b87c39">
@@ -441,12 +459,12 @@
                         {{ $kafe['skor'] }}
                     </span>
                 </div>
+                @endif
 
                 <div class="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
                      style="background:linear-gradient(to top,rgba(0,0,0,.28),transparent)"></div>
             </div>
 
-            {{-- Body --}}
             <div class="p-5 flex flex-col flex-1">
                 <h3 class="font-bold text-gray-900 leading-snug mb-1 line-clamp-1 transition-colors group-hover:text-[#b87c39]"
                     style="font-size:.97rem">{{ $kafe['nama_kafe'] }}</h3>
@@ -472,6 +490,7 @@
                     </span>
                 </div>
 
+                @if(!isset($engineError))
                 <div class="mb-5">
                     <div class="flex justify-between items-center mb-1.5">
                         <span class="text-[10px] font-semibold text-gray-300 uppercase tracking-wider">Skor SAW</span>
@@ -482,6 +501,7 @@
                              style="width:0%;background:linear-gradient(to right,#e8c98a,#b87c39)"></div>
                     </div>
                 </div>
+                @endif
 
                 <div class="mt-auto flex items-end justify-between">
                     <div>
