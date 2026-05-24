@@ -31,7 +31,7 @@
                         <th class="text-center" style="width:180px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:12px 16px;border:none">Aksi</th>
                     </tr>
                 </thead>
-                <tbody x-init="$nextTick(() => lucide.createIcons())">
+                <tbody>
                     <template x-for="(item, index) in kriteria" :key="item.id">
                         <tr :style="index % 2 === 0 ? 'background:#F5ECD7' : 'background:#EFE0C2'"
                             style="border-bottom:1px solid #D4B896;transition:background .15s"
@@ -56,11 +56,13 @@
                                 </span>
                             </td>
 
-                            <td class="text-center" style="padding:10px 16px;border-bottom:1px solid #D4B896">
-                                <div class="flex justify-center items-center gap-2">
-                                    <button @click="openEdit(item.id, item.nama, item.bobot, item.tipe)"
-                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-blue-50 text-blue-500 hover:bg-blue-500 hover:text-white rounded-lg text-[12px] font-bold transition-all border border-blue-200">
-                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <td class="py-5 px-8 text-center">
+                                <div class="flex justify-center items-center gap-3">
+                                    {{-- tombol edit --}}
+                                    <button
+                                        @click="openEdit(item.id, item.nama, item.bobot, item.tipe)"
+                                        class="flex items-center gap-2 px-4 py-2 bg-white text-[#B87A3D] hover:bg-[#B87A3D] hover:text-white rounded-lg text-[13px] font-bold transition-all border border-[#B87A3D]">
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                             <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
                                             <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
                                         </svg>
@@ -196,8 +198,8 @@
                         <button type="button"
                                 @click="form.tipe = 'Benefit'"
                                 :class="form.tipe === 'Benefit'
-                                    ? 'bg-green-500 text-white border-green-500 shadow-lg'
-                                    : 'bg-[#E8D5B5] text-gray-600 border-[#D4B896]'"
+                                    ? 'bg-[#B87A3D] text-white border-[#B87A3D] shadow-lg'
+                                    : 'bg-white text-[#B87A3D] border-[#B87A3D]'"
                                 class="flex-1 py-3 rounded-xl text-[14px] font-bold transition-all border-2">
                             ↑ Benefit
                         </button>
@@ -205,7 +207,7 @@
                                 @click="form.tipe = 'Cost'"
                                 :class="form.tipe === 'Cost'
                                     ? 'bg-red-500 text-white border-red-500 shadow-lg'
-                                    : 'bg-[#E8D5B5] text-gray-600 border-[#D4B896]'"
+                                    : 'bg-white text-red-500 border-red-400'"
                                 class="flex-1 py-3 rounded-xl text-[14px] font-bold transition-all border-2">
                             ↓ Cost
                         </button>
