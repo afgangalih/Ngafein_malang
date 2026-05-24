@@ -5,7 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>{{ $title ?? 'Dashboard' }} | TailAdmin - Laravel Tailwind CSS Admin Dashboard Template</title>
+    <link rel="icon" type="image/png" href="{{ asset('assets/images/logo-ngafein.png') }}">
     @vite(['resources/css/admin.css', 'resources/js/admin.js'])
+    @stack('styles')
     <style>
         body { opacity: 0; }
         body.ready { opacity: 1; }

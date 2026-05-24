@@ -4,34 +4,28 @@ namespace App\Http\Controllers\User;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
-
 use App\Models\KafeModel;
 
 class WelcomeController extends Controller
 {
     public function index(Request $request)
     {
-       
         $totalKafe  = KafeModel::count();
         $avgRating  = KafeModel::avg('rating');
 
-        
         $kafeUnggulan = KafeModel::with('gambar')
             ->orderByDesc('rating')
             ->limit(3)
             ->get();
 
-       
         $hour = now()->hour;
         $rekomendasiWaktu = $this->getWaktuLabel($hour);
 
-        
         $semuaKafe = KafeModel::with('gambar')
             ->orderByDesc('rating')
             ->get();
 
-        return view('user.welcome', compact(
+        return view('user.landing.index', compact(
             'totalKafe',
             'avgRating',
             'kafeUnggulan',
@@ -40,41 +34,6 @@ class WelcomeController extends Controller
         ));
     }
 
-    public function cariRekomendasi(Request $request)
-    {
-        $query = DB::table('kafe');
-
-        
-        if ($request->filled('harga_min')) {
-            $query->where('harga_min', '>=', $request->harga_min);
-        }
-        if ($request->filled('harga_max')) {
-            $query->where('harga_max', '<=', $request->harga_max);
-        }
-
-        
-        if ($request->filled('rating')) {
-            $query->where('rating', '>=', $request->rating);
-        }
-
-       
-        if ($request->filled('jarak')) {
-            $query->where('jarak', '<=', $request->jarak);
-        }
-
-        
-        if ($request->boolean('buka_sekarang')) {
-            $jamSekarang = now()->format('H:i');
-            $query->where('jam_buka', '<=', $jamSekarang)
-                  ->where('jam_tutup', '>=', $jamSekarang);
-        }
-
-        $kafeFilter = $query->orderByDesc('rating')->get();
-
-        return response()->json($kafeFilter);
-    }
-
-   
     private function getWaktuLabel(int $hour): string
     {
         return match(true) {

@@ -10,7 +10,13 @@ class KriteriaController extends Controller
 {
     public function index()
     {
-        $kriterias = Kriteria::all();
+        $kriterias = Kriteria::all()->map(fn($k) => [
+            'id' => $k->id_kriteria,
+            'nama' => $k->nama_kriteria,
+            'bobot' => (float)$k->bobot,
+            'tipe' => ucfirst($k->tipe)
+        ]);
+        
         $totalBobot = Kriteria::sum('bobot');
         return view('admin.kriteria.index', compact('kriterias', 'totalBobot'));
     }
@@ -52,13 +58,29 @@ class KriteriaController extends Controller
         $kriteria = Kriteria::findOrFail($id);
         $kriteria->update($request->only('nama_kriteria', 'bobot', 'tipe'));
 
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Kriteria berhasil diupdate!',
+                'data' => $kriteria
+            ]);
+        }
+
         return redirect()->route('admin.kriteria.index')
                          ->with('success', 'Kriteria berhasil diupdate!');
     }
 
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         Kriteria::findOrFail($id)->delete();
+
+        if ($request->wantsJson()) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Kriteria berhasil dihapus!'
+            ]);
+        }
+
         return redirect()->route('admin.kriteria.index')
                          ->with('success', 'Kriteria berhasil dihapus!');
     }
