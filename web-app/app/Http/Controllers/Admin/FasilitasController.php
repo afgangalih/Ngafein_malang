@@ -11,14 +11,16 @@ class FasilitasController extends Controller
 {
     public function index(Request $request)
     {
-        $search = $request->input('search');
-        $perPage = $request->input('per_page', 10);
+        $search  = $request->input('search');
+        $perPage = $request->input('per_page', '10');
 
-        $fasilitas = FasilitasModel::query()
-            ->when($search, fn ($query) => $query->where('nama_fasilitas', 'like', "%{$search}%"))
-            ->orderBy('id_fasilitas')
-            ->paginate($perPage)
-            ->withQueryString();
+        $query = FasilitasModel::query()
+            ->when($search, fn ($q) => $q->where('nama_fasilitas', 'like', "%{$search}%"))
+            ->orderBy('id_fasilitas');
+
+        $fasilitas = $perPage === 'all'
+            ? $query->paginate($query->count() ?: 1)->withQueryString()
+            : $query->paginate(10)->withQueryString();
 
         return view('admin.fasilitas.index', compact('fasilitas', 'search'));
     }
@@ -35,7 +37,7 @@ class FasilitasController extends Controller
         ]);
 
         $fasilitas = FasilitasModel::create([
-            'id_fasilitas' => ((int) FasilitasModel::max('id_fasilitas')) + 1,
+            'id_fasilitas'  => ((int) FasilitasModel::max('id_fasilitas')) + 1,
             'nama_fasilitas' => $validated['nama_fasilitas'],
         ]);
 
@@ -43,7 +45,7 @@ class FasilitasController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Fasilitas berhasil ditambahkan.',
-                'data' => $fasilitas,
+                'data'    => $fasilitas,
             ]);
         }
 
@@ -79,7 +81,7 @@ class FasilitasController extends Controller
             return response()->json([
                 'success' => true,
                 'message' => 'Fasilitas berhasil diperbarui.',
-                'data' => $fasilitas,
+                'data'    => $fasilitas,
             ]);
         }
 
