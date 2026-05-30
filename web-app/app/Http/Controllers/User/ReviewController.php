@@ -17,21 +17,22 @@ class ReviewController extends Controller
     {
         $request->validate([
             'rating' => 'required|integer|min:1|max:5',
-            'ulasan' => 'nullable|string',
+            'ulasan' => 'required|string|min:5',
         ], [
             'rating.required' => 'Rating bintang wajib dipilih!',
             'rating.min' => 'Rating minimal adalah 1 bintang!',
             'rating.max' => 'Rating maksimal adalah 5 bintang!',
+            'ulasan.required' => 'Isi ulasan wajib ditulis!',
+            'ulasan.min' => 'Isi ulasan minimal 5 karakter!',
         ]);
 
         $cafe = KafeModel::findOrFail($id);
 
-        // Save review
         ReviewModel::create([
             'user_id' => Auth::id(),
             'kafe_id' => $id,
             'rating' => $request->rating,
-            'ulasan' => $request->ulasan ?? '-',
+            'ulasan' => $request->ulasan,
         ]);
 
         // Recalculate average rating and update Kafe table

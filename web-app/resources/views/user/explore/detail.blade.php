@@ -399,11 +399,13 @@
                         <h3 class="text-lg font-extrabold text-gray-900 mb-2">Tulis Ulasan Anda</h3>
                         <p class="text-xs text-gray-400 font-medium mb-6">Bagikan pengalaman Anda tentang {{ $cafe->nama_kafe }} kepada mahasiswa lainnya.</p>
                         
-                        <form action="{{ route('user.kafe.review.store', $cafe->id_kafe) }}" method="POST" x-data="{ userRating: 5 }">
+                        <form action="{{ route('user.kafe.review.store', $cafe->id_kafe) }}" 
+                              method="POST" 
+                              x-data="{ userRating: 5, ulasanText: '', ulasanError: '' }"
+                              @submit="if (ulasanText.trim().length < 5) { ulasanError = ulasanText.trim().length === 0 ? 'Isi ulasan wajib ditulis!' : 'Isi ulasan minimal 5 karakter!'; $event.preventDefault(); }">
                             @csrf
                             <input type="hidden" name="rating" :value="userRating">
                             
-                            {{-- Interactive Rating Star --}}
                             <div class="mb-5">
                                 <label class="block text-[10px] font-bold text-[#2B1A09] uppercase tracking-wider mb-2">Rating Anda</label>
                                 <div class="flex items-center gap-1.5">
@@ -421,11 +423,16 @@
                             </div>
 
                             <div class="mb-5">
-                                <label class="block text-[10px] font-bold text-[#2B1A09] uppercase tracking-wider mb-2">Komentar / Ulasan (Opsional)</label>
+                                <label class="block text-[10px] font-bold text-[#2B1A09] uppercase tracking-wider mb-2">Komentar / Ulasan</label>
                                 <textarea name="ulasan" rows="4" 
+                                          x-model="ulasanText"
+                                          @input="if (ulasanText.trim().length >= 5) { ulasanError = ''; }"
                                           class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all resize-none"
-                                          placeholder="Bagikan pendapat Anda tentang tempat ini (Opsional)..."></textarea>
-                                @error('ulasan') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                                          placeholder="Bagikan pendapat Anda tentang tempat ini (Minimal 5 karakter)..."></textarea>
+                                <template x-if="ulasanError">
+                                    <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="ulasanError"></p>
+                                </template>
+                                @error('ulasan') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!ulasanError">{{ $message }}</p> @enderror
                             </div>
 
                             <button type="submit" 

@@ -21,7 +21,42 @@
     @endif
 
     <div class="bg-white border border-[#B87C39]/25 rounded-[2.5rem] shadow-xl p-6 md:p-10">
-        <form action="{{ route('user.kafe.tambah.store') }}" method="POST" enctype="multipart/form-data" class="space-y-8">
+        <form action="{{ route('user.kafe.tambah.store') }}" 
+              method="POST" 
+              enctype="multipart/form-data" 
+              class="space-y-8"
+              x-data="{
+                  nama_kafe: '{{ old('nama_kafe') }}',
+                  jarak: '{{ old('jarak') }}',
+                  rating: '{{ old('rating', '4.5') }}',
+                  jam_buka: '{{ old('jam_buka', '09:00') }}',
+                  jam_tutup: '{{ old('jam_tutup', '22:00') }}',
+                  harga_min: '{{ old('harga_min', 10000) }}',
+                  harga_max: '{{ old('harga_max', 35000) }}',
+                  alamat: '{{ old('alamat') }}',
+                  errors: {},
+                  validateForm(e) {
+                      this.errors = {};
+                      if (!this.nama_kafe.trim()) this.errors.nama_kafe = 'Nama kafe wajib diisi!';
+                      if (!this.jarak) this.errors.jarak = 'Jarak wajib diisi!';
+                      if (!this.rating) this.errors.rating = 'Rating wajib diisi!';
+                      else if (parseFloat(this.rating) < 1.0 || parseFloat(this.rating) > 5.0) this.errors.rating = 'Rating harus berada di antara 1.0 dan 5.0!';
+                      if (!this.jam_buka.trim()) this.errors.jam_buka = 'Jam buka wajib diisi!';
+                      if (!this.jam_tutup.trim()) this.errors.jam_tutup = 'Jam tutup wajib diisi!';
+                      if (!this.harga_min) this.errors.harga_min = 'Harga minimal wajib diisi!';
+                      if (!this.harga_max) this.errors.harga_max = 'Harga maksimal wajib diisi!';
+                      else if (parseInt(this.harga_min) > parseInt(this.harga_max)) this.errors.harga_max = 'Harga maksimal tidak boleh lebih kecil dari harga minimal!';
+                      if (!this.alamat.trim()) this.errors.alamat = 'Alamat wajib diisi!';
+                      
+                      if (Object.keys(this.errors).length > 0) {
+                          e.preventDefault();
+                          const firstErrKey = Object.keys(this.errors)[0];
+                          const el = document.getElementsByName(firstErrKey)[0];
+                          if (el) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                      }
+                  }
+              }"
+              @submit="validateForm($event)">
             @csrf
             
             <div>
@@ -33,27 +68,36 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Nama Kafe <span class="text-red-500">*</span></label>
-                        <input type="text" name="nama_kafe" required value="{{ old('nama_kafe') }}"
+                        <input type="text" name="nama_kafe" x-model="nama_kafe" @input="errors.nama_kafe = ''"
                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                placeholder="Contoh: Kopi Kenangan Dinoyo">
-                        @error('nama_kafe') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.nama_kafe">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.nama_kafe"></p>
+                        </template>
+                        @error('nama_kafe') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.nama_kafe">{{ $message }}</p> @enderror
                     </div>
                     
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                         <div>
                             <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jarak dari Polinema (km) <span class="text-red-500">*</span></label>
-                            <input type="number" name="jarak" step="0.1" required value="{{ old('jarak') }}"
+                            <input type="number" name="jarak" step="0.1" x-model="jarak" @input="errors.jarak = ''"
                                    class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                    placeholder="Contoh: 1.2">
-                            @error('jarak') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                            <template x-if="errors.jarak">
+                                <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.jarak"></p>
+                            </template>
+                            @error('jarak') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.jarak">{{ $message }}</p> @enderror
                         </div>
 
                         <div>
                             <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Rating Awal Kafe (1.0 - 5.0) <span class="text-red-500">*</span></label>
-                            <input type="number" name="rating" step="0.1" min="1.0" max="5.0" required value="{{ old('rating', '4.5') }}"
+                            <input type="number" name="rating" step="0.1" min="1.0" max="5.0" x-model="rating" @input="errors.rating = ''"
                                    class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                    placeholder="Contoh: 4.5">
-                            @error('rating') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                            <template x-if="errors.rating">
+                                <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.rating"></p>
+                            </template>
+                            @error('rating') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.rating">{{ $message }}</p> @enderror
                         </div>
                     </div>
                 </div>
@@ -68,34 +112,46 @@
                 <div class="grid grid-cols-1 md:grid-cols-4 gap-6">
                     <div class="md:col-span-1">
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jam Buka <span class="text-red-500">*</span></label>
-                        <input type="text" name="jam_buka" required value="{{ old('jam_buka', '09:00') }}"
+                        <input type="text" name="jam_buka" x-model="jam_buka" @input="errors.jam_buka = ''"
                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                placeholder="09:00">
-                        @error('jam_buka') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.jam_buka">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.jam_buka"></p>
+                        </template>
+                        @error('jam_buka') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.jam_buka">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-1">
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Jam Tutup <span class="text-red-500">*</span></label>
-                        <input type="text" name="jam_tutup" required value="{{ old('jam_tutup', '22:00') }}"
+                        <input type="text" name="jam_tutup" x-model="jam_tutup" @input="errors.jam_tutup = ''"
                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                placeholder="22:00">
-                        @error('jam_tutup') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.jam_tutup">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.jam_tutup"></p>
+                        </template>
+                        @error('jam_tutup') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.jam_tutup">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-1">
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Harga Min (Rp) <span class="text-red-500">*</span></label>
-                        <input type="number" name="harga_min" required value="{{ old('harga_min', 10000) }}"
+                        <input type="number" name="harga_min" x-model="harga_min" @input="errors.harga_min = ''"
                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                placeholder="10000">
-                        @error('harga_min') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.harga_min">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.harga_min"></p>
+                        </template>
+                        @error('harga_min') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.harga_min">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-1">
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Harga Max (Rp) <span class="text-red-500">*</span></label>
-                        <input type="number" name="harga_max" required value="{{ old('harga_max', 35000) }}"
+                        <input type="number" name="harga_max" x-model="harga_max" @input="errors.harga_max = ''"
                                class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all"
                                placeholder="35000">
-                        @error('harga_max') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.harga_max">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.harga_max"></p>
+                        </template>
+                        @error('harga_max') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.harga_max">{{ $message }}</p> @enderror
                     </div>
                 </div>
             </div>
@@ -109,10 +165,13 @@
                 <div class="space-y-6">
                     <div>
                         <label class="block text-xs font-bold text-gray-700 uppercase tracking-wider mb-2">Alamat Lengkap <span class="text-red-500">*</span></label>
-                        <textarea name="alamat" required rows="3"
+                        <textarea name="alamat" x-model="alamat" @input="errors.alamat = ''" rows="3"
                                   class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all resize-none"
                                   placeholder="Tulis alamat detail kafe...">{{ old('alamat') }}</textarea>
-                        @error('alamat') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                        <template x-if="errors.alamat">
+                            <p class="text-red-500 text-xs mt-1.5 font-medium" x-text="errors.alamat"></p>
+                        </template>
+                        @error('alamat') <p class="text-red-500 text-xs mt-1.5 font-medium" x-show="!errors.alamat">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
