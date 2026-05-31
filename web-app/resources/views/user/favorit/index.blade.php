@@ -57,9 +57,9 @@
                     cafe.blacklisted = data.blacklisted;
                     if (cafe.blacklisted) {
                         cafe.bookmarked = false;
-                        this.addToast(`${cafe.name} dimasukkan ke Blacklist. Dikecualikan dari perhitungan rekomendasi SAW.`, 'error');
+                        this.addToast(`${cafe.name} dimasukkan ke daftar Exclude. Dikecualikan dari perhitungan rekomendasi SAW.`, 'error');
                     } else {
-                        this.addToast(`${cafe.name} dipulihkan dari Blacklist.`, 'success');
+                        this.addToast(`${cafe.name} dikeluarkan dari daftar Exclude.`, 'success');
                     }
                     $dispatch('blacklist-toggled', { id: cafe.id, blacklisted: cafe.blacklisted });
                 }

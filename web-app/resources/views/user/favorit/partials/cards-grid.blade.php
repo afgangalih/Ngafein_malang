@@ -48,7 +48,7 @@
                     <button @click.prevent="toggleBlacklist(cafe)" 
                             class="w-10 h-10 rounded-xl flex items-center justify-center transition-all duration-300 group cursor-pointer focus:outline-none"
                             :class="cafe.blacklisted ? 'bg-red-500 border-red-500 text-white shadow-lg scale-105' : 'bg-black/40 backdrop-blur-md border border-white/20 text-white hover:border-red-500 hover:bg-red-500/20'"
-                            title="Kecualikan dari Rekomendasi (Blacklist)">
+                            title="Exclude dari Rekomendasi">
                         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4.5 h-4.5 transition-transform duration-300 text-current">
                             <circle cx="12" cy="12" r="10"/>
                             <line x1="4.93" y1="4.93" x2="19.07" y2="19.07"/>

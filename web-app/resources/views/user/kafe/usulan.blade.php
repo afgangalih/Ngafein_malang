@@ -60,7 +60,7 @@
     
     <div class="mb-12 flex flex-col lg:flex-row lg:items-center justify-between gap-6">
         <div>
-            <h1 class="text-3xl md:text-5xl font-serif font-bold text-gray-900 tracking-tight mb-3">Usulan Kafe Saya</h1>
+            <h1 class="text-3xl md:text-5xl font-plus-jakarta font-bold text-gray-900 tracking-tight mb-3">Usulan Kafe Saya</h1>
             <p class="text-gray-500 text-sm max-w-xl">
                 Pantau seluruh pengajuan kafe yang Anda usulkan secara langsung. Tim admin kami akan meninjau kelengkapan informasi sebelum mempublikasikannya.
             </p>
@@ -225,17 +225,32 @@
             </template>
         </div>
 
-        <div class="flex flex-col items-center justify-center py-20 text-center bg-gray-50/40 border border-gray-100 rounded-[2.5rem] p-8"
-             x-show="filteredProposals.length === 0" x-transition>
-            <div class="w-16 h-16 rounded-2xl bg-gray-100 text-gray-400 flex items-center justify-center mb-6">
+        <div class="flex flex-col items-center justify-center py-20 text-center bg-[#B87C39]/5 border border-[#B87C39]/20 rounded-[2.5rem] p-8"
+             x-show="proposals.length === 0" x-transition>
+            <div class="w-16 h-16 rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center mb-6">
+                <svg viewBox="0 0 24 24" class="w-8 h-8 fill-none stroke-current" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/></svg>
+            </div>
+            <h3 class="text-lg font-bold text-gray-900 mb-2">Belum Ada Riwayat Usulan</h3>
+            <p class="text-sm text-gray-500 max-w-sm mb-8 leading-relaxed">
+                Anda belum pernah mengusulkan kafe. Mulai bagikan tempat ngopi pilihan Anda agar dapat ditinjau oleh tim kami.
+            </p>
+            <a href="{{ route('user.kafe.tambah') }}"
+               class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md shadow-[#B87C39]/20">
+                Usulkan Kafe Baru
+            </a>
+        </div>
+
+        <div class="flex flex-col items-center justify-center py-20 text-center bg-[#B87C39]/5 border border-[#B87C39]/20 rounded-[2.5rem] p-8"
+             x-show="proposals.length > 0 && filteredProposals.length === 0" x-transition>
+            <div class="w-16 h-16 rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center mb-6">
                 <svg viewBox="0 0 24 24" class="w-8 h-8 fill-none stroke-current" stroke-width="2"><path d="M22 12h-6l-2 3h-4l-2-3H2"/></svg>
             </div>
             <h3 class="text-lg font-bold text-gray-900 mb-2">Tidak Ada Usulan Ditemukan</h3>
             <p class="text-sm text-gray-500 max-w-sm mb-8 leading-relaxed">
-                Kami tidak menemukan usulan kafe yang sesuai dengan filter pencarian atau kategori status Anda saat ini.
+                Kami tidak menemukan usulan kafe yang sesuai dengan pencarian atau kategori status Anda saat ini.
             </p>
-            <button @click="searchQuery = ''; activeTab = 'all'" 
-                    class="bg-gray-900 hover:bg-gray-800 text-white font-bold text-xs px-6 py-3.5 rounded-xl transition-all cursor-pointer">
+            <button @click="searchQuery = ''; activeTab = 'all'"
+                    class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md shadow-[#B87C39]/20 cursor-pointer">
                 Reset Pencarian & Filter
             </button>
         </div>
