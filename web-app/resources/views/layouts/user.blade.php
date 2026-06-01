@@ -34,6 +34,7 @@
     </main>
 
     <x-user.ui.login-modal />
+    <x-user.ui.register-modal />
 
     @include('partials.user.footer')
 

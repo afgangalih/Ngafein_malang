@@ -135,5 +135,12 @@
                 <span x-text="loading ? 'Sedang Masuk...' : 'Masuk'"></span>
             </button>
         </form>
+
+        <div class="mt-6 text-center text-xs text-gray-500">
+            Belum punya akun? 
+            <button @click="show = false; $dispatch('open-register-modal')" class="text-[#B87C39] font-bold hover:underline ml-1 focus:outline-none cursor-pointer">
+                Daftar Sekarang
+            </button>
+        </div>
     </div>
 </div>
