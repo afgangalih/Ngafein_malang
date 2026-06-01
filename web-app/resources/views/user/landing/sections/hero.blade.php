@@ -110,18 +110,21 @@
                     <template x-for="item in results" :key="item.id_kafe">
                         <a :href="'/explore/' + item.id_kafe" class="flex items-center gap-5 px-6 py-4 hover:bg-white/5 transition-colors group border-b border-white/5 last:border-0">
                             <div class="w-12 h-12 rounded-2xl bg-[#B87C39]/10 flex items-center justify-center text-[#B87C39] group-hover:bg-[#B87C39] group-hover:text-white transition-all duration-300">
-                                <i data-lucide="coffee" class="w-6 h-6"></i>
+                                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+                                    <path d="M6 2v2M10 2v2M14 2v2"/>
+                                </svg>
                             </div>
-                            <div class="flex-1">
+                            <div class="flex-1 text-left">
                                 <h4 class="text-base font-bold text-white group-hover:text-[#B87C39] transition-colors" x-text="item.nama_kafe"></h4>
                                 <p class="text-sm text-white/50 flex items-center gap-1.5 mt-1">
-                                    <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#B87C39]/70"></i>
+                                    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-[#B87C39]/70 fill-none stroke-current" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                     <span x-text="item.jarak ? item.jarak + ' km' : 'Malang'"></span>
                                     <span class="text-white/20">•</span>
                                     <span class="line-clamp-1" x-text="item.alamat"></span>
                                 </p>
                             </div>
-                            <i data-lucide="chevron-right" class="w-5 h-5 text-white/20 group-hover:text-[#B87C39] group-hover:translate-x-1 transition-all"></i>
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 text-white/20 group-hover:text-[#B87C39] group-hover:translate-x-1 transition-all fill-none stroke-current" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
                         </a>
                     </template>
                 </div>

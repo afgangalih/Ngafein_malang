@@ -47,7 +47,14 @@ class RekomendasiController extends Controller
         $engineError = null;
 
         if ($sudahDicari) {
-            $query = KafeModel::with(['fasilitas', 'menus', 'gambar']);
+            $query = KafeModel::approved()->with(['fasilitas', 'menus', 'gambar']);
+
+            if (auth()->check()) {
+                $blacklistedIds = auth()->user()->blacklistedCafes()->pluck('kafe_id')->toArray();
+                if (!empty($blacklistedIds)) {
+                    $query->whereNotIn('id_kafe', $blacklistedIds);
+                }
+            }
 
             if ($request->filled('harga_max')) {
                 $query->where('harga_min', '<=', (int) $request->harga_max);

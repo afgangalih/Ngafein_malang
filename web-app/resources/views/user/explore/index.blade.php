@@ -28,92 +28,97 @@
                 results: [], 
                 show: false,
                 loading: false,
-                init() {
-                    this.$watch('query', (value) => {
-                        if (value.length < 2) {
-                            this.results = [];
-                            this.show = false;
-                            return;
-                        }
-                        this.fetchResults();
-                    });
-                },
+                timer: null,
                 fetchResults() {
+                    if (this.query.length < 2) {
+                        this.results = [];
+                        this.show = false;
+                        return;
+                    }
                     this.loading = true;
-                    fetch(`/cafe/search-api?q=${this.query}`)
-                        .then(res => res.json())
-                        .then(data => {
-                            this.results = data;
-                            this.show = true;
-                            this.loading = false;
-                        })
-                        .catch(() => {
-                            this.loading = false;
-                        });
+                    this.show = true;
+                    
+                    clearTimeout(this.timer);
+                    this.timer = setTimeout(() => {
+                        fetch(`/explore/search-api?q=${encodeURIComponent(this.query)}`)
+                            .then(res => res.json())
+                            .then(data => {
+                                this.results = data;
+                                this.loading = false;
+                            })
+                            .catch(() => {
+                                this.loading = false;
+                            });
+                    }, 400);
                 }
              }"
              @click.away="show = false">
             
-            <div class="flex items-center bg-white border border-gray-100 rounded-2xl shadow-sm hover:shadow-md focus-within:shadow-md focus-within:border-[#b87c39]/30 transition-all duration-300">
-                <div class="flex-1 relative flex items-center">
-                    <div class="absolute left-7 flex items-center justify-center w-5 h-5">
-                        <i data-lucide="search" class="w-5 h-5 text-gray-300 transition-opacity duration-300" :class="loading ? 'opacity-0' : 'opacity-100'"></i>
-                        <i data-lucide="loader-2" class="w-5 h-5 animate-spin text-[#b87c39] absolute transition-opacity duration-300" :class="loading ? 'opacity-100' : 'opacity-0'"></i>
-                    </div>
-                    <input 
-                        type="text" 
-                        x-model.debounce.500ms="query"
-                        @focus="if(results.length > 0) show = true"
-                        placeholder="Mau ngopi di mana hari ini?"
-                        class="w-full pl-16 pr-8 py-4 text-sm font-medium text-gray-800 placeholder:text-gray-400 focus:outline-none bg-transparent"
-                    >
-                    <button x-show="query.length > 0" @click="query = ''; results = []; show = false" class="absolute right-7 text-gray-400 hover:text-gray-600 transition-colors">
-                        <i data-lucide="x-circle" class="w-5 h-5"></i>
-                    </button>
-                </div>
+            <div class="flex items-center bg-white/80 backdrop-blur-lg border border-gray-200/80 rounded-full p-2.5 transition-all duration-300 focus-within:bg-white focus-within:border-[#B87C39]/50 focus-within:ring-4 focus-within:ring-[#B87C39]/10">
+                <svg viewBox="0 0 24 24" class="w-6 h-6 text-[#B87C39] ml-5 mr-3 fill-none stroke-current" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                <input 
+                    type="text" 
+                    x-model="query"
+                    @input="fetchResults()"
+                    @focus="if(results.length > 0) show = true"
+                    placeholder="Cari kafe, area, atau suasana..."
+                    class="flex-1 bg-transparent border-none text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 text-base px-2 h-14"
+                >
+                <button x-show="query.length > 0" @click="query = ''; results = []; show = false" class="p-3 text-gray-400 hover:text-gray-600 transition-colors" x-cloak>
+                    <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
+                </button>
+                <button class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold px-8 h-14 rounded-full transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#B87C39]/30 ml-2 cursor-pointer">
+                    <svg viewBox="0 0 24 24" class="w-4 h-4 hidden sm:inline fill-none stroke-current" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+                    Cari <span class="hidden sm:inline">Kafe</span>
+                </button>
             </div>
 
             {{-- Results Dropdown --}}
             <div x-show="show && query.length >= 2"
-                 x-transition:enter="transition ease-out duration-200"
-                 x-transition:enter-start="opacity-0 translate-y-2"
+                 x-cloak
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0 translate-y-4"
                  x-transition:enter-end="opacity-100 translate-y-0"
-                 class="absolute top-full left-0 right-0 mt-3 bg-white border border-gray-100 rounded-2xl shadow-2xl overflow-hidden min-h-[100px] flex flex-col justify-center">
+                 class="absolute top-full left-0 right-0 mt-4 bg-white border border-gray-100 rounded-3xl shadow-2xl overflow-hidden min-h-[100px] flex flex-col justify-center z-50 max-h-[420px] overflow-y-auto">
                 
                 {{-- State: Loading --}}
-                <div x-show="loading" class="py-10 flex flex-col items-center justify-center gap-3">
-                    <i data-lucide="loader-2" class="w-8 h-8 animate-spin text-[#b87c39]"></i>
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest animate-pulse">Mencari Kafe Terbaik...</p>
+                <div x-show="loading" class="py-10 flex flex-col items-center justify-center gap-3 text-gray-400">
+                    <div class="w-8 h-8 border-2 border-[#B87C39]/20 border-t-[#B87C39] rounded-full animate-spin"></div>
+                    <p class="text-[10px] font-bold uppercase tracking-widest animate-pulse">Mencari racikan terbaik...</p>
                 </div>
 
                 {{-- State: Not Found --}}
-                <div x-show="!loading && results.length === 0" class="py-10 flex flex-col items-center justify-center gap-3">
-                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center text-gray-300">
-                        <i data-lucide="search" class="w-6 h-6"></i>
+                <div x-show="!loading && results.length === 0" class="py-10 text-center px-6">
+                    <div class="w-12 h-12 bg-gray-50 rounded-full flex items-center justify-center mx-auto mb-4 border border-gray-100 text-gray-300">
+                        <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     </div>
-                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center px-6 leading-relaxed">
-                        Maaf, kafe "<span class="text-gray-900" x-text="query"></span>" tidak ditemukan
-                    </p>
+                    <p class="text-sm text-gray-500">Kafe <strong class="text-gray-900" x-text="'&quot;' + query + '&quot;'"></strong> belum ada di radar kami.</p>
                 </div>
 
                 {{-- State: Results Found --}}
                 <div x-show="!loading && results.length > 0">
-                    <div class="px-5 py-3 border-b border-gray-50 bg-gray-50/30">
-                        <p class="text-[9px] font-black text-gray-400 uppercase tracking-widest">Hasil Pencarian</p>
+                    <div class="px-6 py-3 bg-gray-50/50 border-b border-gray-100 text-[10px] font-bold text-[#B87C39] uppercase tracking-widest">
+                        <span x-text="results.length"></span> Kafe Ditemukan
                     </div>
 
                     <template x-for="item in results" :key="item.id_kafe">
-                        <a :href="`/explore/${item.id_kafe}`" class="flex items-center justify-between px-5 py-4 hover:bg-gray-50 transition-colors group">
-                            <div class="flex items-center gap-4">
-                                <div class="w-10 h-10 rounded-xl bg-amber-50 flex items-center justify-center text-[#b87c39] group-hover:bg-[#b87c39] group-hover:text-white transition-all">
-                                    <i data-lucide="coffee" class="w-5 h-5"></i>
-                                </div>
-                                <div>
-                                    <h4 class="text-sm font-bold text-gray-900" x-text="item.nama_kafe"></h4>
-                                    <p class="text-[10px] text-gray-400 font-medium" x-text="`${item.jarak} km dari kampus`"></p>
-                                </div>
+                        <a :href="'/explore/' + item.id_kafe" class="flex items-center gap-5 px-6 py-4 hover:bg-gray-50 transition-colors group border-b border-gray-50 last:border-0 border-collapse">
+                            <div class="w-12 h-12 rounded-2xl bg-[#B87C39]/10 flex items-center justify-center text-[#B87C39] group-hover:bg-[#B87C39] group-hover:text-white transition-all duration-300">
+                                <svg viewBox="0 0 24 24" class="w-6 h-6 fill-none stroke-current" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <path d="M17 8h1a4 4 0 1 1 0 8h-1M3 8h14v9a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V8z"/>
+                                    <path d="M6 2v2M10 2v2M14 2v2"/>
+                                </svg>
                             </div>
-                            <i data-lucide="chevron-right" class="w-4 h-4 text-gray-300 group-hover:translate-x-1 transition-transform"></i>
+                            <div class="flex-1 text-left">
+                                <h4 class="text-base font-bold text-gray-900 group-hover:text-[#B87C39] transition-colors" x-text="item.nama_kafe"></h4>
+                                <p class="text-sm text-gray-400 flex items-center gap-1.5 mt-1">
+                                    <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-[#B87C39]/70 fill-none stroke-current" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                                    <span x-text="item.jarak ? item.jarak + ' km' : 'Malang'"></span>
+                                    <span class="text-gray-200">•</span>
+                                    <span class="line-clamp-1" x-text="item.alamat"></span>
+                                </p>
+                            </div>
+                            <svg viewBox="0 0 24 24" class="w-5 h-5 text-gray-300 group-hover:text-[#B87C39] group-hover:translate-x-1 transition-all fill-none stroke-current" stroke-width="2.5"><path d="m9 18 6-6-6-6"/></svg>
                         </a>
                     </template>
                 </div>
