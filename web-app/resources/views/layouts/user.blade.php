@@ -33,11 +33,39 @@
         @yield('content')
     </main>
 
+    <x-user.ui.login-modal />
+
     @include('partials.user.footer')
 
     <script>
         lucide.createIcons();
     </script>
+    
+    @auth
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const pendingId = localStorage.getItem('pending_bookmark_id');
+            if (pendingId) {
+                localStorage.removeItem('pending_bookmark_id');
+                fetch(`/kafe/${pendingId}/bookmark`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                    }
+                })
+                .then(res => res.json())
+                .then(data => {
+                    if (data.success) {
+                        window.location.reload();
+                    }
+                });
+            }
+        });
+    </script>
+    @endauth
+
     @stack('scripts')
 </body>
 </html>

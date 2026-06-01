@@ -132,9 +132,12 @@
                     </span>
                 </div>
 
-                <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 mb-4 tracking-tight leading-tight">
-                    {{ $cafe->nama_kafe }}
-                </h1>
+                <div class="flex items-center justify-between gap-4 mb-4">
+                    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                        {{ $cafe->nama_kafe }}
+                    </h1>
+                    <x-user.ui.bookmark-button :kafe="$cafe" :isDetail="true" />
+                </div>
 
                 @php
                     $rating = $cafe->rating;
@@ -325,6 +328,158 @@
                 </div>
             </aside>
 
+        </div>
+    </section>
+
+    {{-- Ulasan Pengguna (Modern SaaS-Style) --}}
+    <section class="max-w-7xl mx-auto px-4 md:px-8 py-16 border-t border-[#b87c39]/10">
+        <div class="mb-10">
+            <p class="text-xs font-bold text-[#b87c39] uppercase tracking-widest mb-1">Ulasan Komunitas</p>
+            <h2 class="text-2xl md:text-3xl font-extrabold text-gray-900 tracking-tight">Apa Kata Pengunjung?</h2>
+        </div>
+
+        @if(session('success_review'))
+            <div class="mb-8 p-4 bg-emerald-50 border border-emerald-100 text-emerald-800 text-sm font-semibold rounded-2xl">
+                {{ session('success_review') }}
+            </div>
+        @endif
+
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-10 items-start">
+            
+            {{-- Statistik Rating (Left Column) --}}
+            <div class="bg-gray-50/50 rounded-3xl p-8 border border-gray-200/40">
+                <h3 class="text-base font-bold text-gray-900 mb-4">Statistik Rating</h3>
+                <div class="flex items-baseline gap-2 mb-4">
+                    <span class="text-5xl font-black text-gray-900 tracking-tight">{{ number_format($cafe->rating, 1) }}</span>
+                    <span class="text-sm font-bold text-gray-400">/ 5.0</span>
+                </div>
+                
+                {{-- Stars --}}
+                <div class="flex items-center gap-1 mb-6">
+                    @php
+                        $fullStars = floor($cafe->rating);
+                        $halfStar = ($cafe->rating - $fullStars) >= 0.4;
+                    @endphp
+                    @for($i = 0; $i < 5; $i++)
+                        @if($i < $fullStars)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 fill-amber-400 text-amber-400" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        @elseif($i == $fullStars && $halfStar)
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24"><defs><linearGradient id="half-star"><stop offset="50%" stop-color="#fbbf24"/><stop offset="50%" stop-color="#d1d5db"/></linearGradient></defs><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#half-star)" stroke="#fbbf24" stroke-width="0.5"/></svg>
+                        @else
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-gray-200 fill-gray-200" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                        @endif
+                    @endfor
+                </div>
+
+                <div class="space-y-2">
+                    @php
+                        $totalReviews = $cafe->reviews->count();
+                    @endphp
+                    @for($stars = 5; $stars >= 1; $stars--)
+                        @php
+                            $starCount = $cafe->reviews->where('rating', $stars)->count();
+                            $percentage = $totalReviews > 0 ? ($starCount / $totalReviews) * 100 : 0;
+                        @endphp
+                        <div class="flex items-center gap-3 text-xs font-bold text-gray-500">
+                            <span class="w-3 text-right">{{ $stars }}</span>
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-3 h-3 fill-amber-400 text-amber-400 shrink-0" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                            <div class="flex-1 h-2 bg-gray-200 rounded-full overflow-hidden">
+                                <div class="bg-[#b87c39] h-full rounded-full" style="width: {{ $percentage }}%"></div>
+                            </div>
+                            <span class="w-8 text-right text-gray-400">{{ $starCount }}</span>
+                        </div>
+                    @endfor
+                </div>
+            </div>
+
+            {{-- Formulir Review (Center Column) --}}
+            <div class="lg:col-span-2 space-y-8">
+                @auth
+                    <div class="bg-white border border-gray-100 rounded-3xl p-6 md:p-8 shadow-sm">
+                        <h3 class="text-lg font-extrabold text-gray-900 mb-2">Tulis Ulasan Anda</h3>
+                        <p class="text-xs text-gray-400 font-medium mb-6">Bagikan pengalaman Anda tentang {{ $cafe->nama_kafe }} kepada mahasiswa lainnya.</p>
+                        
+                        <form action="{{ route('user.kafe.review.store', $cafe->id_kafe) }}" method="POST" x-data="{ userRating: 5 }">
+                            @csrf
+                            <input type="hidden" name="rating" :value="userRating">
+                            
+                            {{-- Interactive Rating Star --}}
+                            <div class="mb-5">
+                                <label class="block text-[10px] font-bold text-[#2B1A09] uppercase tracking-wider mb-2">Rating Anda</label>
+                                <div class="flex items-center gap-1.5">
+                                    <template x-for="i in 5">
+                                        <button type="button" @click="userRating = i" class="cursor-pointer focus:outline-none">
+                                            <svg xmlns="http://www.w3.org/2000/svg" 
+                                                 class="w-8 h-8 transition-colors duration-200" 
+                                                 :class="i <= userRating ? 'fill-amber-400 text-amber-400' : 'text-gray-200 fill-gray-200'" 
+                                                 viewBox="0 0 24 24">
+                                                <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
+                                            </svg>
+                                        </button>
+                                    </template>
+                                </div>
+                            </div>
+
+                            <div class="mb-5">
+                                <label class="block text-[10px] font-bold text-[#2B1A09] uppercase tracking-wider mb-2">Komentar / Ulasan (Opsional)</label>
+                                <textarea name="ulasan" rows="4" 
+                                          class="w-full bg-gray-50 border border-gray-200 rounded-2xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all resize-none"
+                                          placeholder="Bagikan pendapat Anda tentang tempat ini (Opsional)..."></textarea>
+                                @error('ulasan') <p class="text-red-500 text-xs mt-1.5 font-medium">{{ $message }}</p> @enderror
+                            </div>
+
+                            <button type="submit" 
+                                    class="bg-[#B87C39] hover:bg-[#2B1A09] text-white font-bold text-xs px-6 py-3.5 rounded-xl transition-all shadow-md shadow-[#B87C39]/10 hover:shadow-[#2B1A09]/20 cursor-pointer">
+                                Kirim Ulasan
+                            </button>
+                        </form>
+                    </div>
+                @else
+                    <div class="bg-gray-50 border border-dashed border-gray-200 rounded-3xl p-8 text-center flex flex-col items-center justify-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10 text-gray-400 mb-3" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                        <h4 class="text-sm font-bold text-gray-900 mb-1">Masuk Untuk Menulis Ulasan</h4>
+                        <p class="text-xs text-gray-400 max-w-xs mb-5 font-medium">Bantu mahasiswa lain menemukan sudut ternyaman dengan berbagi ulasan jujur Anda.</p>
+                        <button @click="$dispatch('open-login-modal')" 
+                                class="bg-[#B87C39] hover:bg-[#2B1A09] text-white font-bold text-xs px-5 py-3 rounded-xl transition-all cursor-pointer">
+                            Masuk Sekarang
+                        </button>
+                    </div>
+                @endauth
+
+                {{-- Ulasan Lists --}}
+                <div class="space-y-4">
+                    <h3 class="text-sm font-bold uppercase tracking-wider text-[#2B1A09] flex items-center gap-2">
+                        <span class="w-1.5 h-4 bg-[#B87C39] rounded-full"></span>
+                        Semua Ulasan ({{ $totalReviews }})
+                    </h3>
+                    
+                    @forelse($cafe->reviews as $rev)
+                        <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm space-y-3.5">
+                            <div class="flex items-center justify-between">
+                                <div class="flex items-center gap-3">
+                                    <div class="w-8 h-8 rounded-full bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center font-bold text-[10px] uppercase overflow-hidden">
+                                        <span>{{ substr($rev->user->name ?? 'U', 0, 2) }}</span>
+                                    </div>
+                                    <div>
+                                        <p class="text-xs font-bold text-gray-900">{{ $rev->user->name ?? 'User Anonim' }}</p>
+                                        <p class="text-[10px] text-gray-400 font-medium">{{ $rev->created_at->diffForHumans() }}</p>
+                                    </div>
+                                </div>
+                                <div class="flex items-center gap-0.5">
+                                    @for($i = 0; $i < 5; $i++)
+                                        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5 {{ $i < $rev->rating ? 'fill-amber-400 text-amber-400' : 'text-gray-200 fill-gray-200' }}" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                                    @endfor
+                                </div>
+                            </div>
+                            <p class="text-xs text-gray-500 font-medium leading-relaxed">{{ $rev->ulasan }}</p>
+                        </div>
+                    @empty
+                        <div class="py-8 text-center text-gray-100/50">
+                            <p class="text-xs font-medium text-gray-400">Belum ada ulasan untuk kafe ini. Jadilah yang pertama!</p>
+                        </div>
+                    @endforelse
+                </div>
+            </div>
         </div>
     </section>
 

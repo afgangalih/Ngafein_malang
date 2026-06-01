@@ -44,9 +44,26 @@
             <div class="p-6 border-t bg-gray-50 flex gap-3 sticky bottom-0">
                 <button @click="closePanel()" 
                         class="flex-1 px-4 py-2.5 border border-gray-300 bg-white rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all active:scale-95"
-                        x-show="panelMode === 'detail'">
+                        x-show="panelMode === 'detail' && !(typeof isApproval !== 'undefined' && isApproval)">
                     Tutup Detail
                 </button>
+                
+                {{-- Approval Buttons inside Side Panel --}}
+                <div class="flex gap-2 flex-1" x-show="panelMode === 'detail' && (typeof isApproval !== 'undefined' && isApproval)">
+                    <button @click="closePanel()" 
+                            class="px-4 py-2.5 border border-gray-300 bg-white rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all active:scale-95">
+                        Tutup
+                    </button>
+                    <button @click="approveCafe(currentCafeId)"
+                            class="flex-1 px-4 py-2.5 bg-[#10b981] text-white rounded-xl font-bold text-sm hover:brightness-95 shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer">
+                        <i data-lucide="check" class="w-4 h-4"></i> Terima
+                    </button>
+                    <button @click="rejectCafe(currentCafeId)"
+                            class="flex-1 px-4 py-2.5 bg-[#ef4444] text-white rounded-xl font-bold text-sm hover:brightness-95 shadow-md transition-all active:scale-95 flex items-center justify-center gap-1.5 cursor-pointer">
+                        <i data-lucide="x" class="w-4 h-4"></i> Tolak
+                    </button>
+                </div>
+
                 <button @click="closePanel()" 
                         class="flex-1 px-4 py-2.5 border border-gray-300 bg-white rounded-xl text-sm font-bold text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition-all active:scale-95"
                         x-show="panelMode !== 'detail'">

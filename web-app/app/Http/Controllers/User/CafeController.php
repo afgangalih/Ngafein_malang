@@ -14,7 +14,7 @@ class CafeController extends Controller
 
 
         if ($category) {
-            $query = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+            $query = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
                 ->withCount(['fasilitas', 'menus']);
 
             switch ($category) {
@@ -50,21 +50,21 @@ class CafeController extends Controller
         }
 
         
-        $terdekat = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+        $terdekat = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
             ->where('jarak', '<=', 1.5)
             ->orderBy('jarak', 'asc')
             ->take(4)->get();
-        $sultan = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+        $sultan = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
             ->withCount('fasilitas')
             ->having('fasilitas_count', '>=', 9)
             ->orderBy('fasilitas_count', 'desc')
             ->take(4)->get();
-        $menuLengkap = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+        $menuLengkap = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
             ->withCount('menus')
             ->having('menus_count', '>=', 6)
             ->orderBy('menus_count', 'desc')
             ->take(4)->get();
-        $buka24jam = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+        $buka24jam = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
             ->where('jam_buka', '00:00')
             ->where('jam_tutup', '23:59')
             ->take(4)
@@ -75,9 +75,9 @@ class CafeController extends Controller
 
     public function show($id)
     {
-        $cafe = KafeModel::with(['fasilitas', 'menus', 'gambar'])->findOrFail($id);
+        $cafe = KafeModel::approved()->with(['fasilitas', 'menus', 'gambar', 'reviews.user'])->findOrFail($id);
 
-        $rekomendasi = KafeModel::with(['menus', 'gambar', 'fasilitas'])
+        $rekomendasi = KafeModel::approved()->with(['menus', 'gambar', 'fasilitas'])
             ->where('id_kafe', '!=', $id)
             ->inRandomOrder()
             ->limit(4)
@@ -94,7 +94,7 @@ class CafeController extends Controller
             return response()->json([]);
         }
 
-        $cafes = KafeModel::where('nama_kafe', 'like', '%' . $query . '%')
+        $cafes = KafeModel::approved()->where('nama_kafe', 'like', '%' . $query . '%')
             ->take(5)
             ->get(['id_kafe', 'nama_kafe', 'jarak']);
 

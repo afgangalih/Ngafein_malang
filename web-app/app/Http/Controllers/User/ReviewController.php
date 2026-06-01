@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Http\Controllers\User;
+
+use App\Http\Controllers\Controller;
+use App\Models\KafeModel;
+use App\Models\ReviewModel;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
+class ReviewController extends Controller
+{
+    /**
+     * Store a newly created review in storage.
+     */
+    public function store(Request $request, $id)
+    {
+        $request->validate([
+            'rating' => 'required|integer|min:1|max:5',
+            'ulasan' => 'nullable|string',
+        ], [
+            'rating.required' => 'Rating bintang wajib dipilih!',
+            'rating.min' => 'Rating minimal adalah 1 bintang!',
+            'rating.max' => 'Rating maksimal adalah 5 bintang!',
+        ]);
+
+        $cafe = KafeModel::findOrFail($id);
+
+        // Save review
+        ReviewModel::create([
+            'user_id' => Auth::id(),
+            'kafe_id' => $id,
+            'rating' => $request->rating,
+            'ulasan' => $request->ulasan ?? '-',
+        ]);
+
+        // Recalculate average rating and update Kafe table
+        $avgRating = ReviewModel::where('kafe_id', $id)->avg('rating');
+        $cafe->update(['rating' => round($avgRating, 1)]);
+
+        return redirect()->back()->with('success_review', 'Terima kasih atas ulasan Anda! Ulasan Anda sangat berharga bagi komunitas.');
+    }
+}

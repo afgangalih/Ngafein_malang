@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'role',
     ];
 
     /**
@@ -41,4 +42,52 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+    /**
+     * Check if user is an admin.
+     */
+    public function isAdmin(): bool
+    {
+        return $this->role === 'admin';
+    }
+
+    /**
+     * Check if user is a student (mahasiswa).
+     */
+    public function isMahasiswa(): bool
+    {
+        return $this->role === 'mahasiswa';
+    }
+
+    /**
+     * Get the cafes favorited by this user.
+     */
+    public function favorites()
+    {
+        return $this->belongsToMany(KafeModel::class, 'favorit_kafe', 'user_id', 'kafe_id');
+    }
+
+    /**
+     * Get the reviews written by this user.
+     */
+    public function reviews()
+    {
+        return $this->hasMany(ReviewModel::class, 'user_id');
+    }
+
+    /**
+     * Get the cafes proposed/submitted by this user.
+     */
+    public function proposedCafes()
+    {
+        return $this->hasMany(KafeModel::class, 'user_id', 'id');
+    }
+
+    /**
+     * Get the cafes blacklisted by this user.
+     */
+    public function blacklistedCafes()
+    {
+        return $this->belongsToMany(KafeModel::class, 'blacklist_kafe', 'user_id', 'kafe_id');
+    }
 }

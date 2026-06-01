@@ -45,6 +45,15 @@
                   class="text-sm font-semibold whitespace-nowrap">Dashboard</span>
         </a>
 
+        {{-- Persetujuan Kafe --}}
+        <a href="{{ route('admin.approval.index') }}"
+           class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all
+           {{ request()->routeIs('admin.approval.*') ? 'bg-white text-[#B87A3D] shadow-lg' : 'text-white/70 hover:bg-white/10 hover:text-white' }}">
+            <i data-lucide="check-square" class="w-5 h-5 flex-shrink-0"></i>
+            <span x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
+                  class="text-sm font-semibold whitespace-nowrap">Persetujuan Kafe</span>
+        </a>
+
         {{-- Data Kriteria --}}
         <a href="{{ route('admin.kriteria.index') }}"
            class="flex items-center gap-4 px-4 py-3.5 rounded-2xl transition-all

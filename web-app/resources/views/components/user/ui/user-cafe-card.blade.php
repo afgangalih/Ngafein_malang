@@ -9,7 +9,14 @@
     $hasAC = $k->fasilitas->contains(fn($f) => str_contains(strtolower($f->nama_fasilitas), 'ac'));
 @endphp
 
+@php
+    $isBlacklisted = Auth::check() && Auth::user()->blacklistedCafes->contains('id_kafe', $k->id_kafe);
+@endphp
+
 <a href="{{ route('user.explore.detail', $k->id_kafe) }}"
+   x-data="{ blacklisted: {{ $isBlacklisted ? 'true' : 'false' }} }"
+   @blacklist-toggled.window="if ($event.detail.id === {{ $k->id_kafe }}) blacklisted = $event.detail.blacklisted"
+   :class="blacklisted ? 'opacity-40 grayscale-[60%] hover:opacity-100 hover:grayscale-0 duration-300' : ''"
    class="group relative block aspect-[4/5] rounded-[2rem] overflow-hidden shadow-xl hover:shadow-[#b87c39]/20 transition-all duration-500 bg-gray-900">
     
     {{-- Background Image --}}
@@ -26,6 +33,9 @@
             <span class="text-[9px] font-bold uppercase tracking-widest">Cafe</span>
         </div>
     </div>
+
+    <x-user.ui.bookmark-button :kafe="$k" />
+    <x-user.ui.blacklist-button :kafe="$k" />
 
     {{-- Bottom Info (Normal State) --}}
     <div class="absolute bottom-6 left-6 right-6 group-hover:translate-y-10 group-hover:opacity-0 transition-all duration-500">

@@ -88,7 +88,7 @@ class CafeController extends Controller
 
     public function show($id, Request $request)
     {
-        $kafe = KafeModel::with(['fasilitas', 'menus', 'gambar'])->findOrFail($id);
+        $kafe = KafeModel::withTrashed()->with(['fasilitas', 'menus', 'gambar'])->findOrFail($id);
 
         if ($request->ajax()) {
             return view('admin.cafe.partials.detail', compact('kafe'))->render();

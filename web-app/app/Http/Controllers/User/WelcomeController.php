@@ -10,10 +10,10 @@ class WelcomeController extends Controller
 {
     public function index(Request $request)
     {
-        $totalKafe  = KafeModel::count();
-        $avgRating  = KafeModel::avg('rating');
+        $totalKafe  = KafeModel::approved()->count();
+        $avgRating  = KafeModel::approved()->avg('rating');
 
-        $kafeUnggulan = KafeModel::with('gambar')
+        $kafeUnggulan = KafeModel::approved()->with('gambar')
             ->orderByDesc('rating')
             ->limit(3)
             ->get();
@@ -21,7 +21,7 @@ class WelcomeController extends Controller
         $hour = now()->hour;
         $rekomendasiWaktu = $this->getWaktuLabel($hour);
 
-        $semuaKafe = KafeModel::with('gambar')
+        $semuaKafe = KafeModel::approved()->with('gambar')
             ->orderByDesc('rating')
             ->get();
 
