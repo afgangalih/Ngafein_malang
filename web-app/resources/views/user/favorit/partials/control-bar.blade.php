@@ -11,7 +11,7 @@
         <button @click="activeTab = 'blacklist'" 
                 :class="activeTab === 'blacklist' ? 'border-red-500 text-red-600 font-extrabold' : 'border-transparent text-gray-400 hover:text-red-500'" 
                 class="pb-4 border-b-2 font-bold text-xs tracking-wider uppercase transition-all duration-300 cursor-pointer flex items-center gap-2 focus:outline-none">
-            <span>Blacklist</span>
+            <span>Exclude</span>
             <span class="px-2 py-0.5 text-[10px] font-bold rounded-md" 
                   :class="activeTab === 'blacklist' ? 'bg-red-500/10 text-red-600' : 'bg-gray-100 text-gray-400'" 
                   x-text="cafes.filter(c => c.blacklisted).length"></span>
