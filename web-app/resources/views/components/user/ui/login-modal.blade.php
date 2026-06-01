@@ -2,6 +2,7 @@
         show: false, 
         email: '', 
         password: '', 
+        showPassword: false,
         errors: {}, 
         loading: false, 
         successMsg: '' 
@@ -109,15 +110,25 @@
                 <div class="flex items-center justify-between mb-2">
                     <label class="block text-[11px] font-bold text-[#2B1A09] uppercase tracking-wider">Password</label>
                 </div>
-                <input type="password" 
-                       x-model="password" 
-                       required 
-                       placeholder="••••••••"
-                       class="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-5 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all text-[#2B1A09]"
-                       :class="errors.password ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''">
+                <div class="relative">
+                    <input :type="showPassword ? 'text' : 'password'" 
+                           x-model="password" 
+                           required 
+                           placeholder="••••••••"
+                           class="w-full bg-gray-50/50 border border-gray-200 rounded-xl pl-5 pr-12 py-3.5 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all text-[#2B1A09]"
+                           :class="errors.password ? 'border-red-500 focus:border-red-500 focus:ring-red-500' : ''">
+                    <button type="button" @click="showPassword = !showPassword" class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 transition-colors focus:outline-none cursor-pointer">
+                        <template x-if="showPassword">
+                            <svg viewBox="0 0 24 24" class="w-4.5 h-4.5 fill-none stroke-current" stroke-width="2.5"><path d="M9.88 9.88a3 3 0 1 0 4.24 4.24M10.73 5.08A10.43 10.43 0 0 1 12 5c7 0 10 7 10 7a13.16 13.16 0 0 1-1.67 2.68M6.61 6.61A13.52 13.52 0 0 0 2 12s3 7 10 7a9.74 9.74 0 0 0 5.39-1.61M2 2l20 20"/></svg>
+                        </template>
+                        <template x-if="!showPassword">
+                            <svg viewBox="0 0 24 24" class="w-4.5 h-4.5 fill-none stroke-current" stroke-width="2.5"><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+                        </template>
+                    </button>
+                </div>
                 <template x-if="errors.password">
                     <p class="text-red-600 text-[11px] font-semibold mt-1.5 flex items-center gap-1">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                        <svg viewBox="0 0 24 24" class="w-3 h-3 fill-none stroke-current" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
                         <span x-text="errors.password[0]"></span>
                     </p>
                 </template>
