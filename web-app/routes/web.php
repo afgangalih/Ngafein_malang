@@ -26,6 +26,7 @@ Route::controller(LoginController::class)->group(function () {
     Route::get('/login', 'showLoginForm')->name('login');
     Route::post('/login', 'login')->name('login.post');
     Route::post('/logout', 'logout')->name('logout');
+    Route::post('/register', 'register')->name('register.post');
 });
 
 // user
