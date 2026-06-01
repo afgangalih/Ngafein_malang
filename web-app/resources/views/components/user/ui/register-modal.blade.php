@@ -46,8 +46,8 @@
             <h3 class="font-serif font-bold text-2xl text-[#2B1A09] text-center tracking-tight">
                 Buat Akun <span class="text-[#2B1A09]">Ngafe</span><span class="text-[#B87C39]">in</span>
             </h3>
-            <p class="text-xs text-[#2B1A09]/60 mt-1 text-center font-medium">
-                Daftar sekarang untuk menyimpan favorit & beri review kafe
+            <p class="text-xs text-[#2B1A09]/60 mt-1.5 text-center font-medium">
+                Yuk gabung! Simpan kafe favoritmu & bagikan ulasan menarik di Malang
             </p>
         </div>
 

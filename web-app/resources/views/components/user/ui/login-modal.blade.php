@@ -48,8 +48,8 @@
             <h3 class="font-serif font-bold text-2xl text-[#2B1A09] text-center tracking-tight">
                 Selamat Datang di <span class="text-[#2B1A09]">Ngafe</span><span class="text-[#B87C39]">in</span>
             </h3>
-            <p class="text-xs text-[#2B1A09]/60 mt-1 text-center font-medium">
-                Masuk untuk menjelajahi, membookmark, & mereview kafe terbaik
+            <p class="text-xs text-[#2B1A09]/60 mt-1.5 text-center font-medium">
+                Masuk dulu yuk! Temukan kafe ternyaman untuk nugas & nongkrong di Malang
             </p>
         </div>
 
