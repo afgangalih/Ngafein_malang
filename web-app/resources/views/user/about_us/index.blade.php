@@ -6,34 +6,41 @@
 @push('styles')
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,500;0,600;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
   :root {
-    --color-brand: #B87C39;
-    --color-brand-deep: #6E4A2F;
-    --color-espresso: #241409;
-    --color-dark: #2B1A09;
+    --color-brand: #101828;
+    --color-brand-deep: #101828;
+    --color-espresso: #101828;
+    --color-dark: #B87C39;
     --color-canvas: #FCFAF8;
     --color-cream: #F7F0E8;
-    --color-text-body: #3A2719;
-    --color-text-muted: rgba(58, 39, 25, 0.66);
-    --color-line: rgba(110, 74, 47, 0.13);
-    --color-line-strong: rgba(110, 74, 47, 0.22);
-    --font-playfair: "Playfair Display", serif;
-    --font-dm-sans: "DM Sans", sans-serif;
+    --color-text-body: #B87C39;
+    --color-text-muted: rgba(16, 24, 40, 0.66);
+    --color-line: rgba(16, 24, 40, 0.13);
+    --color-line-strong: rgba(16, 24, 40, 0.22);
+    --font-plus-jakarta: 'Plus Jakarta Sans', sans-serif;
     --radius-lg: 32px;
     --radius-md: 24px;
   }
 
-
   body {
     background: #fff;
     overflow-x: hidden;
+    font-family: var(--font-plus-jakarta);
   }
 
   .tk-container {
     width: min(1120px, calc(100% - 40px));
     margin: 0 auto;
+  }
+
+  [id^="tk-"] {
+    padding: clamp(2rem, 4vw, 3.5rem) 0 !important;
+  }
+
+  #tk-hero-section {
+    padding: 7rem 0 3rem !important;
   }
 
   .section-label {
@@ -46,6 +53,7 @@
     text-transform: uppercase;
     color: var(--color-brand);
     margin-bottom: 1rem;
+    font-family: var(--font-plus-jakarta);
   }
 
   .section-label::before {
@@ -57,24 +65,25 @@
   }
 
   .section-title {
-    font-family: var(--font-playfair);
-    font-size: clamp(2rem, 4.2vw, 3.35rem);
-    font-weight: 600;
+    font-family: var(--font-plus-jakarta);
+    font-size: clamp(1.5rem, 3vw, 2.4rem);
+    font-weight: 700;
     line-height: 1.08;
     color: var(--color-brand);
-    letter-spacing: 0;
+    letter-spacing: -0.01em;
   }
 
   .section-title em {
-    color: var(--color-espresso);
-    font-style: italic;
-    font-weight: 400;
+    color: var(--color-dark);
+    font-style: normal;
+    font-weight: 800;
   }
 
   .section-body {
     font-size: 1rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.85;
+    font-family: var(--font-plus-jakarta);
   }
 
   .tk-divider {
@@ -83,7 +92,6 @@
     background: var(--color-brand);
     margin: 1.55rem 0;
   }
-
 
   .r {
     opacity: 0;
@@ -105,7 +113,6 @@
 @endpush
 
 @section('content')
-
   @include('user.about_us.sections.hero')
   @include('user.about_us.sections.latar')
   @include('user.about_us.sections.tujuan')
@@ -114,12 +121,10 @@
   @include('user.about_us.sections.kenapa')
   @include('user.about_us.sections.visimisi')
   @include('user.about_us.sections.cta')
-
 @endsection
 
 @push('scripts')
 <script>
-
   const revealElements = document.querySelectorAll('.r');
   const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => { 

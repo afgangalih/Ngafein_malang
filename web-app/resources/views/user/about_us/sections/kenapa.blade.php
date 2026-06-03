@@ -50,16 +50,17 @@
   }
 
   .kenapa-big {
-    font-family: var(--font-playfair);
-    font-size: clamp(1.45rem, 2.4vw, 2rem);
-    font-style: italic;
-    color: var(--color-espresso);
-    line-height: 1.42;
+    font-family: var(--font-plus-jakarta);
+    font-size: clamp(1.2rem, 2vw, 1.7rem);
+    font-weight: 600;
+    font-style: normal;
+    color: #101828;
+    line-height: 1.5;
     margin-top: 2.4rem;
     padding: 1.6rem;
     border-radius: var(--radius-md);
-    background: rgba(184, 124, 57, 0.08);
-    border: 1px solid rgba(184, 124, 57, 0.16);
+    background: rgba(16, 24, 40, 0.04);
+    border: 1px solid rgba(16, 24, 40, 0.1);
   }
 
   .kenapa-list {
@@ -69,8 +70,8 @@
 
   .kenapa-item {
     background: #fff;
-    border: 1px solid rgba(110, 74, 47, 0.08);
-    box-shadow: 0 4px 20px -10px rgba(36, 20, 9, 0.08);
+    border: 1px solid rgba(16, 24, 40, 0.08);
+    box-shadow: 0 4px 20px -10px rgba(16, 24, 40, 0.08);
     border-radius: var(--radius-md);
     padding: 1.3rem;
     display: flex;
@@ -81,18 +82,18 @@
 
   .kenapa-item:hover {
     transform: translateY(-6px);
-    border-color: rgba(184, 124, 57, 0.34);
-    box-shadow: 0 28px 70px -34px rgba(110, 74, 47, 0.46);
+    border-color: rgba(16, 24, 40, 0.2);
+    box-shadow: 0 28px 70px -34px rgba(16, 24, 40, 0.18);
   }
 
   .k-icon {
     width: 46px;
     height: 46px;
     min-width: 46px;
-    border: 1px solid rgba(184, 124, 57, 0.2);
+    border: 1px solid rgba(16, 24, 40, 0.15);
     border-radius: 16px;
-    background: rgba(184, 124, 57, 0.1);
-    color: var(--color-brand-deep);
+    background: rgba(16, 24, 40, 0.06);
+    color: #101828;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -100,16 +101,27 @@
     overflow: hidden;
   }
 
+  .kenapa-item h4 {
+    font-size: 0.95rem;
+    font-weight: 700;
+    color: #101828;
+    margin-bottom: 0.35rem;
+    font-family: var(--font-plus-jakarta);
+  }
+
+  .kenapa-item p {
+    font-size: 0.87rem;
+    color: rgba(16, 24, 40, 0.66);
+    line-height: 1.65;
+    font-family: var(--font-plus-jakarta);
+  }
+
   @media (max-width: 980px) {
-    .kenapa-layout {
-      grid-template-columns: 1fr;
-    }
+    .kenapa-layout { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 640px) {
-    .kenapa-item {
-      padding: 1.15rem;
-    }
+    .kenapa-item { padding: 1.15rem; }
   }
 </style>
 @endpush

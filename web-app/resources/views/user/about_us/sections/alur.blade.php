@@ -79,8 +79,8 @@
     left: 8%;
     right: 8%;
     height: 1px;
-    background: var(--color-brand);
-    opacity: 0.25;
+    background: #101828;
+    opacity: 0.15;
   }
 
   .alur-step {
@@ -96,15 +96,15 @@
     width: 66px;
     height: 66px;
     border-radius: 22px;
-    border: 1px solid rgba(110, 74, 47, 0.22);
+    border: 1px solid rgba(16, 24, 40, 0.22);
     background: #fff;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-family: var(--font-playfair);
+    font-family: var(--font-plus-jakarta);
     font-size: 1.2rem;
-    font-weight: 600;
-    color: var(--color-espresso);
+    font-weight: 700;
+    color: #101828;
     margin-bottom: 1.15rem;
     position: relative;
     z-index: 1;
@@ -113,26 +113,28 @@
 
   .alur-step:hover .alur-circle {
     transform: translateY(-5px);
-    background: rgba(184, 124, 57, 0.08);
+    background: rgba(16, 24, 40, 0.05);
   }
 
   .alur-step.active .alur-circle {
-    background: var(--color-brand-deep);
+    background: #B87C39;
     color: #fff;
-    border-color: var(--color-brand-deep);
+    border-color: #B87C39;
   }
 
   .alur-step h4 {
     font-size: 0.9rem;
     font-weight: 700;
-    color: var(--color-espresso);
+    color: #101828;
     margin-bottom: 0.45rem;
+    font-family: var(--font-plus-jakarta);
   }
 
   .alur-step p {
     font-size: 0.8rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.65;
+    font-family: var(--font-plus-jakarta);
   }
 
   @media (max-width: 980px) {
@@ -148,7 +150,7 @@
       text-align: left;
       align-items: start;
       background: rgba(255,255,255,0.84);
-      border: 1px solid rgba(110, 74, 47, 0.13);
+      border: 1px solid rgba(16, 24, 40, 0.13);
       border-radius: var(--radius-md);
       padding: 1rem;
     }

@@ -18,7 +18,7 @@
   }
 
   .cta-block {
-    background: var(--color-dark);
+    background: #2B1A09;
     border-radius: 32px;
     padding: clamp(4rem, 8vw, 6rem) clamp(2rem, 6vw, 4rem);
     text-align: center;
@@ -32,24 +32,25 @@
     font-weight: 700;
     letter-spacing: 0.22em;
     text-transform: uppercase;
-    color: var(--color-brand);
+    color: #B87C39;
     margin-bottom: 1.1rem;
+    font-family: var(--font-plus-jakarta);
   }
 
   .cta-title {
-    font-family: var(--font-playfair);
+    font-family: var(--font-plus-jakarta);
     font-size: clamp(2.2rem, 5vw, 3.5rem);
-    font-weight: 600;
+    font-weight: 700;
     color: #fff;
     line-height: 1.05;
     margin-bottom: 2.5rem;
-    letter-spacing: -0.01em;
+    letter-spacing: -0.02em;
   }
 
   .cta-title em {
-    color: var(--color-brand);
-    font-style: italic;
-    font-weight: 400;
+    color: #B87C39;
+    font-style: normal;
+    font-weight: 800;
   }
 
   .cta-btns {
@@ -69,16 +70,17 @@
     font-weight: 700;
     text-decoration: none;
     transition: all 0.24s cubic-bezier(.2,.8,.2,1);
+    font-family: var(--font-plus-jakarta);
   }
 
   .cta-btn-primary {
-    background: var(--color-brand);
+    background: #B87C39;
     color: #fff;
   }
 
   .cta-btn-primary:hover {
     background: #fff;
-    color: var(--color-dark);
+    color: #101828;
   }
 
   .cta-btn-ghost {
@@ -92,18 +94,10 @@
   }
 
   @media (max-width: 480px) {
-    .cta-block {
-      padding: 2.5rem 1.75rem;
-    }
-
-    .cta-btns {
-      flex-direction: column;
-    }
-
+    .cta-block { padding: 2.5rem 1.75rem; }
+    .cta-btns { flex-direction: column; }
     .cta-btn-primary,
-    .cta-btn-ghost {
-      justify-content: center;
-    }
+    .cta-btn-ghost { justify-content: center; }
   }
 </style>
 @endpush

@@ -27,8 +27,8 @@
 <style>
   #tk-latar {
     padding: clamp(5rem, 9vw, 8rem) 0;
-    border-top: 1px solid rgba(110, 74, 47, 0.08);
-    border-bottom: 1px solid rgba(110, 74, 47, 0.08);
+    border-top: 1px solid rgba(16, 24, 40, 0.08);
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
   }
 
   .latar-grid {
@@ -46,19 +46,20 @@
 
   .latar-text p {
     font-size: 1rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.9;
     margin: 0;
+    font-family: var(--font-plus-jakarta);
   }
 
   .latar-quote-block {
     position: relative;
     background: #fff;
-    border: 1px solid rgba(110, 74, 47, 0.13);
+    border: 1px solid rgba(16, 24, 40, 0.13);
     border-radius: var(--radius-lg);
     padding: clamp(1.75rem, 4vw, 2.5rem);
     margin-bottom: 1.2rem;
-    box-shadow: 0 22px 55px -32px rgba(36, 20, 9, 0.34);
+    box-shadow: 0 22px 55px -32px rgba(16, 24, 40, 0.34);
   }
 
   .latar-quote-block::before {
@@ -67,23 +68,26 @@
     inset: 0 auto 0 0;
     width: 5px;
     border-radius: 999px;
-    background: var(--color-brand);
+    background: #B87C39;
   }
 
   .latar-quote {
-    font-family: var(--font-playfair);
-    font-size: clamp(1.35rem, 2.2vw, 1.8rem);
-    font-style: italic;
-    color: var(--color-espresso);
-    line-height: 1.45;
+    font-family: var(--font-plus-jakarta);
+    font-size: clamp(1.2rem, 2.2vw, 1.6rem);
+    font-weight: 600;
+    font-style: normal;
+    color: #101828;
+    line-height: 1.5;
   }
 
   .latar-quote-attr {
     font-size: 0.78rem;
-    color: var(--color-brand-deep);
+    color: #101828;
     letter-spacing: 0.08em;
     text-transform: uppercase;
     margin-top: 1rem;
+    font-family: var(--font-plus-jakarta);
+    font-weight: 600;
   }
 
   .latar-facts {
@@ -96,27 +100,26 @@
     align-items: flex-start;
     gap: 0.85rem;
     background: rgba(255, 255, 255, 0.72);
-    border: 1px solid rgba(110, 74, 47, 0.13);
+    border: 1px solid rgba(16, 24, 40, 0.13);
     border-radius: 18px;
     padding: 1rem 1.1rem;
     font-size: 0.9rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.65;
+    font-family: var(--font-plus-jakarta);
   }
 
   .lf-dot {
     width: 7px;
     height: 7px;
     min-width: 7px;
-    background: var(--color-brand);
+    background: #B87C39;
     border-radius: 50%;
     margin-top: 0.55rem;
   }
 
   @media (max-width: 980px) {
-    .latar-grid {
-      grid-template-columns: 1fr;
-    }
+    .latar-grid { grid-template-columns: 1fr; }
   }
 </style>
 @endpush

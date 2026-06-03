@@ -9,8 +9,8 @@
 <style>
     @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,800;1,700&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,400&display=swap');
 
-    .rec-root   { font-family: 'DM Sans', sans-serif; background: #ffffff; }
-    .rec-serif  { font-family: 'Playfair Display', serif; }
+    .rec-root   { font-family: 'Plus Jakarta Sans', sans-serif; background: #ffffff; }
+    .rec-serif  { font-family: 'Plus Jakarta Sans', sans-serif; }
     [x-cloak] { display: none !important; }
 
     .kafe-card {
@@ -160,26 +160,31 @@
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
             <div class="fu">
                 <div class="inline-flex items-center gap-2 mb-5 px-3.5 py-1.5 rounded-full border text-[11px] font-semibold tracking-[.14em] uppercase"
-                     style="color:#b87c39;border-color:rgba(184,124,57,.2);background:rgba(184,124,57,.05)">
+                     style="color:#101828;border-color:rgba(184,124,57,.2);background:rgba(184,124,57,.05)">
                     <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
                     Rekomendasi berbasis SAW
                 </div>
-                <h1 class="rec-serif font-bold text-gray-900 leading-[1.06] tracking-tight"
-                    style="font-size:clamp(2.6rem,5.5vw,4.2rem)">
+                <h1
+                    class="font-bold tracking-tight leading-none"
+                    style="font-size:clamp(3rem,6vw,5rem); color:#0F172A;">
                     Pilihan Bikin<br>
-                    <em style="color:#b87c39;font-style:italic">Betah.</em>
+                    <span style="color:#B87C39;">Betah.</span>
                 </h1>
-                <p class="mt-5 text-gray-400 leading-relaxed max-w-md" style="font-size:.92rem;font-weight:300">
+
+                <p class="mt-5 max-w-md"
+                style="font-size:1rem;font-weight:500;color:#6A7282;">
                     Setiap rekomendasi dihitung dengan mempertimbangkan harga,
                     jarak, fasilitas, dan hal-hal yang paling kamu butuhkan.
                 </p>
             </div>
 
             <div class="fu d2 hidden lg:block shrink-0">
-                <p class="text-[10px] font-semibold tracking-[.2em] uppercase text-gray-300 mb-3 text-right">Bobot Kriteria</p>
+                <p class="text-[14px] font-semibold tracking-[.2em] uppercase text-gray-500 mb-3 text-right"
+                style="font-family:'Plus Jakarta Sans', sans-serif;">Bobot Kriteria
+                </p>
                 <div class="flex flex-wrap gap-2 justify-end max-w-xs">
                     @foreach([['Harga','20%','banknote'],['Jarak','20%','map-pin'],['Fasilitas','20%','wifi'],['Menu','15%','utensils'],['Jam','15%','clock'],['Rating','10%','star']] as [$lbl,$pct,$ico])
-                    <div class="flex items-center gap-1.5 bg-white border border-gray-100 rounded-full px-3 py-1.5 text-[11px] font-medium text-gray-500 shadow-sm">
+                    <div class="flex items-center gap-1.5 bg-white border border-gray-100 rounded-full px-3 py-1.5 text-[14px] font-medium text-gray-600 shadow-sm">
                         <i data-lucide="{{ $ico }}" class="w-3 h-3" style="color:#b87c39"></i>
                         {{ $lbl }} <span class="font-bold" style="color:#b87c39">{{ $pct }}</span>
                     </div>
@@ -200,7 +205,7 @@
                 <div class="w-8 h-8 rounded-xl flex items-center justify-center" style="background:rgba(184,124,57,.1)">
                     <i data-lucide="sliders-horizontal" class="w-4 h-4" style="color:#b87c39"></i>
                 </div>
-                <span class="font-semibold text-gray-800 text-sm">Filter Preferensi</span>
+                <span class="font-semibold text-gray-800 text-lg">Filter Preferensi</span>
                 @if($sudahDicari)
                 <span class="text-white text-[10px] font-bold px-2.5 py-0.5 rounded-full tracking-wide" style="background:#b87c39">AKTIF</span>
                 @endif
@@ -377,13 +382,14 @@
             Atur preferensimu dulu!
         </h2>
         <p class="text-gray-400 text-sm max-w-sm leading-relaxed mb-8" style="font-weight:300">
-            Pilih harga, jarak, rating, atau fasilitas di atas,
-            lalu klik <strong class="font-semibold text-gray-600">Cari Rekomendasi</strong>.
+            <strong class="font-semibold text-gray-600">            Pilih harga, jarak, rating, atau fasilitas di atas,
+            lalu klik Cari Rekomendasi</strong>.
         </p>
         <div class="flex flex-wrap justify-center gap-2">
             @foreach([['banknote','Harga'],['map-pin','Jarak'],['star','Rating'],['wifi','Fasilitas'],['utensils','Menu'],['clock','Jam Operasional']] as [$ico,$lbl])
-            <div class="inline-flex items-center gap-1.5 bg-white border border-gray-100 rounded-full px-3.5 py-1.5 text-xs font-medium text-gray-400 shadow-sm">
-                <i data-lucide="{{ $ico }}" class="w-3 h-3" style="color:#b87c39"></i>{{ $lbl }}
+            <div class="inline-flex items-center gap-2 bg-white border border-gray-100 rounded-full px-4 py-2 text-sm font-medium text-gray-500 shadow-sm">
+                <i data-lucide="{{ $ico }}" class="w-4 h-4" style="color:#b87c39"></i>
+                {{ $lbl }}
             </div>
             @endforeach
         </div>

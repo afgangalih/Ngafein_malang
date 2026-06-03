@@ -29,8 +29,8 @@
 <style>
   #tk-visimisi {
     padding: clamp(5rem, 9vw, 8rem) 0;
-    border-top: 1px solid rgba(110, 74, 47, 0.08);
-    border-bottom: 1px solid rgba(110, 74, 47, 0.08);
+    border-top: 1px solid rgba(16, 24, 40, 0.08);
+    border-bottom: 1px solid rgba(16, 24, 40, 0.08);
   }
 
   .vm-header {
@@ -55,8 +55,8 @@
 
   .vm-cell {
     background: #fff;
-    border: 1px solid rgba(110, 74, 47, 0.08);
-    box-shadow: 0 4px 20px -10px rgba(36, 20, 9, 0.08);
+    border: 1px solid rgba(16, 24, 40, 0.08);
+    box-shadow: 0 4px 20px -10px rgba(16, 24, 40, 0.08);
     border-radius: var(--radius-lg);
     padding: clamp(2rem, 4vw, 3rem);
     min-height: 330px;
@@ -65,12 +65,12 @@
 
   .vm-cell:hover {
     transform: translateY(-6px);
-    border-color: rgba(184, 124, 57, 0.34);
-    box-shadow: 0 28px 70px -34px rgba(110, 74, 47, 0.46);
+    border-color: rgba(16, 24, 40, 0.2);
+    box-shadow: 0 28px 70px -34px rgba(16, 24, 40, 0.18);
   }
 
   .vm-cell.dark {
-    background: var(--color-brand);
+    background: #2B1A09;
     border: none;
   }
 
@@ -79,28 +79,30 @@
     font-weight: 700;
     letter-spacing: 0.18em;
     text-transform: uppercase;
-    color: var(--color-brand);
+    color: #B87C39;
     margin-bottom: 1.2rem;
     display: block;
+    font-family: var(--font-plus-jakarta);
   }
 
   .vm-cell.dark .vm-tag { color: rgba(255, 231, 198, 0.68); }
 
   .vm-cell h3 {
-    font-family: var(--font-playfair);
-    font-size: clamp(1.45rem, 2.4vw, 2.15rem);
-    font-weight: 600;
-    color: var(--color-brand);
+    font-family: var(--font-plus-jakarta);
+    font-size: clamp(1.3rem, 2.2vw, 1.85rem);
+    font-weight: 700;
+    color: #101828;
     margin-bottom: 1rem;
-    line-height: 1.28;
+    line-height: 1.3;
   }
 
   .vm-cell.dark h3 { color: #fff; }
 
   .vm-cell p {
     font-size: 0.95rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.85;
+    font-family: var(--font-plus-jakarta);
   }
 
   .vm-cell.dark p { color: rgba(255, 255, 255, 0.78); }
@@ -117,30 +119,27 @@
     display: flex;
     gap: 0.85rem;
     font-size: 0.92rem;
-    color: rgba(58, 39, 25, 0.66);
+    color: rgba(16, 24, 40, 0.66);
     line-height: 1.7;
     align-items: flex-start;
+    font-family: var(--font-plus-jakarta);
   }
 
   .mi-dot {
     width: 7px;
     height: 7px;
     min-width: 7px;
-    background: var(--color-brand);
+    background: #B87C39;
     border-radius: 50%;
     margin-top: 0.55rem;
   }
 
   @media (max-width: 980px) {
-    .vm-grid {
-      grid-template-columns: 1fr;
-    }
+    .vm-grid { grid-template-columns: 1fr; }
   }
 
   @media (max-width: 640px) {
-    .vm-cell {
-      min-height: auto;
-    }
+    .vm-cell { min-height: auto; }
   }
 </style>
 @endpush
