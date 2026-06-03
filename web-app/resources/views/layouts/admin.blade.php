@@ -13,36 +13,21 @@
         body.ready { opacity: 1; }
         body:not(.ready) * { transition: none !important; }
     </style>
-    <script>
-        (function() {
-            var t = localStorage.getItem('theme');
-            if (t === 'dark' || (!t && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-                document.documentElement.classList.add('dark');
-            }
-        })();
-    </script>
+
     <script>
         document.addEventListener('alpine:init', () => {
             Alpine.store('theme', {
                 init() {
-                    const savedTheme = localStorage.getItem('theme');
-                    const systemTheme = window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
-                    this.theme = savedTheme || systemTheme;
+                    this.theme = 'light';
                     this.updateTheme();
                 },
                 theme: 'light',
                 toggle() {
-                    this.theme = this.theme === 'light' ? 'dark' : 'light';
-                    localStorage.setItem('theme', this.theme);
+                    this.theme = 'light';
                     this.updateTheme();
                 },
                 updateTheme() {
-                    const html = document.documentElement;
-                    if (this.theme === 'dark') {
-                        html.classList.add('dark');
-                    } else {
-                        html.classList.remove('dark');
-                    }
+                    document.documentElement.classList.remove('dark');
                 }
             });
             Alpine.store('sidebar', {
