@@ -36,41 +36,77 @@
          @click.away="show = false"
          @keydown.escape.window="show = false">
     
-    <div class="absolute inset-0 z-0 overflow-hidden">
-        <img src="https://images.unsplash.com/photo-1469631423273-6995642a6a40?auto=format&fit=crop&w=2000&q=80" 
-             alt="Cafe Background" 
-             class="w-full h-full object-cover opacity-70">
-        <div class="absolute inset-0 bg-gradient-to-b from-[#2B1A09]/40 via-[#2B1A09]/30 to-[#2B1A09]/95"></div>
-    </div>
+<div class="absolute inset-0 z-0 overflow-hidden">
+    {{-- Slideshow Images --}}
+    @php
+        $images = [
+            'https://images.unsplash.com/photo-1469631423273-6995642a6a40?auto=format&fit=crop&w=2000&q=80',
+            'https://images.unsplash.com/photo-1501339847302-ac426a4a7cbb?auto=format&fit=crop&w=2000&q=80',
+            'https://images.unsplash.com/photo-1442512595331-e89e73853f31?auto=format&fit=crop&w=2000&q=80',
+            'https://images.unsplash.com/photo-1445116572660-236099ec97a0?auto=format&fit=crop&w=2000&q=80',
+        ];
+    @endphp
+
+    @foreach ($images as $index => $image)
+        <img 
+            src="{{ $image }}" 
+            alt="Cafe Background {{ $index + 1 }}"
+            class="slideshow-img absolute inset-0 w-full h-full object-cover opacity-70 transition-opacity duration-1000"
+            style="opacity: {{ $index === 0 ? '0.7' : '0' }}; z-index: {{ $index }};"
+        >
+    @endforeach
+
+    <div class="absolute inset-0 bg-gradient-to-b from-[#2B1A09]/40 via-[#2B1A09]/30 to-[#2B1A09]/95" style="z-index: 10;"></div>
+</div>
+
+<style>
+    .slideshow-img {
+        transition: opacity 1.5s ease-in-out;
+    }
+</style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const imgs = document.querySelectorAll('.slideshow-img');
+        let current = 0;
+
+        setInterval(() => {
+            imgs[current].style.opacity = '0';
+            current = (current + 1) % imgs.length;
+            imgs[current].style.opacity = '0.7';
+        }, 4000); // ganti setiap 4 detik
+    });
+</script>
 
     <div class="relative z-30 w-full max-w-4xl mx-auto flex flex-col items-center text-center mt-20">
         
-        
+        {{-- Eyebrow label --}}
         <div class="flex items-center gap-4 mb-6 opacity-90">
-            <div class="w-10 sm:w-14 h-[1px] bg-[#B87C39]"></div>
-            <span class="text-[#F0B942] text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase">
+            <div class="w-10 sm:w-14 h-[1px] bg-[#ffffff]"></div>
+            <span class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-[#fff] text-[10px] sm:text-xs font-bold tracking-[0.25em] uppercase">
                 Temukan Tempat Ngopi Terbaik
             </span>
-            <div class="w-10 sm:w-14 h-[1px] bg-[#B87C39]"></div>
+            <div class="w-10 sm:w-14 h-[1px] bg-[#ffffff]"></div>
         </div>
         
-        
-        <h1 class="text-5xl md:text-6xl lg:text-7xl font-serif font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-lg">
+        {{-- Headline — Playfair Display --}}
+        <h1 class="font-[\'Playfair_Display\',serif] text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.1] mb-6 tracking-tight drop-shadow-lg">
             Kopi dan Cerita <br/>
             <span class="text-[#F0E0C0] italic font-normal tracking-wide">di Setiap Sudut Kota</span>
         </h1>
         
-        <p class="text-base md:text-xl text-white/90 font-light mb-12 max-w-2xl leading-relaxed drop-shadow-md">
+        {{-- Subheading — Plus Jakarta Sans --}}
+        <p class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-base md:text-sm text-white/80 font-light mb-12 max-w-2xl leading-relaxed drop-shadow-md">
             Di mana moodmu hari ini membawamu? Temukan kafe yang pas untuk kerja, nongkrong, atau sekadar menyendiri dengan tenang.
         </p>
 
-        
+        {{-- Search bar --}}
         <div class="w-full max-w-3xl relative">
             <div class="flex items-center bg-white/10 backdrop-blur-lg border border-white/20 rounded-full p-2.5 shadow-2xl transition-all duration-300 focus-within:bg-white/15 focus-within:border-[#B87C39]/50 focus-within:ring-4 focus-within:ring-[#B87C39]/20">
-                <i data-lucide="search" class="w-6 h-6 text-[#F0B942] ml-5 mr-3"></i>
+                <i data-lucide="search" class="w-6 h-6 text-[#B87C39] ml-5 mr-3"></i>
                 <input 
                     type="text"
-                    class="flex-1 bg-transparent border-none text-white placeholder-white/70 focus:outline-none focus:ring-0 text-base md:text-lg px-2 h-14"
+                    class="font-[\'Plus_Jakarta_Sans\',sans-serif] flex-1 bg-transparent border-none text-white placeholder-white/60 focus:outline-none focus:ring-0 text-base md:text-lg px-2 h-14"
                     placeholder="Cari kafe, area, atau suasana..."
                     x-model="query"
                     @input="fetchResults()"
@@ -78,33 +114,34 @@
                     autocomplete="off"
                 >
                 
-                <button x-show="query.length > 0" @click="clear()" class="p-3 text-white/70 hover:text-white transition-colors" x-cloak>
+                <button x-show="query.length > 0" @click="clear()" class="p-3 text-white/60 hover:text-white transition-colors" x-cloak>
                     <i data-lucide="x" class="w-5 h-5"></i>
                 </button>
 
-                <button class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold px-8 h-14 rounded-full transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#B87C39]/30 ml-2">
+                {{-- CTA Button — brand color, Plus Jakarta Sans --}}
+                <button class="font-[\'Plus_Jakarta_Sans\',sans-serif] bg-[#B87C39] hover:bg-[#9a662e] text-white font-bold px-8 h-14 rounded-full transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#B87C39]/30 ml-2 tracking-wide">
                     <i data-lucide="search" class="w-4 h-4 hidden sm:inline"></i>
                     Cari <span class="hidden sm:inline">Kafe</span>
                 </button>
             </div>
 
-            
+            {{-- Dropdown results --}}
             <div x-show="show && query.length >= 2" 
                  x-cloak
                  x-transition:enter="transition ease-out duration-300"
                  x-transition:enter-start="opacity-0 translate-y-4"
                  x-transition:enter-end="opacity-100 translate-y-0"
-                 class="absolute top-full left-0 right-0 mt-4 bg-[#140b03]/95 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#c89b3c]/20 overflow-hidden text-left z-50 max-h-[420px] overflow-y-auto scrollbar-hide">
+                 class="absolute top-full left-0 right-0 mt-4 bg-[#2B1A09]/98 backdrop-blur-xl rounded-3xl shadow-2xl border border-[#B87C39]/20 overflow-hidden text-left z-50 max-h-[420px] overflow-y-auto scrollbar-hide">
                 
-              
-                <div x-show="loading" class="p-8 flex flex-col items-center justify-center gap-4 text-[#c89b3c]/60">
+                {{-- Loading state --}}
+                <div x-show="loading" class="p-8 flex flex-col items-center justify-center gap-4 text-[#B87C39]/60">
                     <div class="w-8 h-8 border-2 border-[#B87C39]/20 border-t-[#B87C39] rounded-full animate-spin"></div>
-                    <span class="text-sm font-medium tracking-widest uppercase">Mencari racikan terbaik...</span>
+                    <span class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-sm font-medium tracking-widest uppercase">Mencari racikan terbaik...</span>
                 </div>
 
-                
+                {{-- Results --}}
                 <div x-show="!loading && results.length > 0">
-                    <div class="px-6 py-3 bg-white/5 border-b border-white/5 text-[10px] font-bold text-[#c89b3c]/50 uppercase tracking-[0.2em]">
+                    <div class="font-[\'Plus_Jakarta_Sans\',sans-serif] px-6 py-3 bg-white/5 border-b border-white/5 text-[10px] font-bold text-[#B87C39]/60 uppercase tracking-[0.2em]">
                         <span x-text="results.length"></span> Kafe Ditemukan
                     </div>
                     <template x-for="item in results" :key="item.id_kafe">
@@ -116,8 +153,8 @@
                                 </svg>
                             </div>
                             <div class="flex-1 text-left">
-                                <h4 class="text-base font-bold text-white group-hover:text-[#B87C39] transition-colors" x-text="item.nama_kafe"></h4>
-                                <p class="text-sm text-white/50 flex items-center gap-1.5 mt-1">
+                                <h4 class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-base font-bold text-white group-hover:text-[#B87C39] transition-colors" x-text="item.nama_kafe"></h4>
+                                <p class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-sm text-white/50 flex items-center gap-1.5 mt-1">
                                     <svg viewBox="0 0 24 24" class="w-3.5 h-3.5 text-[#B87C39]/70 fill-none stroke-current" stroke-width="2"><path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
                                     <span x-text="item.jarak ? item.jarak + ' km' : 'Malang'"></span>
                                     <span class="text-white/20">•</span>
@@ -129,12 +166,12 @@
                     </template>
                 </div>
 
-                
+                {{-- No results --}}
                 <div x-show="!loading && results.length === 0" class="p-10 text-center">
                     <div class="w-14 h-14 rounded-full bg-white/5 flex items-center justify-center mx-auto mb-4 border border-white/10">
                         <i data-lucide="search" class="w-6 h-6 text-white/20"></i>
                     </div>
-                    <p class="text-base text-white/60">Kafe <strong class="text-white" x-text="'&quot;' + query + '&quot;'"></strong> belum ada di radar kami.</p>
+                    <p class="font-[\'Plus_Jakarta_Sans\',sans-serif] text-base text-white/60">Kafe <strong class="font-[\'Playfair_Display\',serif] text-white" x-text="'&quot;' + query + '&quot;'"></strong> belum ada di radar kami.</p>
                 </div>
             </div>
         </div>

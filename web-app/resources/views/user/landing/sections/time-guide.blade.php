@@ -1,11 +1,11 @@
-<section class="w-full bg-white py-20 md:py-28 border-b border-gray-100">
+<section class="w-full bg-[#fcfaf8] py-20 md:py-28 border-b border-[#6e4a2f]/10">
     <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex flex-col sm:flex-row sm:items-end justify-between mb-12 gap-6">
             <div>
-                <p class="text-[#B87C39] text-xs font-bold tracking-[0.2em] uppercase mb-3">Panduan Waktu</p>
-                <h2 class="text-3xl md:text-4xl font-serif font-bold text-[#2B1A09]">Kapan Waktu Terbaik?</h2>
+                <p class="font-plus-jakarta text-[#B87C39] text-xs font-bold tracking-[0.2em] uppercase mb-3">Panduan Waktu</p>
+                <h2 class="font-plus-jakarta text-3xl md:text-4xl font-bold text-[#2B1A09]">Kapan Waktu Terbaik?</h2>
             </div>
-            <p class="text-base text-[#2B1A09]/60 max-w-sm sm:text-right">
+            <p class="font-plus-jakarta text-base text-[#3a2719]/60 max-w-sm sm:text-right">
                 Pilih ritme hari yang paling sesuai dengan aktivitasmu.
             </p>
         </div>
@@ -22,13 +22,13 @@
             @endphp
 
             @foreach($waktuGuide as $item)
-            <div class="bg-white rounded-[2rem] p-8 border {{ $item['on'] ? 'border-[#B87C39] shadow-lg ring-1 ring-[#B87C39]/20' : 'border-gray-200' }} hover:border-[#B87C39]/40 hover:shadow-[0_15px_30px_-10px_rgba(0,0,0,0.05)] transition-all duration-300 flex flex-col">
-                <div class="w-12 h-12 rounded-full {{ $item['on'] ? 'bg-[#B87C39] text-white' : 'bg-gray-50 text-[#B87C39]' }} flex items-center justify-center mb-6 border border-gray-100">
+            <div class="bg-white rounded-[2rem] p-8 border {{ $item['on'] ? 'border-[#B87C39] shadow-lg ring-1 ring-[#B87C39]/20' : 'border-[#6e4a2f]/10' }} hover:border-[#B87C39]/40 hover:shadow-[0_15px_30px_-10px_rgba(110,74,47,0.08)] transition-all duration-300 flex flex-col">
+                <div class="w-12 h-12 rounded-full {{ $item['on'] ? 'bg-[#B87C39] text-white' : 'bg-[#fcfaf8] text-[#B87C39]' }} flex items-center justify-center mb-6 border border-[#6e4a2f]/10">
                     <i data-lucide="{{ $item['icon'] }}" class="w-5 h-5"></i>
                 </div>
-                <div class="text-[10px] font-bold tracking-[0.15em] text-[#B87C39] mb-2 uppercase">{{ $item['waktu'] }}</div>
-                <h4 class="text-lg font-bold text-[#2B1A09] mb-3">{{ $item['nama'] }}</h4>
-                <p class="text-sm text-[#2B1A09]/60 leading-relaxed flex-1">{{ $item['desc'] }}</p>
+                <div class="font-plus-jakarta text-[12px] font-bold tracking-[0.15em] text-[#B87C39] mb-2 uppercase">{{ $item['waktu'] }}</div>
+                <h4 class="font-plus-jakarta text-lg font-bold text-[#2B1A09] mb-3">{{ $item['nama'] }}</h4>
+                <p class="font-plus-jakarta text-sm text-[#3a2719]/60 leading-relaxed flex-1">{{ $item['desc'] }}</p>
             </div>
             @endforeach
         </div>
