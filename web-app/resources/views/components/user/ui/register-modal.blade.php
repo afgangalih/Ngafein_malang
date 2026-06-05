@@ -57,9 +57,13 @@
         </div>
 
         <form @submit.prevent="
-            loading = true;
             errors = {};
             successMsg = '';
+            if (password.length < 8 || !/[a-z]/.test(password) || !/[A-Z]/.test(password) || !/\d/.test(password)) {
+                errors = { password: ['Password harus memenuhi semua kriteria keamanan.'] };
+                return;
+            }
+            loading = true;
             fetch('{{ route('register.post') }}', {
                 method: 'POST',
                 headers: {
@@ -134,6 +138,52 @@
                         </template>
                     </button>
                 </div>
+                
+                <!-- Interactive Password Validation Indicators Checklist -->
+                <div class="mt-2.5 space-y-1.5 bg-[#FCFAF8] p-3 rounded-xl border border-gray-100/80 transition-all duration-300" 
+                     x-show="password.length > 0" 
+                     x-transition:enter="transition ease-out duration-200"
+                     x-transition:enter-start="opacity-0 -translate-y-2"
+                     x-transition:enter-end="opacity-100 translate-y-0">
+                    <div class="text-[10px] font-bold text-[#2B1A09]/60 uppercase tracking-wider mb-1">Kekuatan Password:</div>
+                    
+                    <!-- Min 8 Karakter -->
+                    <div class="flex items-center gap-2 transition-colors duration-200"
+                         :class="password.length >= 8 ? 'text-emerald-600 font-bold' : 'text-gray-400 font-medium'">
+                        <span class="w-4.5 h-4.5 rounded-full flex items-center justify-center border transition-all duration-200 shrink-0"
+                              :class="password.length >= 8 ? 'bg-emerald-500/10 border-emerald-500 text-emerald-500' : 'border-gray-300 bg-gray-50 text-gray-400'">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                        <span class="text-xs">Minimal 8 karakter</span>
+                    </div>
+
+                    <!-- Huruf Besar & Kecil -->
+                    <div class="flex items-center gap-2 transition-colors duration-200"
+                         :class="(/[a-z]/.test(password) && /[A-Z]/.test(password)) ? 'text-emerald-600 font-bold' : 'text-gray-400 font-medium'">
+                        <span class="w-4.5 h-4.5 rounded-full flex items-center justify-center border transition-all duration-200 shrink-0"
+                              :class="(/[a-z]/.test(password) && /[A-Z]/.test(password)) ? 'bg-emerald-500/10 border-emerald-500 text-emerald-500' : 'border-gray-300 bg-gray-50 text-gray-400'">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                        <span class="text-xs">Kombinasi huruf besar & kecil</span>
+                    </div>
+
+                    <!-- Angka -->
+                    <div class="flex items-center gap-2 transition-colors duration-200"
+                         :class="(/\d/.test(password)) ? 'text-emerald-600 font-bold' : 'text-gray-400 font-medium'">
+                        <span class="w-4.5 h-4.5 rounded-full flex items-center justify-center border transition-all duration-200 shrink-0"
+                              :class="(/\d/.test(password)) ? 'bg-emerald-500/10 border-emerald-500 text-emerald-500' : 'border-gray-300 bg-gray-50 text-gray-400'">
+                            <svg class="w-2.5 h-2.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="4">
+                                <path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4L19 7" />
+                            </svg>
+                        </span>
+                        <span class="text-xs">Kombinasi angka</span>
+                    </div>
+                </div>
+
                 <template x-if="errors.password">
                     <p class="text-red-600 text-[11px] font-semibold mt-1 flex items-center gap-1">
                         <svg viewBox="0 0 24 24" class="w-3 h-3 fill-none stroke-current" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
