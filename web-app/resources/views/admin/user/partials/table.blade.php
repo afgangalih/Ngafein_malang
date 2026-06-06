@@ -1,30 +1,44 @@
-        <div class="overflow-hidden rounded-lg border border-gray-200">
+        <div class="rounded-2xl overflow-hidden border border-[#D4B896]">
             <div class="overflow-x-auto">
-                <table class="w-full min-w-[750px] text-left">
-                    <thead class="bg-[#6E4A22] text-white">
+                <table class="w-full min-w-[750px] text-left" style="border-collapse:collapse;table-layout:fixed">
+                    <thead>
                         <tr>
-                            <th class="w-20 px-5 py-3 text-center text-xs font-bold uppercase tracking-wide">No</th>
-                            <th class="px-5 py-3 text-xs font-bold uppercase tracking-wide">Nama</th>
-                            <th class="px-5 py-3 text-xs font-bold uppercase tracking-wide">Email</th>
-                            <th class="w-56 px-5 py-3 text-center text-xs font-bold uppercase tracking-wide">Aksi</th>
+                            <th class="text-center" style="width:70px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:14px 16px;border:none">No</th>
+                            <th style="background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:14px 16px;border:none">Nama</th>
+                            <th style="background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:14px 16px;border:none">Email</th>
+                            <th class="text-center" style="width:220px;background:#C9A876;color:#fff;font-size:13px;font-weight:700;padding:14px 16px;border:none">Aksi</th>
                         </tr>
                     </thead>
-                    <tbody class="divide-y divide-gray-100 bg-white">
-                        @forelse ($users as $item)
-                            <tr class="transition hover:bg-[#B87C39]/5">
-                                <td class="px-5 py-4 text-center text-sm font-bold text-gray-500">{{ $users->firstItem() + $loop->index }}</td>
-                                <td class="px-5 py-4 text-sm font-bold text-gray-900">{{ $item->name }}</td>
-                                <td class="px-5 py-4 text-sm font-semibold text-gray-500">{{ $item->email }}</td>
-                                <td class="px-5 py-4">
-                                    <div class="flex items-center justify-center gap-2">
-                                        <button type="button" @click="openEdit({ id: {{ $item->id }}, name: @js($item->name), email: @js($item->email) })" class="inline-flex items-center gap-1.5 rounded-lg border border-[#B87C39]/30 bg-white px-3 py-2 text-xs font-bold text-[#6E4A22] transition hover:border-[#B87C39] hover:bg-[#B87C39] hover:text-white">
-                                            <i data-lucide="pencil" class="h-3.5 w-3.5"></i>
-                                            Edit
+                    <tbody>
+                        @forelse ($users as $index => $item)
+                            <tr style="
+                                    border-bottom:1px solid #D4B896;
+                                    transition:background .15s;
+                                    background: {{ $index % 2 == 0 ? '#F5ECD7' : '#EFE0C2' }}
+                                "
+                                onmouseover="this.style.background='#DFC9A0'"
+                                onmouseout="this.style.background='{{ $index % 2 == 0 ? '#F5ECD7' : '#EFE0C2' }}'">
+                                <td class="text-center" style="padding:12px 16px;font-size:13px;font-weight:700;color:#7a6248;border-bottom:1px solid #D4B896">
+                                    {{ $users->firstItem() + $index }}
+                                </td>
+                                <td style="padding:12px 16px;font-size:13px;font-weight:700;color:#3d2f1f;border-bottom:1px solid #D4B896">
+                                    {{ $item->name }}
+                                </td>
+                                <td style="padding:12px 16px;font-size:13px;font-weight:600;color:#5a4a35;border-bottom:1px solid #D4B896">
+                                    {{ $item->email }}
+                                </td>
+                                <td class="py-4 px-6 text-center border-b border-[#D4B896]">
+                                    <div class="flex justify-center items-center gap-3">
+                                        <button type="button" @click="openEdit({ id: {{ $item->id }}, name: @js($item->name), email: @js($item->email) })" 
+                                            class="flex items-center gap-1.5 px-3 py-1.5 bg-white text-[#B87C39] hover:bg-[#B87C39] hover:text-white rounded-xl text-xs font-bold transition-all border border-[#B87C39] cursor-pointer">
+                                            <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                            <span>Edit</span>
                                         </button>
                                         @if(auth()->id() != $item->id)
-                                        <button type="button" @click="confirmDelete({{ $item->id }}, @js($item->name))" class="inline-flex items-center gap-1.5 rounded-lg border border-red-200 bg-white px-3 py-2 text-xs font-bold text-red-600 transition hover:bg-red-600 hover:text-white">
-                                            <i data-lucide="trash-2" class="h-3.5 w-3.5"></i>
-                                            Hapus
+                                        <button type="button" @click="confirmDelete({{ $item->id }}, @js($item->name))" 
+                                            class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-xs font-bold transition-all border border-red-200 cursor-pointer">
+                                            <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
+                                            <span>Hapus</span>
                                         </button>
                                         @endif
                                     </div>
@@ -32,7 +46,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-5 py-10 text-center text-sm font-semibold text-gray-500">Belum ada data admin.</td>
+                                <td colspan="4" class="text-center py-10 text-sm font-semibold text-[#9a8068] bg-[#F5ECD7]">Belum ada data admin.</td>
                             </tr>
                         @endforelse
                     </tbody>
@@ -41,7 +55,7 @@
         </div>
 
         <div class="mt-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <p class="text-sm font-medium text-gray-500">
+            <p class="text-[13px] text-gray-500 px-1">
                 Menampilkan {{ $users->firstItem() ?? 0 }} - {{ $users->lastItem() ?? 0 }} dari {{ $users->total() }} data
             </p>
             <div class="flex items-center gap-1">
