@@ -13,6 +13,11 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // SQLite tidak mengenal FOREIGN_KEY_CHECKS dan MODIFY — lewati saat testing
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         // 1. Matikan pengecekan foreign key sementara
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
 
@@ -28,6 +33,11 @@ return new class extends Migration
      */
     public function down(): void
     {
+        // SQLite tidak mengenal FOREIGN_KEY_CHECKS dan MODIFY — lewati saat testing
+        if (DB::getDriverName() === 'sqlite') {
+            return;
+        }
+
         DB::statement('SET FOREIGN_KEY_CHECKS=0');
         DB::statement('ALTER TABLE kafe MODIFY id_kafe BIGINT UNSIGNED');
         DB::statement('SET FOREIGN_KEY_CHECKS=1');
