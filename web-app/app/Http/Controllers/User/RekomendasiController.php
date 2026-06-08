@@ -57,7 +57,15 @@ class RekomendasiController extends Controller
             }
 
             if ($request->filled('harga_max')) {
-                $query->where('harga_min', '<=', (int) $request->harga_max);
+                $hargaVal = (int) $request->harga_max;
+                if ($hargaVal === 25000) {
+                    $query->where('harga_max', '<=', 25000);
+                } elseif ($hargaVal === 50000) {
+                    $query->where('harga_max', '>', 25000)
+                          ->where('harga_max', '<=', 50000);
+                } elseif ($hargaVal === 999999) {
+                    $query->where('harga_max', '>', 50000);
+                }
             }
 
             if ($request->filled('jarak_max')) {
@@ -114,6 +122,7 @@ class RekomendasiController extends Controller
                             'jarak_km' => $cafe->jarak,
                             'harga_min' => $cafe->harga_min,
                             'harga_max' => $cafe->harga_max,
+                            'harga_rata_rata' => $cafe->harga_rata_rata,
                             'gambar' => ($cafe->relationLoaded('gambar') && $cafe->gambar) ? ($cafe->gambar->first()?->link_gambar ?? null) : null,
                             'skor' => 0.0,
                             'ranking' => $idx + 1,
