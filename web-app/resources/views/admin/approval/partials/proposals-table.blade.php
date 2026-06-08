@@ -19,7 +19,7 @@
                         onmouseover="this.style.background='#DFC9A0'"
                         :onmouseout="'this.style.background=' + (idx % 2 === 0 ? '\'#F5ECD7\'' : '\'#EFE0C2\'')">
                         
-                        <td class="text-center font-bold text-[#7a6248]" style="padding:12px 16px;font-size:13px" x-text="idx + 1"></td>
+                        <td class="text-center font-bold text-[#7a6248]" style="padding:12px 16px;font-size:13px;border-bottom:1px solid #D4B896" x-text="idx + 1"></td>
                         <td style="padding:12px 16px;border-bottom:1px solid #D4B896">
                             <div class="font-extrabold text-[#3d2f1f] text-sm" x-text="c.name"></div>
                             <div class="text-[11px] text-[#5a4a35]/70 mt-1 flex items-center gap-1">
@@ -43,9 +43,9 @@
                                 </div>
                             </div>
                         </td>
-                        <td class="text-center font-bold text-[#3d2f1f]" style="padding:12px 16px" x-text="c.distance + ' km'"></td>
-                        <td class="text-center font-semibold text-[#5a4a35]" style="padding:12px 16px" x-text="c.hours"></td>
-                        <td class="text-center" style="padding:12px 16px">
+                        <td class="text-center font-bold text-[#3d2f1f]" style="padding:12px 16px;border-bottom:1px solid #D4B896" x-text="c.distance + ' km'"></td>
+                        <td class="text-center font-semibold text-[#5a4a35]" style="padding:12px 16px;border-bottom:1px solid #D4B896" x-text="c.hours"></td>
+                        <td class="text-center" style="padding:12px 16px;border-bottom:1px solid #D4B896">
                             <template x-if="c.deleted">
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-gray-100/80 text-gray-600 font-bold rounded-lg border border-gray-200">Dihapus</span>
                             </template>
@@ -59,7 +59,7 @@
                                 <span class="inline-flex items-center gap-1 px-2.5 py-1 bg-rose-50 text-rose-700 font-bold rounded-lg border border-rose-200/50">Ditolak</span>
                             </template>
                         </td>
-                        <td class="text-center" style="padding:12px 16px">
+                        <td class="text-center" style="padding:12px 16px;border-bottom:1px solid #D4B896">
                             <div class="flex justify-center items-center">
                                 <button @click="openPanel('/admin/cafe/' + c.id, 'detail', c.id, c.status, c.deleted)"
                                         class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-white text-[#B87C39] hover:bg-[#B87C39] hover:text-white rounded-xl text-xs font-bold transition-all border border-[#B87C39] cursor-pointer">
