@@ -92,61 +92,83 @@
     @include('admin.cafe.partials.side-panel')
 
     {{-- Modal Import --}}
-    <div x-show="importOpen" x-cloak
-        class="fixed inset-0 z-[100] flex items-center justify-center bg-black/50 backdrop-blur-sm"
-        x-transition:enter="transition ease-out duration-300"
-        x-transition:enter-start="opacity-0"
-        x-transition:enter-end="opacity-100"
-        x-transition:leave="transition ease-in duration-200"
-        x-transition:leave-start="opacity-100"
-        x-transition:leave-end="opacity-0">
-        
-        <div class="bg-[#F5ECD7] rounded-3xl p-8 max-w-lg w-full mx-4 shadow-xl border border-[#D4B896]"
-            @click.outside="if (!importing) closeImportModal()">
-            <div class="flex items-center justify-between mb-6">
-                <h3 class="text-xl font-black text-gray-900 tracking-tight">Import Data Kafe</h3>
-                <button @click="closeImportModal()" :disabled="importing" class="text-gray-400 hover:text-gray-700 p-1 rounded-lg">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+    <template x-teleport="body">
+        <div x-show="importOpen" x-cloak
+            class="fixed inset-0 z-[99999] flex items-center justify-center px-4"
+            style="display: none;">
+            
+            <!-- Backdrop with full blur and smooth transition -->
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-md"
+                 x-show="importOpen"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @click="if (!importing) closeImportModal()"></div>
+            
+            <!-- Modal Card with smooth scale transition -->
+            <div class="relative w-full max-w-md bg-white rounded-[2rem] border border-[#B87C39]/15 shadow-2xl p-8 z-10"
+                x-show="importOpen"
+                x-transition:enter="transition ease-out duration-300 transform"
+                x-transition:enter-start="opacity-0 scale-95"
+                x-transition:enter-end="opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-200 transform"
+                x-transition:leave-start="opacity-100 scale-100"
+                x-transition:leave-end="opacity-0 scale-95">
+                
+                <button @click="closeImportModal()" :disabled="importing" 
+                        class="absolute top-6 right-6 text-[#2B1A09]/40 hover:text-[#2B1A09] transition-colors cursor-pointer disabled:opacity-50">
+                    <svg viewBox="0 0 24 24" class="w-5.5 h-5.5 fill-none stroke-current" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
                 </button>
-            </div>
 
-            <div class="space-y-6">
-                <div class="border-2 border-dashed border-[#D4B896] bg-[#EFE0C2]/50 rounded-2xl p-8 text-center hover:border-[#B87C39] transition-colors cursor-pointer relative"
-                    @click="$refs.fileInput.click()">
-                    <input type="file" id="file-import-input" x-ref="fileInput" accept=".xlsx,.xls,.csv"
-                        class="hidden" @change="importFile = $event.target.files[0]">
-                    
-                    <div class="flex flex-col items-center justify-center space-y-3">
-                        <div class="w-12 h-12 rounded-full bg-[#B87C39]/10 flex items-center justify-center text-[#B87C39]">
-                            <i data-lucide="file-spreadsheet" class="w-6 h-6"></i>
-                        </div>
-                        <div class="text-sm font-bold text-gray-800" x-text="importFile ? importFile.name : 'Pilih File Excel (.xlsx, .csv)'"></div>
-                        <p class="text-xs font-medium text-gray-500" x-show="!importFile">Seret dan lepas file di sini, atau klik untuk menelusuri</p>
+                <div class="flex flex-col items-center mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center mb-3">
+                        <i data-lucide="file-spreadsheet" class="w-5.5 h-5.5"></i>
                     </div>
+                    <h3 class="font-serif font-bold text-2xl text-[#2B1A09] text-center tracking-tight">Import Data Kafe</h3>
+                    <p class="text-xs text-[#2B1A09]/60 mt-1.5 text-center font-medium">Unggah file Excel Anda untuk menambahkan daftar kafe</p>
                 </div>
 
-                <div class="flex items-center justify-between text-xs text-gray-500 px-1 pt-1">
-                    <span>Format file harus sesuai standar Ngafein.</span>
-                    <a href="{{ route('admin.cafe.template') }}" class="text-[#B87C39] hover:underline font-bold flex items-center gap-1">
-                        <i data-lucide="download" class="w-3.5 h-3.5"></i>
-                        Download Template
-                    </a>
-                </div>
+                <div class="space-y-5">
+                    <div class="border-2 border-dashed border-[#B87C39]/20 bg-[#FCFAF8] hover:bg-[#B87C39]/5 rounded-2xl p-8 text-center transition-all duration-300 cursor-pointer relative group"
+                        @click="$refs.fileInput.click()">
+                        <input type="file" id="file-import-input" x-ref="fileInput" accept=".xlsx,.xls,.csv"
+                            class="hidden" @change="importFile = $event.target.files[0]">
+                        
+                        <div class="flex flex-col items-center justify-center space-y-3">
+                            <div class="w-10 h-10 rounded-full bg-white text-[#B87C39] flex items-center justify-center shadow-sm border border-gray-100/50 group-hover:scale-105 transition-transform duration-300">
+                                <i data-lucide="upload-cloud" class="w-5 h-5"></i>
+                            </div>
+                            <div class="text-sm font-bold text-[#2B1A09]" x-text="importFile ? importFile.name : 'Pilih File Excel (.xlsx, .csv)'"></div>
+                            <p class="text-[11px] font-medium text-gray-400" x-show="!importFile">Seret dan lepas file di sini, atau klik untuk menelusuri</p>
+                        </div>
+                    </div>
 
-                <div class="flex justify-end gap-3 pt-2">
-                    <button @click="closeImportModal()" :disabled="importing" type="button"
-                        class="px-5 py-2.5 text-sm font-bold text-gray-600 hover:bg-gray-100 rounded-xl transition-colors">
-                        Batal
-                    </button>
-                    <button @click="submitImport()" :disabled="importing || !importFile" type="button"
-                        class="px-6 py-2.5 bg-[#B87C39] text-white font-bold rounded-xl shadow-sm hover:brightness-90 transition-all flex items-center gap-2 disabled:opacity-50">
-                        <span x-show="importing" class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
-                        <span x-text="importing ? 'Memproses...' : 'Mulai Import'"></span>
-                    </button>
+                    <div class="flex items-center justify-between text-[11px] text-gray-400 px-1">
+                        <span>Format file harus sesuai dengan standar.</span>
+                        <a href="{{ route('admin.cafe.template') }}" class="text-[#B87C39] hover:underline font-bold flex items-center gap-1">
+                            <i data-lucide="download-cloud" class="w-3.5 h-3.5"></i>
+                            Download Template
+                        </a>
+                    </div>
+
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button @click="closeImportModal()" :disabled="importing" type="button"
+                            class="px-5 py-2.5 text-xs font-bold text-gray-500 hover:text-[#2B1A09] hover:bg-gray-100/60 rounded-xl transition-all cursor-pointer">
+                            Batal
+                        </button>
+                        <button @click="submitImport()" :disabled="importing || !importFile" type="button"
+                            class="px-6 py-3 bg-[#B87C39] hover:bg-[#9a662e] text-white font-bold text-xs rounded-xl shadow-md shadow-[#B87C39]/10 transition-all flex items-center gap-2 cursor-pointer disabled:opacity-50">
+                            <span x-show="importing" class="animate-spin inline-block w-4 h-4 border-2 border-white border-t-transparent rounded-full"></span>
+                            <span x-text="importing ? 'Memproses...' : 'Mulai Import'"></span>
+                        </button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    </template>
 </div>
 @push('scripts')
 <script src="https://unpkg.com/lucide@latest"></script>

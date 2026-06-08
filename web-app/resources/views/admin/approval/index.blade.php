@@ -21,17 +21,21 @@
         </div>
     @endif
 
-    @include('admin.approval.partials.stats-cards', [
-        'totalCount' => $proposals->count(),
-        'pendingCount' => $proposals->where('status', 'pending')->count(),
-        'approvedCount' => $proposals->where('status', 'approved')->whereNull('deleted_at')->count(),
-        'rejectedCount' => $proposals->where('status', 'rejected')->count(),
-        'deletedCount' => $proposals->whereNotNull('deleted_at')->count()
-    ])
+    <div class="bg-[#F5ECD7] rounded-[2rem] p-8 shadow-sm space-y-6">
+        @include('admin.approval.partials.stats-cards', [
+            'totalCount' => $proposals->count(),
+            'pendingCount' => $proposals->where('status', 'pending')->count(),
+            'approvedCount' => $proposals->where('status', 'approved')->whereNull('deleted_at')->count(),
+            'rejectedCount' => $proposals->where('status', 'rejected')->count(),
+            'deletedCount' => $proposals->whereNotNull('deleted_at')->count()
+        ])
 
-    @include('admin.approval.partials.filter-bar')
-
-    @include('admin.approval.partials.proposals-table')
+        @include('admin.approval.partials.filter-bar')
+        
+        <div class="mt-5">
+            @include('admin.approval.partials.proposals-table')
+        </div>
+    </div>
 
     @include('admin.cafe.partials.side-panel')
 </div>

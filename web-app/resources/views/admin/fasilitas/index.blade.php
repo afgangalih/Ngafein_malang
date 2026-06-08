@@ -96,16 +96,16 @@
                                     <button
                                         type="button"
                                         @click="openEdit({ id: {{ $item->id_fasilitas }}, nama: @js($item->nama_fasilitas) })"
-                                        class="flex items-center gap-2 px-4 py-2 bg-white text-[#B87A3D] hover:bg-[#B87A3D] hover:text-white rounded-lg text-[13px] font-bold transition-all border border-[#B87A3D]">
-                                        <i data-lucide="pencil" class="w-4 h-4"></i>
-                                        Edit
+                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-white text-[#B87C39] hover:bg-[#B87C39] hover:text-white rounded-xl text-xs font-bold transition-all border border-[#B87C39] cursor-pointer">
+                                        <i data-lucide="pencil" class="w-3.5 h-3.5"></i>
+                                        <span>Edit</span>
                                     </button>
                                     <button
                                         type="button"
                                         @click="confirmDelete({{ $item->id_fasilitas }}, @js($item->nama_fasilitas))"
-                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-lg text-[12px] font-bold transition-all border border-red-200">
+                                        class="flex items-center gap-1.5 px-3 py-1.5 bg-red-50 text-red-500 hover:bg-red-500 hover:text-white rounded-xl text-xs font-bold transition-all border border-red-200 cursor-pointer">
                                         <i data-lucide="trash-2" class="w-3.5 h-3.5"></i>
-                                        Hapus
+                                        <span>Hapus</span>
                                     </button>
                                 </div>
                             </td>
@@ -166,7 +166,7 @@
             class="fixed inset-0 z-[99999] flex items-center justify-center px-4"
             style="display: none;">
 
-            <div class="absolute inset-0 bg-black/50 backdrop-blur-sm" @click="closeForm()"></div>
+            <div class="absolute inset-0 bg-black/60 backdrop-blur-md" @click="closeForm()"></div>
 
             <div
                 x-show="showForm"
@@ -176,16 +176,19 @@
                 x-transition:leave="transition ease-in duration-150"
                 x-transition:leave-start="opacity-100 scale-100"
                 x-transition:leave-end="opacity-0 scale-95"
-                class="relative w-full max-w-md rounded-xl bg-white p-6 shadow-2xl z-10">
+                class="relative w-full max-w-md bg-white rounded-[2rem] border border-[#B87C39]/15 shadow-2xl p-8 z-10 animate-fade-up">
 
-                <div class="mb-5 flex items-center justify-between">
-                    <div>
-                        <h2 class="text-lg font-black text-gray-900" x-text="formMode === 'create' ? 'Tambah Fasilitas' : 'Edit Fasilitas'"></h2>
-                        <p class="mt-1 text-sm font-medium text-gray-500">Nama fasilitas wajib unik.</p>
+                <button type="button" @click="closeForm()" 
+                        class="absolute top-6 right-6 text-[#2B1A09]/40 hover:text-[#2B1A09] transition-colors cursor-pointer">
+                    <svg viewBox="0 0 24 24" class="w-5.5 h-5.5 fill-none stroke-current" stroke-width="2.5"><line x1="18" x2="6" y1="6" y2="18"/><line x1="6" x2="18" y1="6" y2="18"/></svg>
+                </button>
+
+                <div class="flex flex-col items-center mb-6">
+                    <div class="w-12 h-12 rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center mb-3">
+                        <i :data-lucide="formMode === 'create' ? 'plus-circle' : 'pencil'" class="w-5.5 h-5.5"></i>
                     </div>
-                    <button type="button" @click="closeForm()" class="inline-flex h-9 w-9 items-center justify-center rounded-lg border border-gray-200 text-gray-500 transition hover:bg-gray-50">
-                        <i data-lucide="x" class="h-4 w-4"></i>
-                    </button>
+                    <h3 class="font-serif font-bold text-2xl text-[#2B1A09] text-center tracking-tight" x-text="formMode === 'create' ? 'Tambah Fasilitas' : 'Edit Fasilitas'"></h3>
+                    <p class="text-xs text-[#2B1A09]/60 mt-1.5 text-center font-medium">Pastikan nama fasilitas yang ditambahkan bersifat unik</p>
                 </div>
 
                 <form method="POST" :action="formAction" class="space-y-5">
@@ -194,18 +197,25 @@
                         <input type="hidden" name="_method" value="PUT">
                     </template>
                     <div>
-                        <label for="nama_fasilitas" class="mb-2 block text-sm font-bold text-gray-700">Nama Fasilitas</label>
+                        <label for="nama_fasilitas" class="block text-[11px] font-bold text-[#2B1A09] uppercase tracking-wider mb-1.5">Nama Fasilitas</label>
                         <input
                             id="nama_fasilitas"
                             name="nama_fasilitas"
                             type="text"
                             x-model="formNama"
                             required
-                            class="w-full rounded-lg border border-gray-200 bg-white px-4 py-3 text-sm font-semibold text-gray-900 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
+                            placeholder="Masukkan nama fasilitas..."
+                            class="w-full bg-gray-50/50 border border-gray-200 rounded-xl px-5 py-3 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all text-[#2B1A09]">
                     </div>
-                    <div class="flex justify-end gap-3">
-                        <button type="button" @click="closeForm()" class="rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-bold text-gray-600 transition hover:bg-gray-50">Batal</button>
-                        <button type="submit" class="rounded-lg bg-[#B87C39] px-4 py-2.5 text-sm font-bold text-white shadow-sm transition hover:bg-[#6E4A22]">Simpan</button>
+                    <div class="flex justify-end gap-3 pt-2">
+                        <button type="button" @click="closeForm()" 
+                            class="px-5 py-2.5 text-xs font-bold text-gray-500 hover:text-[#2B1A09] hover:bg-gray-100/60 rounded-xl transition-all cursor-pointer">
+                            Batal
+                        </button>
+                        <button type="submit" 
+                            class="px-6 py-3 bg-[#B87C39] hover:bg-[#9a662e] text-white font-bold text-xs rounded-xl shadow-md shadow-[#B87C39]/10 transition-all cursor-pointer">
+                            Simpan
+                        </button>
                     </div>
                 </form>
             </div>

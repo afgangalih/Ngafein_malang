@@ -19,18 +19,34 @@
         </button>
     </div>
 
-    <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm">
+    <div class="bg-[#F5ECD7] rounded-[2rem] p-8 shadow-sm">
         <form method="GET" action="{{ route('admin.user.index') }}" class="mb-5 flex flex-col gap-3 md:flex-row md:items-center md:justify-between">
-            <div class="relative w-full md:max-w-sm">
-                <i data-lucide="search" class="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400"></i>
-                <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama atau email" class="w-full rounded-lg border border-gray-200 bg-white py-2.5 pl-10 pr-4 text-sm font-medium text-gray-800 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
+            <div class="relative">
+                <svg class="pointer-events-none absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-[#b0957a]"
+                    xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                    <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+                </svg>
+                <input type="text" name="search" value="{{ $search }}" placeholder="Cari nama atau email..." class="pl-9 pr-4 py-2 rounded-xl border border-[#D4B896] bg-white text-[13px] font-medium text-[#3d2f1f] placeholder-[#b0957a] outline-none focus:border-[#B87A3D] focus:ring-2 focus:ring-[#B87A3D]/20 transition-all w-56">
             </div>
+            
             <div class="flex items-center gap-2">
-                <select name="per_page" onchange="this.form.submit()" class="rounded-lg border border-gray-200 bg-white px-3 py-2.5 text-sm font-semibold text-gray-700 outline-none transition focus:border-[#B87C39] focus:ring-4 focus:ring-[#B87C39]/10">
-                    @foreach ([10, 25, 50] as $size)
-                        <option value="{{ $size }}" @selected((int) request('per_page', 10) === $size)>{{ $size }} data</option>
-                    @endforeach
-                </select>
+                <label class="text-[13px] font-semibold text-[#5a4a35] whitespace-nowrap">
+                    Tampilkan
+                </label>
+                <div class="relative">
+                    <select name="per_page" onchange="this.form.submit()" class="bg-white border border-[#D4B896] rounded-xl pl-3 pr-8 py-2 text-[13px] font-semibold text-[#5a4a35] outline-none focus:border-[#B87A3D] focus:ring-2 focus:ring-[#B87A3D]/20 transition-all cursor-pointer appearance-none">
+                        @foreach ([10, 25, 50] as $size)
+                            <option value="{{ $size }}" @selected((int) request('per_page', 10) === $size)>{{ $size }}</option>
+                        @endforeach
+                    </select>
+                    <svg class="pointer-events-none absolute right-2.5 top-1/2 -translate-y-1/2 w-3 h-3 text-gray-400"
+                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2.5">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+                <span class="text-[13px] font-semibold text-[#5a4a35] whitespace-nowrap">
+                    data
+                </span>
             </div>
         </form>
 
