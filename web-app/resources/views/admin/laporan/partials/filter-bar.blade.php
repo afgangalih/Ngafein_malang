@@ -20,17 +20,17 @@
     </form>
 
     <div class="flex items-center gap-3 flex-wrap">
-        <a href="{{ route('admin.laporan.print') }}" target="_blank"
-            class="inline-flex items-center gap-2 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all duration-200 hover:opacity-90 active:scale-95"
-            style="background:#6E4A22;">
+        <button type="button" @click="showPdfPreview = true"
+            class="inline-flex items-center gap-2 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all duration-200 hover:opacity-90 active:scale-95 cursor-pointer"
+            style="background:#B87C39;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 01-2-2v-5a2 2 0 012-2h16a2 2 0 012 2v5a2 2 0 01-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
             Cetak / PDF
-        </a>
-        <a href="{{ route('admin.laporan.excel', ['limit' => $limit]) }}"
-            class="inline-flex items-center gap-2 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all duration-200 hover:opacity-90 active:scale-95"
+        </button>
+        <button type="button" @click="showExcelPreview = true"
+            class="inline-flex items-center gap-2 text-white text-sm font-bold px-5 py-2.5 rounded-lg transition-all duration-200 hover:opacity-90 active:scale-95 cursor-pointer"
             style="background:#B87C39;">
             <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
             Ekspor Excel
-        </a>
+        </button>
     </div>
 </div>

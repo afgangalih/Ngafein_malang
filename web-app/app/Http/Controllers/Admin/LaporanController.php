@@ -99,7 +99,7 @@ class LaporanController extends Controller
         $waktu = Carbon::now()->format('Ymd_His');
         $filename = "Laporan_Rekomendasi_Kafe_Ngafein_{$waktu}.xlsx";
 
-        return \SimpleXLSXGen::fromArray($excelData)
+        return \Shuchkin\SimpleXLSXGen::fromArray($excelData)
             ->setDefaultFont('Calibri')
             ->downloadAs($filename);
     }
