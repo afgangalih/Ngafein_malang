@@ -1,6 +1,6 @@
 <nav class="fixed top-0 left-0 right-0 z-50 transition-[padding] duration-300 ease-out"
      x-data="{ mobileMenuOpen: false }"
-     :class="(scrolled || lightMode || mobileMenuOpen) ? 'py-3' : 'py-6'">
+     :class="(scrolled || lightMode || mobileMenuOpen) ? 'py-2.5 sm:py-3' : 'py-4 sm:py-6'">
     
     {{-- Absolute Background Layer for Hardware-Accelerated Blur Transition --}}
     <div class="absolute inset-0 transition-opacity duration-300 ease-out"
@@ -10,11 +10,11 @@
     {{-- Navbar Content --}}
     <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between">
        
-        <a href="/" class="flex items-center gap-4 group">
+        <a href="/" class="flex items-center gap-2.5 sm:gap-4 group">
             <img src="{{ asset('assets/images/logo-ngafein.png') }}" 
                  alt="Ngafein Logo" 
-                 class="h-14 sm:h-16 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
-            <span class="font-serif font-bold text-2xl sm:text-3xl tracking-tight">
+                 class="h-10 sm:h-14 w-auto object-contain transition-transform duration-300 group-hover:scale-105">
+            <span class="font-serif font-bold text-xl sm:text-2xl md:text-3xl tracking-tight">
                 <span class="transition-colors duration-300" 
                       :class="(scrolled || lightMode || forceDarkText) ? 'text-gray-900' : 'text-white'">Ngafe</span><span class="text-[#B87C39]">in</span><span class="text-[#B87C39]">.</span>
             </span>
