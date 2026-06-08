@@ -235,11 +235,11 @@
                         </label>
                         <select name="jarak_max" class="filter-select w-full border border-gray-200 rounded-xl px-3.5 py-2.5 text-sm text-gray-700 font-medium bg-white focus:outline-none focus:ring-2 focus:ring-[#b87c39]/20 focus:border-[#b87c39] transition">
                             <option value="">Semua Jarak</option>
-                            <option value="1"   @selected(request('jarak_max')=='1')  >Sangat Dekat · &lt; 1 km</option>
-                            <option value="2"   @selected(request('jarak_max')=='2')  >Dekat · 1 – 2 km</option>
-                            <option value="4"   @selected(request('jarak_max')=='4')  >Cukup Jauh · 2 – 4 km</option>
-                            <option value="6"   @selected(request('jarak_max')=='6')  >Jauh · 4 – 6 km</option>
-                            <option value="999" @selected(request('jarak_max')=='999')>Sangat Jauh · &gt; 6 km</option>
+                            <option value="1"   @selected(request('jarak_max')=='1')  >Sangat Dekat · ≤ 1 km</option>
+                            <option value="2"   @selected(request('jarak_max')=='2')  >Dekat · ≤ 2 km</option>
+                            <option value="4"   @selected(request('jarak_max')=='4')  >Cukup Jauh · ≤ 4 km</option>
+                            <option value="6"   @selected(request('jarak_max')=='6')  >Jauh · ≤ 6 km</option>
+                            <option value="999" @selected(request('jarak_max')=='999')>Sangat Jauh · Semua Jarak</option>
                         </select>
                     </div>
 
@@ -473,6 +473,10 @@
             $visibleCls = $idx < 6
                 ? 'fu d' . min($idx + 1, 6)
                 : 'card-hidden';
+
+            $minK = $kafe['harga_min'] >= 1000 ? ($kafe['harga_min'] / 1000) . 'k' : $kafe['harga_min'];
+            $maxK = $kafe['harga_max'] >= 1000 ? ($kafe['harga_max'] / 1000) . 'k' : $kafe['harga_max'];
+            $rangeK = "{$minK} - {$maxK}";
         @endphp
 
         <a href="{{ route('user.explore.detail', $kafe['id_kafe']) }}"
@@ -513,7 +517,7 @@
                             rating: '{{ $kafe['rating_raw'] }}',
                             jarak: '{{ $kafe['jarak_km'] }}',
                             jam: '{{ $kafe['jam_buka'] }} – {{ $kafe['jam_tutup'] }}',
-                            harga: 'Rp {{ number_format($kafe['harga_min'],0,',','.') }}',
+                            harga: 'Rp {{ $rangeK }}',
                             skor: '{{ round($kafe['skor'] * 100) }}%',
                             perhitungan: '{{ $kafe['perhitungan'] }}',
                             rank: '#{{ $rank }}',
@@ -568,9 +572,9 @@
 
                 <div class="mt-auto flex items-end justify-between">
                     <div>
-                        <p class="text-[10px] text-gray-400 mb-0.5" style="font-weight:300">Mulai dari</p>
+                        <p class="text-[10px] text-gray-400 mb-0.5" style="font-weight:300">Range Harga</p>
                         <p class="font-bold text-gray-900" style="font-size:.97rem">
-                            Rp {{ number_format($kafe['harga_min'],0,',','.') }}
+                            Rp {{ $rangeK }}
                         </p>
                     </div>
                     <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white px-4 py-2 rounded-xl transition-all group-hover:shadow-md group-hover:opacity-90"

@@ -1,7 +1,10 @@
 @php
     $thumb = $k->gambar->first()?->link_gambar
         ?? 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&q=80&w=800';
-    $hargaMin = number_format($k->harga_min, 0, ',', '.');
+    
+    $minK = $k->harga_min >= 1000 ? ($k->harga_min / 1000) . 'k' : $k->harga_min;
+    $maxK = $k->harga_max >= 1000 ? ($k->harga_max / 1000) . 'k' : $k->harga_max;
+    $formattedPrice = "{$minK} - {$maxK}";
     
     // Mapping Fasilitas untuk Hover State
     $hasWifi = $k->fasilitas->contains(fn($f) => str_contains(strtolower($f->nama_fasilitas), 'wifi'));
@@ -62,8 +65,8 @@
                 <span class="text-[7px] sm:text-[8px] font-bold text-white/40 uppercase tracking-widest">Really Good</span>
             </div>
             <div class="text-right">
-                <span class="block text-xs sm:text-sm md:text-base font-black text-white">Rp {{ $hargaMin }}</span>
-                <span class="text-[7px] sm:text-[8px] font-bold text-white/40 uppercase tracking-widest">Start from</span>
+                <span class="block text-xs sm:text-sm md:text-base font-black text-white">Rp {{ $formattedPrice }}</span>
+                <span class="text-[7px] sm:text-[8px] font-bold text-white/40 uppercase tracking-widest">Price Range</span>
             </div>
         </div>
     </div>

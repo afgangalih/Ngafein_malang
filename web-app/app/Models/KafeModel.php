@@ -47,4 +47,9 @@ class KafeModel extends Model
     {
         return $query->where('status', 'approved');
     }
+
+    public function getHargaRataRataAttribute()
+    {
+        return ($this->harga_min + $this->harga_max) / 2;
+    }
 }

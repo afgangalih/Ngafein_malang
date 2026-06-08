@@ -46,7 +46,8 @@ class SAWService
                 $hasilMapped = collect($data['hasil'])->map(function ($item) {
                     return array_merge($item, [
                         'rating_raw' => $item['rating'],
-                        'jarak_km' => $item['jarak']
+                        'jarak_km' => $item['jarak'],
+                        'harga_rata_rata' => ($item['harga_min'] + $item['harga_max']) / 2
                     ]);
                 });
 
