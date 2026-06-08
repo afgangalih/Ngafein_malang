@@ -5,7 +5,7 @@
 
 @section('content')
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-32 md:pt-40">
+    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-24 sm:pt-32 md:pt-40">
         <x-user.ui.user-back-button class="mb-6" />
         @php
             $images = $cafe->gambar->pluck('link_gambar')->toArray();
@@ -16,7 +16,7 @@
         @endphp
 
         @if($count <= 1)
-            <div class="h-[380px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm border border-gray-100/50 relative group cursor-pointer"
+            <div class="h-[220px] sm:h-[320px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm border border-gray-100/50 relative group cursor-pointer"
                  onclick="openLightbox(0)">
                 <img src="{{ $allImages[0] }}" alt="Foto {{ $cafe->nama_kafe }}"
                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-in-out">
@@ -28,7 +28,7 @@
             </div>
 
         @elseif($count == 2)
-            <div class="grid grid-cols-2 gap-3 h-[380px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm">
+            <div class="grid grid-cols-2 gap-2 sm:gap-3 h-[220px] sm:h-[320px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm">
                 @foreach($allImages as $index => $img)
                     <div class="relative group cursor-pointer overflow-hidden" onclick="openLightbox({{ $index }})">
                         <img src="{{ $img }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
@@ -38,7 +38,7 @@
             </div>
 
         @elseif($count == 3)
-            <div class="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm">
+            <div class="grid grid-cols-4 grid-rows-2 gap-2 sm:gap-3 h-[220px] sm:h-[320px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm">
                 <div class="col-span-3 row-span-2 relative group cursor-pointer overflow-hidden" onclick="openLightbox(0)">
                     <img src="{{ $allImages[0] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all"></div>
@@ -54,7 +54,7 @@
             </div>
 
         @else
-            <div class="grid grid-cols-4 grid-rows-2 gap-3 h-[380px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm border border-gray-100/50">
+            <div class="grid grid-cols-4 grid-rows-2 gap-2 sm:gap-3 h-[220px] sm:h-[320px] md:h-[480px] rounded-2xl overflow-hidden shadow-sm border border-gray-100/50">
                 <div class="col-span-4 md:col-span-2 row-span-2 relative group cursor-pointer overflow-hidden" onclick="openLightbox(0)">
                     <img src="{{ $allImages[0] }}" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700">
                     <div class="absolute inset-0 bg-black/0 group-hover:bg-black/20 transition-all"></div>
@@ -71,8 +71,8 @@
                 <div class="col-span-4 md:col-span-2 row-span-1 relative group cursor-pointer overflow-hidden" onclick="openLightbox(3)">
                     <img src="{{ $allImages[3] }}" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 opacity-90">
                     <div class="absolute inset-0 flex items-center justify-center bg-black/30 group-hover:bg-black/40 transition-all">
-                        <span class="bg-white/95 backdrop-blur-md text-gray-900 font-bold px-8 py-3 rounded-full shadow-xl flex items-center gap-2">
-                            <i data-lucide="images" class="w-5 h-5 text-[#b87c39]"></i>
+                        <span class="bg-white/95 backdrop-blur-md text-gray-900 font-bold px-5 py-2.5 sm:px-8 sm:py-3 rounded-full shadow-xl flex items-center gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                            <i data-lucide="images" class="w-4 h-4 sm:w-5 sm:h-5 text-[#b87c39]"></i>
                             @if($count > 4)
                                 +{{ $count - 3 }} Foto Lainnya
                             @else
@@ -115,25 +115,25 @@
         </button>
     </div>
 
-    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-8 md:pt-12">
+    <section class="max-w-7xl mx-auto px-4 md:px-8 pt-6 sm:pt-8 md:pt-12">
 
 
-        <div class="flex flex-col lg:flex-row gap-10">
+        <div class="flex flex-col lg:flex-row gap-6 lg:gap-10">
 
             <div class="flex-1">
 
-                <div class="flex items-center gap-3 mb-4">
-                    <span class="bg-[#b87c39] text-white text-xs font-bold px-4 py-1.5 rounded-full uppercase tracking-widest">
+                <div class="flex items-center gap-2.5 sm:gap-3 mb-3 sm:mb-4">
+                    <span class="bg-[#b87c39] text-white text-[10px] sm:text-xs font-bold px-3 py-1 sm:px-4 sm:py-1.5 rounded-full uppercase tracking-widest">
                         {{ $cafe->menus->first()->nama_menu ?? 'Cafe' }}
                     </span>
-                    <span class="flex items-center gap-1.5 text-gray-500 text-sm font-medium">
+                    <span class="flex items-center gap-1.5 text-gray-500 text-xs sm:text-sm font-medium">
                         <i data-lucide="map-pin" class="w-3.5 h-3.5 text-[#b87c39]"></i>
-                        Berjarak <strong class="text-gray-900 ml-1">{{ $cafe->jarak }} km</strong>
+                        Berjarak <strong class="text-gray-900 ml-0.5">{{ $cafe->jarak }} km</strong>
                     </span>
                 </div>
 
-                <div class="flex items-center justify-between gap-4 mb-4">
-                    <h1 class="text-3xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
+                <div class="flex items-center justify-between gap-4 mb-3 sm:mb-4">
+                    <h1 class="text-xl sm:text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
                         {{ $cafe->nama_kafe }}
                     </h1>
                     <x-user.ui.bookmark-button :kafe="$cafe" :isDetail="true" />
@@ -152,45 +152,45 @@
                         default => 'Biasa',
                     };
                 @endphp
-                <div class="flex items-center gap-3 mb-8 pb-8 border-b border-[#b87c39]/20">
-                    <span class="text-2xl font-extrabold text-gray-900 tabular-nums">{{ number_format($rating, 1) }}</span>
+                <div class="flex items-center gap-2.5 sm:gap-3 mb-6 sm:mb-8 pb-6 sm:pb-8 border-b border-[#b87c39]/20">
+                    <span class="text-lg sm:text-2xl font-extrabold text-gray-900 tabular-nums">{{ number_format($rating, 1) }}</span>
                     <div class="flex items-center gap-0.5">
                         @for($i = 0; $i < $fullStars; $i++)
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="#b87c39" stroke="#b87c39" stroke-width="1">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="#b87c39" stroke="#b87c39" stroke-width="1">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                             </svg>
                         @endfor
                         @if($halfStar)
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24">
                                 <defs><linearGradient id="half"><stop offset="50%" stop-color="#b87c39"/><stop offset="50%" stop-color="#d1d5db"/></linearGradient></defs>
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2" fill="url(#half)" stroke="#b87c39" stroke-width="0.5"/>
                             </svg>
                         @endif
                         @for($i = 0; $i < $emptyStars; $i++)
-                            <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4 sm:w-5 sm:h-5" viewBox="0 0 24 24" fill="none" stroke="#d1d5db" stroke-width="1.5">
                                 <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/>
                             </svg>
                         @endfor
                     </div>
-                    <span class="text-sm font-semibold text-[#b87c39] bg-amber-50 px-3 py-1 rounded-full border border-amber-100">
+                    <span class="text-xs sm:text-sm font-semibold text-[#b87c39] bg-amber-50 px-2.5 py-0.5 sm:px-3 sm:py-1 rounded-full border border-amber-100">
                         {{ $ratingLabel }}
                     </span>
                 </div>
 
-                <div class="mb-8">
-                    <h3 class="text-sm font-bold mb-2 text-gray-900 flex items-center gap-2">
-                        <span class="w-1 h-4 bg-[#b87c39] rounded-full inline-block"></span>
+                <div class="mb-6 sm:mb-8">
+                    <h3 class="text-xs sm:text-sm font-bold mb-2 text-gray-900 flex items-center gap-2">
+                        <span class="w-1 h-3.5 sm:h-4 bg-[#b87c39] rounded-full inline-block"></span>
                         Tentang Kafe
                     </h3>
-                    <p class="text-gray-500 leading-relaxed text-sm">{{ $cafe->deskripsi ?? 'Belum ada deskripsi untuk kafe ini.' }}</p>
+                    <p class="text-gray-500 leading-relaxed text-xs sm:text-sm">{{ $cafe->deskripsi ?? 'Belum ada deskripsi untuk kafe ini.' }}</p>
                 </div>
 
-                <div class="mb-8">
-                    <h3 class="text-sm font-bold mb-4 text-gray-900 flex items-center gap-2">
-                        <span class="w-1 h-4 bg-[#b87c39] rounded-full inline-block"></span>
+                <div class="mb-6 sm:mb-8">
+                    <h3 class="text-xs sm:text-sm font-bold mb-3 sm:mb-4 text-gray-900 flex items-center gap-2">
+                        <span class="w-1 h-3.5 sm:h-4 bg-[#b87c39] rounded-full inline-block"></span>
                         Fasilitas
                     </h3>
-                    <div class="flex flex-wrap gap-2.5">
+                    <div class="flex flex-wrap gap-2">
                         @php
                         $fasilitasIcons = [
                             'wifi'          => 'wifi',
@@ -219,20 +219,20 @@
                             $key = strtolower($fas->nama_fasilitas); 
                             $iconClass = $fasilitasIcons[$key] ?? 'fa-check'; 
                         @endphp
-                        <span class="inline-flex items-center gap-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-default capitalize shadow-sm">
-                            <i data-lucide="{{ $iconClass }}" class="w-4 h-4 text-[#b87c39]"></i>
+                        <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-default capitalize shadow-sm">
+                            <i data-lucide="{{ $iconClass }}" class="w-3.5 h-3.5 text-[#b87c39]"></i>
                             {{ str_replace('_', ' ', $fas->nama_fasilitas) }}
                         </span>
                         @endforeach
                     </div>
                 </div>
 
-                <div class="mb-8">
-                    <h3 class="text-sm font-bold mb-4 text-gray-900 flex items-center gap-2">
-                        <span class="w-1 h-4 bg-[#b87c39] rounded-full inline-block"></span>
+                <div class="mb-6 sm:mb-8">
+                    <h3 class="text-xs sm:text-sm font-bold mb-3 sm:mb-4 text-gray-900 flex items-center gap-2">
+                        <span class="w-1 h-3.5 sm:h-4 bg-[#b87c39] rounded-full inline-block"></span>
                         Kategori Menu
                     </h3>
-                    <div class="flex flex-wrap gap-2.5">
+                    <div class="flex flex-wrap gap-2">
                         @php
                         $menuIcons = [
                             'kopi'          => 'coffee',
@@ -252,8 +252,8 @@
                             $mKey = strtolower($menu->nama_menu);
                             $mIcon = $menuIcons[$mKey] ?? 'fa-bowl-food';
                         @endphp
-                        <span class="inline-flex items-center gap-2.5 text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-4 py-2.5 rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-pointer capitalize shadow-sm">
-                            <i data-lucide="{{ $mIcon }}" class="w-4 h-4 text-[#b87c39]"></i>
+                        <span class="inline-flex items-center gap-2 text-xs sm:text-sm font-semibold text-gray-700 bg-white border border-gray-200 px-3 py-2 sm:px-4 sm:py-2.5 rounded-lg sm:rounded-xl hover:border-[#b87c39] hover:text-[#b87c39] hover:bg-[#b87c39]/5 transition-all cursor-pointer capitalize shadow-sm">
+                            <i data-lucide="{{ $mIcon }}" class="w-3.5 h-3.5 text-[#b87c39]"></i>
                             {{ str_replace('_', ' ', $menu->nama_menu) }}
                         </span>
                         @endforeach
@@ -461,14 +461,28 @@
                     </h3>
                     
                     @forelse($cafe->reviews as $rev)
+                        @php
+                            $origName = $rev->user->name ?? 'User Anonim';
+                            $parts = explode(' ', $origName);
+                            $maskedParts = [];
+                            foreach ($parts as $part) {
+                                $len = strlen($part);
+                                if ($len <= 2) {
+                                    $maskedParts[] = $part;
+                                } else {
+                                    $maskedParts[] = substr($part, 0, 1) . str_repeat('*', $len - 2) . substr($part, -1);
+                                }
+                            }
+                            $maskedName = implode(' ', $maskedParts);
+                        @endphp
                         <div class="bg-white border border-gray-100 rounded-2xl p-5 shadow-sm space-y-3.5">
                             <div class="flex items-center justify-between">
                                 <div class="flex items-center gap-3">
                                     <div class="w-8 h-8 rounded-full bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center font-bold text-[10px] uppercase overflow-hidden">
-                                        <span>{{ substr($rev->user->name ?? 'U', 0, 2) }}</span>
+                                        <span>{{ substr($origName, 0, 2) }}</span>
                                     </div>
                                     <div>
-                                        <p class="text-xs font-bold text-gray-900">{{ $rev->user->name ?? 'User Anonim' }}</p>
+                                        <p class="text-xs font-bold text-gray-900">{{ $maskedName }}</p>
                                         <p class="text-[10px] text-gray-400 font-medium">{{ $rev->created_at->diffForHumans() }}</p>
                                     </div>
                                 </div>

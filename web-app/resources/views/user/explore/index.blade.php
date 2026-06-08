@@ -7,13 +7,13 @@
 <div class="bg-[#FBFBFB] min-h-screen pb-20">
     
     {{-- Hero Section --}}
-    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-32 md:pt-48 mb-12">
+    <div class="max-w-7xl mx-auto px-4 md:px-8 pt-24 sm:pt-32 md:pt-48 mb-8 sm:mb-12">
         <div class="text-center relative">
-            <h1 class="text-5xl md:text-8xl font-black text-gray-900 tracking-tighter mb-8 leading-[0.9]">
+            <h1 class="text-3xl sm:text-5xl md:text-8xl font-black text-gray-900 tracking-tighter mb-4 sm:mb-8 leading-[1.0] sm:leading-[0.9]">
                 Temukan <span class="text-[#b87c39]">Kafe</span> <br class="hidden md:block"> Terbaikmu.
             </h1>
             
-            <p class="text-base md:text-xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed tracking-tight">
+            <p class="text-sm sm:text-base md:text-xl text-gray-500 font-medium max-w-2xl mx-auto leading-relaxed tracking-tight">
                 Pilihan kurasi kafe terbaik di Malang untuk produktivitas <br class="hidden md:block"> 
                 dan kenyamanan nongkrong yang tak tertandingi.
             </p>
@@ -22,7 +22,7 @@
         </div>
 
         {{-- Interactive Search Bar --}}
-        <div class="mt-12 max-w-2xl mx-auto relative z-20" 
+        <div class="mt-8 sm:mt-12 max-w-2xl mx-auto relative z-20" 
              x-data="{ 
                 query: '', 
                 results: [], 
@@ -54,20 +54,20 @@
              }"
              @click.away="show = false">
             
-            <div class="flex items-center bg-white/80 backdrop-blur-lg border border-gray-200/80 rounded-full p-2.5 transition-all duration-300 focus-within:bg-white focus-within:border-[#B87C39]/50 focus-within:ring-4 focus-within:ring-[#B87C39]/10">
-                <svg viewBox="0 0 24 24" class="w-6 h-6 text-[#B87C39] ml-5 mr-3 fill-none stroke-current" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
+            <div class="flex items-center bg-white/80 backdrop-blur-lg border border-gray-200/80 rounded-full p-1.5 sm:p-2.5 transition-all duration-300 focus-within:bg-white focus-within:border-[#B87C39]/50 focus-within:ring-4 focus-within:ring-[#B87C39]/10">
+                <svg viewBox="0 0 24 24" class="w-5 h-5 sm:w-6 sm:h-6 text-[#B87C39] ml-3 sm:ml-5 mr-1.5 sm:mr-3 fill-none stroke-current" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                 <input 
-                    type="text" 
-                    x-model="query"
-                    @input="fetchResults()"
-                    @focus="if(results.length > 0) show = true"
-                    placeholder="Cari kafe, area, atau suasana..."
-                    class="flex-1 bg-transparent border-none text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 text-base px-2 h-14"
+                     type="text" 
+                     x-model="query"
+                     @input="fetchResults()"
+                     @focus="if(results.length > 0) show = true"
+                     placeholder="Cari kafe, area, atau suasana..."
+                     class="flex-1 bg-transparent border-none text-gray-800 placeholder-gray-400 focus:outline-none focus:ring-0 text-sm sm:text-base px-2 h-11 sm:h-14"
                 >
-                <button x-show="query.length > 0" @click="query = ''; results = []; show = false" class="p-3 text-gray-400 hover:text-gray-600 transition-colors" x-cloak>
+                <button x-show="query.length > 0" @click="query = ''; results = []; show = false" class="p-2 sm:p-3 text-gray-400 hover:text-gray-600 transition-colors" x-cloak>
                     <svg viewBox="0 0 24 24" class="w-5 h-5 fill-none stroke-current" stroke-width="2.5"><path d="M18 6 6 18M6 6l12 12"/></svg>
                 </button>
-                <button class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold px-8 h-14 rounded-full transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#B87C39]/30 ml-2 cursor-pointer">
+                <button class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold px-5 sm:px-8 h-11 sm:h-14 rounded-full transition-all duration-200 flex items-center gap-2 shadow-lg shadow-[#B87C39]/30 ml-2 cursor-pointer text-xs sm:text-sm">
                     <svg viewBox="0 0 24 24" class="w-4 h-4 hidden sm:inline fill-none stroke-current" stroke-width="2.5"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.3-4.3"/></svg>
                     Cari <span class="hidden sm:inline">Kafe</span>
                 </button>

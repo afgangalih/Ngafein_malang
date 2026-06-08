@@ -155,7 +155,6 @@
          style="background:radial-gradient(circle at 10% 90%,rgba(184,124,57,.04),transparent 60%)"></div>
 
     <div class="max-w-7xl mx-auto px-5 md:px-8 relative z-10">
-        <x-user.ui.user-back-button class="mb-10" />
 
         <div class="flex flex-col lg:flex-row lg:items-end lg:justify-between gap-10">
             <div class="fu">
@@ -632,23 +631,23 @@
          x-transition:leave="transition ease-in duration-200 transform"
          x-transition:leave-start="translate-y-0 opacity-100"
          x-transition:leave-end="translate-y-full opacity-0"
-         class="fixed bottom-6 inset-x-4 max-w-xl mx-auto z-40 bg-[#2B1A09]/95 backdrop-blur-md rounded-3xl border border-[#B87C39]/30 shadow-2xl p-4 flex items-center justify-between gap-4"
+         class="fixed bottom-6 inset-x-4 max-w-xl mx-auto z-40 bg-[#2B1A09]/95 backdrop-blur-md rounded-3xl border border-[#B87C39]/30 shadow-2xl p-3 sm:p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 sm:gap-4"
          x-cloak>
-        <div class="flex items-center gap-3">
-            <div class="w-10 h-10 rounded-xl bg-[#B87C39]/20 text-[#B87C39] flex items-center justify-center shrink-0">
-                <i data-lucide="git-compare" class="w-5 h-5"></i>
+        <div class="flex items-center gap-2.5 sm:gap-3">
+            <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-lg sm:rounded-xl bg-[#B87C39]/20 text-[#B87C39] flex items-center justify-center shrink-0">
+                <i data-lucide="git-compare" class="w-4.5 h-4.5 sm:w-5 sm:h-5"></i>
             </div>
             <div>
-                <p class="text-xs font-bold text-white uppercase tracking-wider">Perbandingan Kafe</p>
-                <p class="text-[11px] text-white/60 font-light mt-0.5"><span x-text="selectedCafes.length" class="font-bold text-[#B87C39]"></span> dari maks 3 kafe terpilih</p>
+                <p class="text-[11px] sm:text-xs font-bold text-white uppercase tracking-wider">Perbandingan Kafe</p>
+                <p class="text-[10px] sm:text-[11px] text-white/60 font-light mt-0.5"><span x-text="selectedCafes.length" class="font-bold text-[#B87C39]"></span> dari maks 3 kafe terpilih</p>
             </div>
         </div>
-        <div class="flex items-center gap-3">
-            <button @click="selectedCafes = []" class="text-xs text-white/60 hover:text-white transition-colors py-2 px-3 rounded-xl border border-white/10 hover:bg-white/5 font-medium">
+        <div class="flex items-center justify-end gap-2.5 sm:gap-3 w-full sm:w-auto">
+            <button @click="selectedCafes = []" class="text-[10px] sm:text-xs text-white/60 hover:text-white transition-colors py-1.5 px-3 rounded-lg border border-white/10 hover:bg-white/5 font-semibold">
                 Batal
             </button>
             <button @click="if (selectedCafes.length < 2) { triggerError('Pilih minimal 2 kafe untuk dibandingkan!'); } else { showModal = true; }" 
-                    class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold text-xs px-5 py-2.5 rounded-xl transition-all shadow-md shadow-[#B87C39]/20 flex items-center gap-1.5">
+                    class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-bold text-[10px] sm:text-xs px-4 py-2 sm:px-5 sm:py-2.5 rounded-lg sm:rounded-xl transition-all shadow-md shadow-[#B87C39]/20 flex items-center gap-1.5">
                 Bandingkan <i data-lucide="arrow-right" class="w-3.5 h-3.5"></i>
             </button>
         </div>
@@ -659,188 +658,323 @@
          class="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 bg-black/60 backdrop-blur-sm"
          x-transition
          x-cloak>
-        <div class="bg-white w-full max-w-4xl rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden max-h-[90vh] flex flex-col animate-fade-up"
+        <div class="bg-white w-full max-w-4xl rounded-3xl md:rounded-[2.5rem] shadow-2xl border border-gray-100 overflow-hidden max-h-[90vh] flex flex-col animate-fade-up"
              @click.away="showModal = false">
             
             <!-- Modal Header -->
-            <div class="p-6 md:p-8 border-b border-gray-100 flex items-center justify-between shrink-0 bg-[#FCFAF8]">
-                <div class="flex items-center gap-3.5">
-                    <div class="w-11 h-11 rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center shadow-inner">
-                        <i data-lucide="git-compare" class="w-5 h-5"></i>
+            <div class="p-4 md:p-8 border-b border-gray-100 flex items-center justify-between shrink-0 bg-[#FCFAF8]">
+                <div class="flex items-center gap-2.5 md:gap-3.5">
+                    <div class="w-9 h-9 md:w-11 md:h-11 rounded-xl md:rounded-2xl bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center shadow-inner shrink-0">
+                        <i data-lucide="git-compare" class="w-4.5 h-4.5 md:w-5 md:h-5"></i>
                     </div>
                     <div>
-                        <h3 class="text-lg font-extrabold text-[#2B1A09] tracking-tight">Analisis Komparatif</h3>
-                        <p class="text-xs text-gray-400 font-light mt-0.5">Perbandingan side-by-side berdasarkan parameter SAW</p>
+                        <h3 class="text-sm md:text-lg font-extrabold text-[#2B1A09] tracking-tight">Analisis Komparatif</h3>
+                        <p class="text-[10px] md:text-xs text-gray-400 font-light mt-0.5">Perbandingan side-by-side berdasarkan parameter SAW</p>
                     </div>
                 </div>
-                <button @click="showModal = false" class="w-8 h-8 flex items-center justify-center text-gray-400 hover:text-[#2B1A09] transition-colors rounded-full hover:bg-gray-200/50">
-                    <i data-lucide="x" class="w-5 h-5"></i>
+                <button @click="showModal = false" class="w-7 h-7 md:w-8 md:h-8 flex items-center justify-center text-gray-400 hover:text-[#2B1A09] transition-colors rounded-full hover:bg-gray-200/50">
+                    <i data-lucide="x" class="w-4 h-4 md:w-5 md:h-5"></i>
                 </button>
             </div>
 
             <!-- Modal Content (Scrollable Table) -->
-            <div class="p-6 md:p-8 overflow-y-auto flex-1">
-                <table class="w-full border-collapse table-fixed text-left">
-                    <thead>
-                        <tr class="border-b border-gray-100">
-                            <!-- Label column -->
-                            <th class="w-1/4 pb-6 pt-2 pr-4 text-xs font-bold text-gray-400 uppercase tracking-widest align-bottom">
-                                Kriteria Evaluasi
-                                <p class="text-[9px] text-gray-300 font-light lowercase mt-1 tracking-normal">nilai parameter & perhitungan saw</p>
-                            </th>
-                            
-                            <!-- Cafe columns -->
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <th class="w-1/4 pb-6 px-3">
-                                    <div class="bg-[#FCFAF8] rounded-2xl p-4 border border-gray-100 relative group transition-all hover:border-[#B87C39]/20 shadow-sm text-center">
-                                        <div class="h-20 w-full rounded-xl overflow-hidden mb-3 relative bg-gray-50">
-                                            <img :src="cafe.gambar" :alt="cafe.nama" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
-                                            <span class="absolute top-2 left-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/95 text-[#B87C39] text-[10px] font-extrabold shadow-sm border border-gray-100" x-text="cafe.rank"></span>
+            <!-- Modal Content (Scrollable Table for Desktop / Card list for Mobile) -->
+            <div class="p-4 md:p-8 overflow-y-auto flex-1">
+                
+                <!-- Desktop Table View -->
+                <div class="hidden md:block">
+                    <table class="w-full border-collapse text-left table-fixed">
+                        <thead>
+                            <tr class="border-b border-gray-100">
+                                <!-- Label column -->
+                                <th class="w-1/4 pb-6 pt-2 pr-4 text-xs font-bold text-gray-400 uppercase tracking-widest align-bottom">
+                                    Kriteria Evaluasi
+                                    <p class="text-[9px] text-gray-300 font-light lowercase mt-1 tracking-normal">nilai parameter & perhitungan saw</p>
+                                </th>
+                                
+                                <!-- Cafe columns -->
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <th class="w-1/4 pb-6 px-3">
+                                        <div class="bg-[#FCFAF8] rounded-2xl p-4 border border-gray-100 relative group transition-all hover:border-[#B87C39]/20 shadow-sm text-center">
+                                            <div class="h-20 w-full rounded-xl overflow-hidden mb-3 relative bg-gray-50">
+                                                <img :src="cafe.gambar" :alt="cafe.nama" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500">
+                                                <span class="absolute top-2 left-2 inline-flex items-center justify-center w-6 h-6 rounded-full bg-white/95 text-[#B87C39] text-[10px] font-extrabold shadow-sm border border-gray-100" x-text="cafe.rank"></span>
+                                            </div>
+                                            <h4 class="font-bold text-[#2B1A09] text-xs line-clamp-1" x-text="cafe.nama"></h4>
+                                            <p class="text-[9px] text-gray-400 mt-0.5 line-clamp-1 font-light" x-text="cafe.alamat"></p>
                                         </div>
-                                        <h4 class="font-bold text-[#2B1A09] text-xs line-clamp-1" x-text="cafe.nama"></h4>
-                                        <p class="text-[9px] text-gray-400 mt-0.5 line-clamp-1 font-light" x-text="cafe.alamat"></p>
-                                    </div>
-                                </th>
-                            </template>
+                                    </th>
+                                </template>
+                                
+                                <!-- Fill empty column slots if less than 3 cafes selected -->
+                                <template x-if="selectedCafes.length < 3">
+                                    <th class="w-1/4 pb-6 px-3">
+                                        <div class="border border-dashed border-gray-200 rounded-2xl h-[162px] flex flex-col items-center justify-center text-center bg-gray-50/30">
+                                            <i data-lucide="plus-circle" class="w-5 h-5 text-gray-300 mb-1"></i>
+                                            <span class="text-[9px] text-gray-400">Pilih kafe lain</span>
+                                        </div>
+                                    </th>
+                                </template>
+                            </tr>
+                        </thead>
+                        <tbody class="divide-y divide-gray-100">
                             
-                            <!-- Fill empty column slots if less than 3 cafes selected -->
-                            <template x-if="selectedCafes.length < 3">
-                                <th class="w-1/4 pb-6 px-3">
-                                    <div class="border border-dashed border-gray-200 rounded-2xl h-[162px] flex flex-col items-center justify-center text-center bg-gray-50/30">
-                                        <i data-lucide="plus-circle" class="w-5 h-5 text-gray-300 mb-1"></i>
-                                        <span class="text-[9px] text-gray-400">Pilih kafe lain</span>
+                            <!-- Row 1: Skor SAW -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-middle">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center shrink-0">
+                                            <i data-lucide="sparkles" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-[#2B1A09]">Skor SAW</span>
                                     </div>
-                                </th>
-                            </template>
-                        </tr>
-                    </thead>
-                    <tbody class="divide-y divide-gray-100">
-                        
-                        <!-- Row 1: Skor SAW -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-middle">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center shrink-0">
-                                        <i data-lucide="sparkles" class="w-4 h-4"></i>
-                                    </div>
-                                    <span class="text-xs font-bold text-[#2B1A09]">Skor SAW</span>
-                                </div>
-                            </td>
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 text-center align-middle">
-                                    <span class="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-[#B87C39] text-white text-xs font-extrabold shadow-sm" x-text="cafe.skor"></span>
                                 </td>
-                            </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 text-center align-middle">
+                                        <span class="inline-flex items-center justify-center px-3.5 py-1.5 rounded-full bg-[#B87C39] text-white text-xs font-extrabold shadow-sm" x-text="cafe.skor"></span>
+                                    </td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
 
-                        <!-- Row 2: Harga Minimum -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-middle">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                                        <i data-lucide="banknote" class="w-4 h-4"></i>
+                            <!-- Row 2: Harga Minimum -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-middle">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                                            <i data-lucide="banknote" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-500">Harga Terendah</span>
                                     </div>
-                                    <span class="text-xs font-bold text-gray-500">Harga Terendah</span>
-                                </div>
-                            </td>
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.harga"></td>
-                            </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
+                                </td>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.harga"></td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
 
-                        <!-- Row 3: Jarak -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-middle">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                                        <i data-lucide="map-pin" class="w-4 h-4"></i>
+                            <!-- Row 3: Jarak -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-middle">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                                            <i data-lucide="map-pin" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-500">Jarak Lokasi</span>
                                     </div>
-                                    <span class="text-xs font-bold text-gray-500">Jarak Lokasi</span>
-                                </div>
-                            </td>
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.jarak + ' km'"></td>
-                            </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
+                                </td>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.jarak + ' km'"></td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
 
-                        <!-- Row 4: Rating -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-middle">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                                        <i data-lucide="star" class="w-4 h-4"></i>
+                            <!-- Row 4: Rating -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-middle">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                                            <i data-lucide="star" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-500">Rating</span>
                                     </div>
-                                    <span class="text-xs font-bold text-gray-500">Rating</span>
-                                </div>
-                            </td>
+                                </td>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]">
+                                        <div class="inline-flex items-center gap-1 justify-center">
+                                            <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                            <span x-text="cafe.rating"></span>
+                                        </div>
+                                    </td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
+
+                            <!-- Row 5: Jam Operasional -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-middle">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                                            <i data-lucide="clock" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-500">Jam Operasional</span>
+                                    </div>
+                                </td>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.jam"></td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
+
+                            <!-- Row 6: Formula Perhitungan -->
+                            <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
+                                <td class="py-4 pr-4 align-top pt-5">
+                                    <div class="flex items-center gap-2">
+                                        <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
+                                            <i data-lucide="cpu" class="w-4 h-4"></i>
+                                        </div>
+                                        <span class="text-xs font-bold text-gray-500">Formula SAW</span>
+                                    </div>
+                                </td>
+                                <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                    <td class="py-4 px-3 align-middle">
+                                        <div class="bg-[#FCFAF8] border border-gray-200/60 rounded-xl p-3 text-[10px] text-gray-500 font-mono break-all leading-relaxed shadow-inner max-w-[200px] mx-auto text-center" x-text="cafe.perhitungan"></div>
+                                    </td>
+                                </template>
+                                <template x-if="selectedCafes.length < 3">
+                                    <td class="py-4 px-3"></td>
+                                </template>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+
+                <!-- Mobile Responsive View (Card Stacked comparison) -->
+                <div class="block md:hidden space-y-5">
+                    <!-- Header: Kafe yang Dibandingkan -->
+                    <div class="grid grid-cols-3 gap-2 pb-3.5 border-b border-gray-100">
+                        <template x-for="cafe in selectedCafes" :key="cafe.id">
+                            <div class="bg-[#FCFAF8] rounded-xl p-2.5 border border-gray-100 text-center relative flex flex-col items-center justify-center min-h-[68px]">
+                                <span class="inline-flex items-center justify-center px-1.5 py-0.5 rounded-full bg-[#B87C39]/10 text-[#B87C39] text-[9px] font-extrabold mb-1" x-text="cafe.rank"></span>
+                                <h4 class="font-bold text-[#2B1A09] text-[10px] line-clamp-2 leading-tight" x-text="cafe.nama"></h4>
+                            </div>
+                        </template>
+                        <template x-if="selectedCafes.length < 3">
+                            <div class="border border-dashed border-gray-200 rounded-xl p-2.5 flex items-center justify-center text-center bg-gray-50/30 min-h-[68px]">
+                                <span class="text-[9px] text-gray-400 font-bold tracking-wider">+ Cari Lain</span>
+                            </div>
+                        </template>
+                    </div>
+
+                    <!-- Kriteria 1: Skor SAW -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-[#B87C39]/10 text-[#B87C39] flex items-center justify-center">
+                                <i data-lucide="sparkles" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-[#2B1A09]">Skor SAW</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
                             <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]">
-                                    <div class="inline-flex items-center gap-1 justify-center">
-                                        <i data-lucide="star" class="w-3.5 h-3.5 text-amber-400 fill-amber-400"></i>
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <span class="inline-flex items-center justify-center px-2 py-0.5 rounded-full bg-[#B87C39] text-white text-[10px] font-extrabold" x-text="cafe.skor"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Kriteria 2: Harga Terendah -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center">
+                                <i data-lucide="banknote" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700">Harga Terendah</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
+                            <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <span class="text-[10px] font-bold text-[#2B1A09]" x-text="cafe.harga"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Kriteria 3: Jarak -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center">
+                                <i data-lucide="map-pin" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700">Jarak Lokasi</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
+                            <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <span class="text-[10px] font-bold text-[#2B1A09]" x-text="cafe.jarak + ' km'"></span>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+
+                    <!-- Kriteria 4: Rating -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center">
+                                <i data-lucide="star" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700">Rating</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
+                            <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <div class="inline-flex items-center gap-0.5 justify-center text-[10px] font-bold text-[#2B1A09]">
+                                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
                                         <span x-text="cafe.rating"></span>
                                     </div>
-                                </td>
-                            </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
-
-                        <!-- Row 5: Jam Operasional -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-middle">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                                        <i data-lucide="clock" class="w-4 h-4"></i>
-                                    </div>
-                                    <span class="text-xs font-bold text-gray-500">Jam Operasional</span>
                                 </div>
-                            </td>
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 text-center align-middle text-xs font-bold text-[#2B1A09]" x-text="cafe.jam"></td>
                             </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
+                        </div>
+                    </div>
 
-                        <!-- Row 6: Formula Perhitungan -->
-                        <tr class="hover:bg-[#FCFAF8]/40 transition-colors">
-                            <td class="py-4 pr-4 align-top pt-5">
-                                <div class="flex items-center gap-2">
-                                    <div class="w-7 h-7 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center shrink-0">
-                                        <i data-lucide="cpu" class="w-4 h-4"></i>
-                                    </div>
-                                    <span class="text-xs font-bold text-gray-500">Formula SAW</span>
+                    <!-- Kriteria 5: Jam Operasional -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center">
+                                <i data-lucide="clock" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700">Jam Operasional</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
+                            <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <span class="text-[9px] font-bold text-[#2B1A09]" x-text="cafe.jam"></span>
                                 </div>
-                            </td>
-                            <template x-for="cafe in selectedCafes" :key="cafe.id">
-                                <td class="py-4 px-3 align-middle">
-                                    <div class="bg-[#FCFAF8] border border-gray-200/60 rounded-xl p-3 text-[10px] text-gray-500 font-mono break-all leading-relaxed shadow-inner max-w-[200px] mx-auto text-center" x-text="cafe.perhitungan"></div>
-                                </td>
                             </template>
-                            <template x-if="selectedCafes.length < 3">
-                                <td class="py-4 px-3"></td>
-                            </template>
-                        </tr>
+                        </div>
+                    </div>
 
-                    </tbody>
-                </table>
+                    <!-- Kriteria 6: Formula Perhitungan -->
+                    <div class="bg-[#FCFAF8]/60 rounded-2xl p-3.5 border border-gray-100/80">
+                        <div class="flex items-center gap-2 mb-2.5">
+                            <div class="w-6.5 h-6.5 rounded-lg bg-gray-100 text-gray-500 flex items-center justify-center">
+                                <i data-lucide="cpu" class="w-3.5 h-3.5"></i>
+                            </div>
+                            <span class="text-xs font-bold text-gray-700">Formula SAW</span>
+                        </div>
+                        <div class="grid gap-2" :class="selectedCafes.length === 3 ? 'grid-cols-3' : 'grid-cols-2'">
+                            <template x-for="cafe in selectedCafes" :key="cafe.id">
+                                <div class="bg-white border border-gray-50 rounded-xl p-2 text-center shadow-sm">
+                                    <span class="block text-[8px] text-gray-400 font-medium truncate mb-1" x-text="cafe.nama"></span>
+                                    <div class="bg-[#FCFAF8] border border-gray-200/60 rounded-lg p-1.5 text-[8px] text-gray-500 font-mono break-all leading-relaxed shadow-inner text-left whitespace-normal" x-text="cafe.perhitungan"></div>
+                                </div>
+                            </template>
+                        </div>
+                    </div>
+                </div>
+
             </div>
             
             <!-- Modal Footer -->
-            <div class="p-6 border-t border-gray-100 bg-[#FCFAF8] text-right shrink-0 flex items-center justify-between">
-                <span class="text-[11px] text-gray-400">Metode Simple Additive Weighting (SAW)</span>
-                <button @click="showModal = false" class="bg-[#B87C39] hover:bg-[#a66c2e] text-white font-extrabold text-xs px-8 py-3 rounded-xl transition-all shadow-md">
+            <div class="p-4 md:p-6 border-t border-gray-100 bg-[#FCFAF8] shrink-0 flex items-center justify-between gap-4">
+                <span class="text-[11px] text-gray-400 hidden sm:block">Metode Simple Additive Weighting (SAW)</span>
+                <button @click="showModal = false" class="w-full sm:w-auto text-center justify-center bg-[#B87C39] hover:bg-[#a66c2e] text-white font-extrabold text-xs px-8 py-3.5 sm:py-3 rounded-xl transition-all shadow-md">
                     Selesai
                 </button>
             </div>

@@ -20,13 +20,16 @@
             </div>
 
             <!-- Bagian Kanan: Link Navigasi -->
-            <div class="flex flex-col items-start gap-4">
-                <p class="text-left text-[12px] font-medium text-[#B87C39] tracking-[0.12em] uppercase">Halaman</p>
-                <div class="flex flex-wrap justify-center gap-6 sm:gap-10 text-sm font-semibold text-white/80">
-                    <a href="{{ route('user.home') }}"  class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Beranda</a>
-                    <a href="{{ route('user.explore.index') }}"class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Eksplorasi</a>
-                    <a href="{{ route('user.kafe.rekomendasi') }}"  class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Rekomendasi</a>
-                    <a href="{{ route('user.about') }}"class="flex items-center gap-1.5 hover:text-[#B87C39] transition-colors">| Tentang Kami</a>
+            <div class="flex flex-col items-center lg:items-start gap-3">
+                <p class="text-[12px] font-bold text-[#B87C39] tracking-[0.15em] uppercase">Halaman</p>
+                <div class="flex flex-wrap justify-center lg:justify-start gap-x-6 gap-y-2.5 text-sm font-semibold text-white/80">
+                    <a href="{{ route('user.home') }}" class="hover:text-[#B87C39] transition-colors">Beranda</a>
+                    <span class="text-white/20 hidden sm:inline">•</span>
+                    <a href="{{ route('user.explore.index') }}" class="hover:text-[#B87C39] transition-colors">Eksplorasi</a>
+                    <span class="text-white/20 hidden sm:inline">•</span>
+                    <a href="{{ route('user.kafe.rekomendasi') }}" class="hover:text-[#B87C39] transition-colors">Rekomendasi</a>
+                    <span class="text-white/20 hidden sm:inline">•</span>
+                    <a href="{{ route('user.about') }}" class="hover:text-[#B87C39] transition-colors">Tentang Kami</a>
                 </div>
             </div>
         </div>
