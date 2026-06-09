@@ -20,6 +20,7 @@ class DatabaseSeeder extends Seeder
             KafeSeeder::class,
             KafeFasilitasSeeder::class,
             KafeMenuSeeder::class,
+            KafeGambarSeeder::class,
         ]);
     }
 }
