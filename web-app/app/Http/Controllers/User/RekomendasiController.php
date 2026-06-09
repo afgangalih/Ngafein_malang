@@ -106,7 +106,11 @@ class RekomendasiController extends Controller
                 $bobot = $this->getBobot();
                 try {
                     $sawResult = $sawService->calculate($kafes, $bobot);
-                    $hasil = $sawResult['hasil'];
+                    $kafesKeyed = $kafes->keyBy('id_kafe');
+                    $hasil = $sawResult['hasil']->map(function ($item) use ($kafesKeyed) {
+                        $item['model'] = $kafesKeyed->get($item['id_kafe']);
+                        return $item;
+                    });
                 } catch (\Exception $e) {
                     $engineError = $e->getMessage();
                     $hasil = $kafes->map(function ($cafe, $idx) {
@@ -126,7 +130,8 @@ class RekomendasiController extends Controller
                             'gambar' => ($cafe->relationLoaded('gambar') && $cafe->gambar) ? ($cafe->gambar->first()?->link_gambar ?? null) : null,
                             'skor' => 0.0,
                             'ranking' => $idx + 1,
-                            'perhitungan' => ''
+                            'perhitungan' => '',
+                            'model' => $cafe
                         ];
                     });
                 }

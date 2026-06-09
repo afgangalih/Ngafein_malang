@@ -37,9 +37,6 @@
         </div>
     </div>
 
-    <x-user.ui.bookmark-button :kafe="$k" />
-    <x-user.ui.blacklist-button :kafe="$k" />
-
     {{-- Bottom Info (Normal State) --}}
     <div class="absolute bottom-3.5 left-3.5 right-3.5 sm:bottom-6 sm:left-6 sm:right-6 group-hover:translate-y-10 group-hover:opacity-0 transition-all duration-500">
         <div class="mb-2 sm:mb-3">
