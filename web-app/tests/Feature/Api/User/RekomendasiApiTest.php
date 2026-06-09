@@ -55,18 +55,21 @@ class RekomendasiApiTest extends TestCase
         $match = $this->createCafe([
             'nama_kafe' => 'Kafe Cocok',
             'harga_min' => 20000,
+            'harga_max' => 24000,
             'jarak' => 1.0,
             'rating' => 4.5,
         ]);
         $this->createCafe([
             'nama_kafe' => 'Kafe Terlalu Mahal',
             'harga_min' => 60000,
+            'harga_max' => 70000,
             'jarak' => 1.0,
             'rating' => 4.8,
         ]);
         $this->createCafe([
             'nama_kafe' => 'Kafe Terlalu Jauh',
             'harga_min' => 15000,
+            'harga_max' => 24000,
             'jarak' => 5.0,
             'rating' => 4.8,
         ]);
@@ -74,7 +77,7 @@ class RekomendasiApiTest extends TestCase
         Http::fake(['*' => Http::response(['error' => 'engine down'], 500)]);
         Sanctum::actingAs($user);
 
-        $response = $this->getJson('/api/rekomendasi?harga_max=30000&jarak_max=2&rating_min=4');
+        $response = $this->getJson('/api/rekomendasi?harga_max=25000&jarak_max=2&rating_min=4');
 
         $response->assertOk()
             ->assertJsonPath('success', true);

@@ -77,6 +77,8 @@ class SAWServiceTest extends TestCase
                     'skor'      => 0.87,
                     'rating'    => 4.2,
                     'jarak'     => 0.8,
+                    'harga_min' => 15000,
+                    'harga_max' => 40000,
                 ],
             ],
             'matriks' => [
@@ -131,6 +133,44 @@ class SAWServiceTest extends TestCase
         $this->assertArrayHasKey('jarak_km', $firstHasil);
         $this->assertEquals(4.2, $firstHasil['rating_raw']);
         $this->assertEquals(0.8, $firstHasil['jarak_km']);
+    }
+
+    /**
+     * @test
+     * Menguji kesiapan service mengirim data ekstrem (jarak ribuan km, harga negatif)
+     * ke engine API dan memetakan response secara normal.
+     */
+    public function saat_payload_ekstrem_calculate_tetap_berjalan(): void
+    {
+        Http::fake([
+            '*' => Http::response($this->fakeEngineSuccessResponse(), 200),
+        ]);
+
+        $extremeCafe = new class {
+            public int $id_kafe = 2;
+            public string $nama_kafe = 'Kafe Ekstrem';
+            public string $alamat = 'Alamat Jauh';
+            public float $rating = 5.5; 
+            public float $jarak = 12000.5; 
+            public int $harga_min = -1500; 
+            public int $harga_max = 500000;
+            public string $jam_buka = '08:00:00';
+            public string $jam_tutup = '22:00:00';
+            public $gambar = null;
+            public $fasilitas = null;
+            public $menus = null;
+
+            public function relationLoaded(string $relation): bool
+            {
+                return false;
+            }
+        };
+
+        $service = new SAWService();
+        $result = $service->calculate(collect([$extremeCafe]), $this->makeBobot());
+
+        $this->assertNotEmpty($result['hasil']);
+        $this->assertEquals('Kafe Ujicoba', $result['hasil']->first()['nama_kafe']);
     }
 
     // =========================================================================
