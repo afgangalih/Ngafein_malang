@@ -33,8 +33,8 @@
         @yield('content')
     </main>
 
-    <x-user.ui.login-modal />
-    <x-user.ui.register-modal />
+    @include('auth.user.login-modal')
+    @include('auth.user.register-modal')
 
     @include('partials.user.footer')
 

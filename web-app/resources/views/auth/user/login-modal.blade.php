@@ -1,3 +1,4 @@
+{{-- resources/views/auth/user/login-modal.blade.php --}}
 <div x-data="{ 
         show: false, 
         email: '', 
