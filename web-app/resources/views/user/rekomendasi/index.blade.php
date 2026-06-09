@@ -480,13 +480,20 @@
         @endphp
 
         <a href="{{ route('user.explore.detail', $kafe['id_kafe']) }}"
+           @php
+               $k = $kafe['model'];
+               $isBlacklisted = Auth::check() && Auth::user()->blacklistedCafes->contains('id_kafe', $k->id_kafe);
+           @endphp
+           x-data="{ blacklisted: {{ $isBlacklisted ? 'true' : 'false' }} }"
+           @blacklist-toggled.window="if ($event.detail.id === {{ $k->id_kafe }}) blacklisted = $event.detail.blacklisted"
+           :class="blacklisted ? 'opacity-40 grayscale-[60%] hover:opacity-100 hover:grayscale-0 duration-300' : ''"
            class="kafe-card group relative bg-white rounded-2xl overflow-hidden border border-gray-100 shadow-sm flex flex-col {{ $visibleCls }}"
            data-card-index="{{ $idx }}">
 
             <div class="relative h-52 overflow-hidden bg-gray-50 flex-shrink-0">
                 @if($kafe['gambar'])
                     <img src="{{ $kafe['gambar'] }}" alt="{{ $kafe['nama_kafe'] }}"
-                         class="kafe-img w-full h-full object-cover" loading="lazy">
+                         class="kafe-img w-full h-full object-cover group-hover:scale-105 transition-transform duration-700" loading="lazy">
                 @else
                     <div class="w-full h-full flex items-center justify-center" style="background:#fdf8f3">
                         <i data-lucide="coffee" class="w-14 h-14" style="color:#e5d5c0"></i>
@@ -501,40 +508,42 @@
                 </div>
 
                 <div class="absolute top-3.5 right-3.5 z-10">
-                    <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-white/60"
-                          style="color:#b87c39">
+                    <span class="inline-flex items-center gap-1 bg-white/90 backdrop-blur-sm text-[10px] font-bold px-2.5 py-1 rounded-full shadow-sm border border-white/60 text-[#B87C39]">
                         <i data-lucide="cpu" class="w-2.5 h-2.5"></i>
-                        {{ $kafe['skor'] }}
+                        {{ $pct }}%
                     </span>
                 </div>
                 @endif
 
-                <button type="button" 
-                        @click.prevent="toggleCafe({
-                            id: {{ $kafe['id_kafe'] }},
-                            nama: '{{ addslashes($kafe['nama_kafe']) }}',
-                            alamat: '{{ addslashes($kafe['alamat'] ?? '-') }}',
-                            rating: '{{ $kafe['rating_raw'] }}',
-                            jarak: '{{ $kafe['jarak_km'] }}',
-                            jam: '{{ $kafe['jam_buka'] }} – {{ $kafe['jam_tutup'] }}',
-                            harga: 'Rp {{ $rangeK }}',
-                            skor: '{{ round($kafe['skor'] * 100) }}%',
-                            perhitungan: '{{ $kafe['perhitungan'] }}',
-                            rank: '#{{ $rank }}',
-                            gambar: '{{ $kafe['gambar'] ?? 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80' }}'
-                        })"
-                        class="absolute bottom-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 flex items-center justify-center transition-all duration-300 hover:scale-105"
-                        :class="selectedCafes.some(c => c.id === {{ $kafe['id_kafe'] }}) ? 'text-[#B87C39] border-[#B87C39] bg-[#B87C39]/10' : 'text-gray-400 hover:text-[#B87C39]'">
-                    <i data-lucide="git-compare" class="w-4 h-4"></i>
-                </button>
+                {{-- Compare Button (Bottom-Right of Image Overlay) --}}
+                <div class="absolute bottom-3.5 right-3.5 z-20" @click.prevent.stop="">
+                    <button type="button" 
+                            @click.prevent.stop="toggleCafe({
+                                id: {{ $kafe['id_kafe'] }},
+                                nama: '{{ addslashes($kafe['nama_kafe']) }}',
+                                alamat: '{{ addslashes($kafe['alamat'] ?? '-') }}',
+                                rating: '{{ $kafe['rating_raw'] }}',
+                                jarak: '{{ $kafe['jarak_km'] }}',
+                                jam: '{{ $kafe['jam_buka'] }} – {{ $kafe['jam_tutup'] }}',
+                                harga: 'Rp {{ $rangeK }}',
+                                skor: '{{ round($kafe['skor'] * 100) }}%',
+                                perhitungan: '{{ $kafe['perhitungan'] }}',
+                                rank: '#{{ $rank }}',
+                                gambar: '{{ $kafe['gambar'] ?? 'https://images.unsplash.com/photo-1554118811-1e0d58224f24?auto=format&fit=crop&w=600&q=80' }}'
+                            })"
+                            class="w-9 h-9 rounded-full bg-white/95 backdrop-blur-sm shadow-md border border-gray-100 flex items-center justify-center transition-all duration-300 hover:scale-105 cursor-pointer focus:outline-none"
+                            :class="selectedCafes.some(c => c.id === {{ $kafe['id_kafe'] }}) ? 'text-[#B87C39] border-[#B87C39] bg-[#B87C39]/10' : 'text-gray-400 hover:text-[#B87C39]'"
+                            title="Bandingkan Kafe">
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M16 3h5v5"/><path d="M8 3H3v5"/><path d="M21 16v5h-5"/><path d="M3 16v5h5"/><path d="M4 12h16"/></svg>
+                    </button>
+                </div>
 
                 <div class="absolute inset-x-0 bottom-0 h-16 pointer-events-none"
                      style="background:linear-gradient(to top,rgba(0,0,0,.28),transparent)"></div>
             </div>
 
-            <div class="p-5 flex flex-col flex-1">
-                <h3 class="font-bold text-gray-900 leading-snug mb-1 line-clamp-1 transition-colors group-hover:text-[#b87c39]"
-                    style="font-size:.97rem">{{ $kafe['nama_kafe'] }}</h3>
+            <div class="p-5 flex flex-col flex-1 bg-white">
+                <h3 class="font-bold text-gray-900 leading-snug mb-1 line-clamp-1 transition-colors group-hover:text-[#b87c39]" style="font-size:.97rem">{{ $kafe['nama_kafe'] }}</h3>
                 <p class="text-[11px] text-gray-400 mb-4 line-clamp-1 flex items-center gap-1.5" style="font-weight:300">
                     <i data-lucide="map-pin" class="w-3 h-3 flex-shrink-0" style="color:#b87c39"></i>
                     {{ $kafe['alamat'] ?? '-' }}
@@ -577,7 +586,7 @@
                             Rp {{ $rangeK }}
                         </p>
                     </div>
-                    <span class="inline-flex items-center gap-1.5 text-xs font-semibold text-white px-4 py-2 rounded-xl transition-all group-hover:shadow-md group-hover:opacity-90"
+                    <span class="inline-flex items-center gap-1.5 text-xs font-bold text-white px-4 py-2 rounded-xl transition-all group-hover:shadow-md group-hover:opacity-90"
                           style="background:#b87c39">
                         Detail
                         <i data-lucide="arrow-right" class="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform"></i>

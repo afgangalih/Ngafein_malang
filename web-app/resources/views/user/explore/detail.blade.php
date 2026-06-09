@@ -136,7 +136,10 @@
                     <h1 class="text-xl sm:text-2xl md:text-4xl font-extrabold text-gray-900 tracking-tight leading-tight">
                         {{ $cafe->nama_kafe }}
                     </h1>
-                    <x-user.ui.bookmark-button :kafe="$cafe" :isDetail="true" />
+                    <div class="flex items-center gap-2 flex-shrink-0">
+                        <x-user.ui.bookmark-button :kafe="$cafe" :isDetail="true" />
+                        <x-user.ui.blacklist-button :kafe="$cafe" :isDetail="true" />
+                    </div>
                 </div>
 
                 @php
