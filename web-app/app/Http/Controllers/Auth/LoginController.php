@@ -17,7 +17,7 @@ class LoginController extends Controller
             $user = Auth::user();
             return redirect()->route($user->isAdmin() ? 'admin.dashboard' : 'user.home');
         }
-        return view('admin.auth.login');
+        return view('auth.admin.login');
     }
 
     /**

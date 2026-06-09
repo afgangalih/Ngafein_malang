@@ -1,3 +1,4 @@
+{{-- resources/views/auth/user/register-modal.blade.php --}}
 <div x-data="{ 
         show: false, 
         name: '',
