@@ -103,6 +103,15 @@
         transition: background .2s;
     }
     .btn-load-more:hover .lm-badge { background: rgba(184,124,57,.18); }
+
+    @media (max-width: 639px) {
+        .desktop-only-table { display: none !important; }
+        .mobile-only-cards { display: block !important; }
+    }
+    @media (min-width: 640px) {
+        .desktop-only-table { display: block !important; }
+        .mobile-only-cards { display: none !important; }
+    }
 </style>
 @endpush
 
@@ -693,8 +702,8 @@
             <!-- Modal Content (Scrollable Table) -->
             <div class="p-4 md:p-8 overflow-y-auto flex-1">
                 
-                <!-- Scrollable Table View -->
-                <div class="overflow-x-auto scrollbar-hide -mx-4 md:mx-0 px-4 md:px-0">
+                <!-- Desktop/Tablet Scrollable Table View -->
+                <div class="desktop-only-table overflow-x-auto scrollbar-hide -mx-4 md:mx-0 px-4 md:px-0">
                     <table class="w-full min-w-[750px] border-collapse text-left table-fixed">
                         <thead>
                             <tr class="border-b border-gray-100">
@@ -850,6 +859,53 @@
 
                         </tbody>
                     </table>
+                </div>
+
+                <!-- Mobile View Card List (No Horizontal Collisions) -->
+                <div class="mobile-only-cards space-y-4 max-h-[60vh] overflow-y-auto pr-1">
+                    <template x-for="cafe in selectedCafes" :key="cafe.id">
+                        <div class="bg-[#FCFAF8] border border-gray-100 rounded-3xl p-5 shadow-sm relative group transition-all hover:border-[#B87C39]/20 text-left">
+                            <!-- Header Info -->
+                            <div class="flex items-center gap-3 mb-4">
+                                <div class="w-7 h-7 rounded-full bg-[#B87C39] text-white text-xs font-black flex items-center justify-center shadow-sm" x-text="cafe.rank"></div>
+                                <div class="min-w-0 flex-1">
+                                    <h4 class="font-bold text-xs text-[#2B1A09] truncate" x-text="cafe.nama"></h4>
+                                    <p class="text-[9px] text-gray-400 truncate font-light mt-0.5" x-text="cafe.alamat"></p>
+                                </div>
+                            </div>
+                            
+                            <!-- Parameters List -->
+                            <div class="space-y-3 divide-y divide-gray-100/50">
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Skor SAW</span>
+                                    <span class="inline-flex items-center justify-center px-2.5 py-1 rounded-full bg-[#B87C39] text-white text-[10px] font-black" x-text="cafe.skor"></span>
+                                </div>
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Harga Terendah</span>
+                                    <span class="text-[10px] font-bold text-[#2B1A09]" x-text="cafe.harga"></span>
+                                </div>
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Jarak Lokasi</span>
+                                    <span class="text-[10px] font-bold text-[#2B1A09]" x-text="cafe.jarak + ' km'"></span>
+                                </div>
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Rating</span>
+                                    <div class="inline-flex items-center gap-0.5 text-[10px] font-bold text-[#2B1A09]">
+                                        <i data-lucide="star" class="w-3 h-3 text-amber-400 fill-amber-400"></i>
+                                        <span x-text="cafe.rating"></span>
+                                    </div>
+                                </div>
+                                <div class="flex justify-between items-center pt-2">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Jam Operasional</span>
+                                    <span class="text-[10px] font-bold text-[#2B1A09]" x-text="cafe.jam"></span>
+                                </div>
+                                <div class="flex flex-col pt-3 gap-1.5 border-t border-gray-100">
+                                    <span class="text-[9px] font-bold text-gray-400 uppercase tracking-wider">Formula SAW</span>
+                                    <div class="bg-white border border-gray-200/60 rounded-xl p-2.5 text-[9px] text-gray-500 font-mono break-all leading-relaxed text-left" x-text="cafe.perhitungan"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
                 </div>
 
             </div>
