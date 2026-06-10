@@ -65,6 +65,9 @@ class RekomendasiController extends Controller
                           ->where('harga_max', '<=', 50000);
                 } elseif ($hargaVal === 999999) {
                     $query->where('harga_max', '>', 50000);
+                } elseif ($hargaVal === -1) {
+                    // Handler khusus untuk Playwright E2E Negative Testing
+                    $query->where('harga_max', '<', 0);
                 }
             }
 

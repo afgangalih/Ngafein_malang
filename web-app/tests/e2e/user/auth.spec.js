@@ -30,7 +30,7 @@ test.describe('Autentikasi (Login, Register & Logout)', () => {
     await loginForm.locator('input[type="password"]').fill('pass123');
     await loginForm.getByRole('button', { name: 'Masuk' }).click();
 
-    const avatarButton = page.locator('nav').locator('div.relative button').filter({ has: page.locator('svg') }).first();
+    const avatarButton = page.locator('div.hidden.md\\:flex').getByRole('button').filter({ has: page.locator('circle') });
     await expect(avatarButton).toBeVisible({ timeout: 10000 });
     await avatarButton.click();
 
@@ -53,8 +53,8 @@ test.describe('Autentikasi (Login, Register & Logout)', () => {
     const registerForm = page.locator('form').filter({ has: page.getByRole('button', { name: 'Daftar Sekarang' }) });
     await registerForm.locator('input[placeholder*="nama lengkap"]').fill('Tester Duplikat');
     await registerForm.locator('input[type="email"]').fill('mahasiswa@gmail.com'); // email yang sudah ada
-    await registerForm.locator('input[placeholder="••••••••"]').first().fill('password123');
-    await registerForm.locator('input[placeholder="••••••••"]').last().fill('password123');
+    await registerForm.locator('input[placeholder="••••••••"]').first().fill('Password123');
+    await registerForm.locator('input[placeholder="••••••••"]').last().fill('Password123');
 
     await registerForm.getByRole('button', { name: 'Daftar Sekarang' }).click();
 
@@ -71,8 +71,8 @@ test.describe('Autentikasi (Login, Register & Logout)', () => {
     const registerForm = page.locator('form').filter({ has: page.getByRole('button', { name: 'Daftar Sekarang' }) });
     await registerForm.locator('input[placeholder*="nama lengkap"]').fill('Tester Mismatch');
     await registerForm.locator('input[type="email"]').fill('mismatch@gmail.com');
-    await registerForm.locator('input[placeholder="••••••••"]').first().fill('password123');
-    await registerForm.locator('input[placeholder="••••••••"]').last().fill('passwordberbeda'); // password konfirmasi beda
+    await registerForm.locator('input[placeholder="••••••••"]').first().fill('Password123');
+    await registerForm.locator('input[placeholder="••••••••"]').last().fill('Berbeda123'); // password konfirmasi beda
 
     await registerForm.getByRole('button', { name: 'Daftar Sekarang' }).click();
 
@@ -92,13 +92,13 @@ test.describe('Autentikasi (Login, Register & Logout)', () => {
     const registerForm = page.locator('form').filter({ has: page.getByRole('button', { name: 'Daftar Sekarang' }) });
     await registerForm.locator('input[placeholder*="nama lengkap"]').fill(`Tester Baru ${timestamp}`);
     await registerForm.locator('input[type="email"]').fill(uniqueEmail);
-    await registerForm.locator('input[placeholder="••••••••"]').first().fill('password123');
-    await registerForm.locator('input[placeholder="••••••••"]').last().fill('password123');
+    await registerForm.locator('input[placeholder="••••••••"]').first().fill('Password123');
+    await registerForm.locator('input[placeholder="••••••••"]').last().fill('Password123');
 
     await registerForm.getByRole('button', { name: 'Daftar Sekarang' }).click();
 
     // Verifikasi otomatis login & reload ke homepage dengan ditandai munculnya tombol avatar user
-    const avatarButton = page.locator('nav').locator('div.relative button').filter({ has: page.locator('svg') }).first();
+    const avatarButton = page.locator('div.hidden.md\\:flex').getByRole('button').filter({ has: page.locator('circle') });
     await expect(avatarButton).toBeVisible({ timeout: 10000 });
   });
 
