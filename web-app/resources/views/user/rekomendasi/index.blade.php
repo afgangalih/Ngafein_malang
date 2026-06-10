@@ -409,14 +409,20 @@
 const filterBody  = document.getElementById('filter-body');
 const chevronIcon = document.getElementById('chevron-icon');
 let filterOpen = true;
+function syncFilterBodyHeight() {
+    if (!filterBody || !filterOpen) return;
+    filterBody.style.maxHeight = filterBody.scrollHeight + 'px';
+}
 filterBody.style.transition = 'max-height .35s cubic-bezier(.4,0,.2,1)';
 filterBody.style.overflow   = 'hidden';
-filterBody.style.maxHeight  = filterBody.scrollHeight + 'px';
+syncFilterBodyHeight();
 function toggleFilter() {
     filterOpen = !filterOpen;
     filterBody.style.maxHeight  = filterOpen ? filterBody.scrollHeight + 'px' : '0';
     chevronIcon.style.transform = filterOpen ? 'rotate(180deg)' : 'rotate(0deg)';
 }
+window.addEventListener('resize', syncFilterBodyHeight);
+window.addEventListener('load', syncFilterBodyHeight);
 
 /* ════════════════════════════════════════
    STAR RATING BUTTONS
@@ -463,6 +469,7 @@ document.querySelectorAll('.fas-label').forEach(lbl => {
                 ico?.classList.add('hidden');
             }
             updateFasLabel();
+            syncFilterBodyHeight();
         }, 0);
     });
 });
@@ -550,6 +557,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     if (typeof lucide !== 'undefined') lucide.createIcons();
+    requestAnimationFrame(syncFilterBodyHeight);
 });
 </script>
 @endpush
