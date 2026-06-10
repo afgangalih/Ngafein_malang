@@ -20,7 +20,7 @@ test.describe('Fitur Perbandingan Kafe', () => {
     await firstCafeCompareBtn.click();
 
     // 2. Klik tombol "Bandingkan" pada floating bar
-    const compareFloatingBtn = page.getByRole('button', { name: 'Bandingkan' });
+    const compareFloatingBtn = page.getByRole('button', { name: 'Bandingkan', exact: true });
     await expect(compareFloatingBtn).toBeVisible();
     await compareFloatingBtn.click();
 
@@ -39,7 +39,7 @@ test.describe('Fitur Perbandingan Kafe', () => {
     await secondCafeCompareBtn.click();
 
     // 3. Klik tombol "Bandingkan" pada floating tray
-    const compareFloatingBtn = page.getByRole('button', { name: 'Bandingkan' });
+    const compareFloatingBtn = page.getByRole('button', { name: 'Bandingkan', exact: true });
     await expect(compareFloatingBtn).toBeVisible();
     await compareFloatingBtn.click();
 

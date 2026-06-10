@@ -53,11 +53,14 @@ test.describe('Fitur Ulasan dan Bookmark Kafe', () => {
     const registerForm = page.locator('form').filter({ has: page.getByRole('button', { name: 'Daftar Sekarang' }) });
     await registerForm.locator('input[placeholder*="nama lengkap"]').fill(`Tester Bookmark ${timestamp}`);
     await registerForm.locator('input[type="email"]').fill(uniqueEmail);
-    await registerForm.locator('input[placeholder="••••••••"]').first().fill('password123');
-    await registerForm.locator('input[placeholder="••••••••"]').last().fill('password123');
+    await registerForm.locator('input[placeholder="••••••••"]').first().fill('Password123');
+    await registerForm.locator('input[placeholder="••••••••"]').last().fill('Password123');
     await registerForm.getByRole('button', { name: 'Daftar Sekarang' }).click();
 
     // Tunggu register & auto login selesai
+    const avatarButton = page.locator('nav').locator('div.relative button').filter({ has: page.locator('svg') }).first();
+    await expect(avatarButton).toBeVisible({ timeout: 10000 });
+
     // 2. Pergi ke halaman detail kafe 1
     await page.goto('/explore/1');
     const cafeName = await page.locator('h1').innerText();
