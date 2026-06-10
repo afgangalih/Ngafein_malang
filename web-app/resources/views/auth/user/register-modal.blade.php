@@ -203,6 +203,12 @@
                            class="w-full bg-gray-50/50 border border-gray-200 rounded-xl pl-5 pr-12 py-3 text-sm outline-none focus:border-[#B87C39] focus:ring-1 focus:ring-[#B87C39] transition-all text-[#2B1A09]"
                            :class="errors.password_confirmation ? 'border-red-500 focus:border-red-500' : ''">
                 </div>
+                <template x-if="errors.password_confirmation">
+                    <p class="text-red-600 text-[11px] font-semibold mt-1 flex items-center gap-1">
+                        <svg viewBox="0 0 24 24" class="w-3 h-3 fill-none stroke-current" stroke-width="2"><circle cx="12" cy="12" r="10"/><line x1="12" x2="12" y1="8" y2="12"/><line x1="12" x2="12.01" y1="16" y2="16"/></svg>
+                        <span x-text="errors.password_confirmation[0]"></span>
+                    </p>
+                </template>
             </div>
 
             <button type="submit" 
